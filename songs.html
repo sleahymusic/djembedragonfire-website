@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Song List | Djembe Dragonfire</title>
+  <meta name="description" content="Browse a searchable sample of Djembe Dragonfire's Second Life performance song list." />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header class="site-header">
+    <a class="brand" href="index.html">Djembe Dragonfire</a>
+    <nav aria-label="Main navigation">
+      <a href="index.html#listen">Listen</a>
+      <a href="index.html#about">About</a>
+      <a href="index.html#shows">Shows</a>
+      <a href="songs.html">Song List</a>
+      <a href="index.html#contact">Booking</a>
+    </nav>
+  </header>
+
+  <main>
+    <section class="page-hero">
+      <p class="eyebrow">Browse the music</p>
+      <h1>Song List</h1>
+      <p class="lead">Search by title, artist, category, mood, or style. This public browser is built from Djembe's AI Brain Master Song List.</p>
+    </section>
+
+    <section class="section song-browser">
+      <label class="search-label" for="songSearch">Search songs</label>
+      <input id="songSearch" class="search-input" type="search" placeholder="Try Beggin, Adele, Broadway, jazz, Disney, country..." />
+      <div class="song-meta"><span id="songCount"></span></div>
+      <div id="songResults" class="song-results" aria-live="polite"></div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <p>&copy; <span id="year"></span> Djembe Dragonfire. All rights reserved.</p>
+  </footer>
+
+  <script src="songs.js"></script>
+  <script>
+    document.getElementById('year').textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>
