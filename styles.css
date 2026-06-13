@@ -1,0 +1,239 @@
+:root {
+  --bg: #120707;
+  --bg-2: #220b0b;
+  --text: #fff7ed;
+  --muted: #f8c8a0;
+  --gold: #f7b733;
+  --ember: #ff5a1f;
+  --red: #9d1c13;
+  --panel: rgba(255, 247, 237, 0.08);
+  --border: rgba(255, 247, 237, 0.18);
+  --shadow: 0 24px 80px rgba(0, 0, 0, 0.35);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  font-family: Arial, Helvetica, sans-serif;
+  color: var(--text);
+  background:
+    radial-gradient(circle at top left, rgba(255, 90, 31, 0.35), transparent 34rem),
+    radial-gradient(circle at bottom right, rgba(247, 183, 51, 0.18), transparent 30rem),
+    linear-gradient(135deg, var(--bg), var(--bg-2));
+  line-height: 1.6;
+}
+
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  background-image: linear-gradient(rgba(255,255,255,0.025) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.025) 1px, transparent 1px);
+  background-size: 42px 42px;
+  mask-image: linear-gradient(to bottom, black, transparent 85%);
+}
+
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 1rem clamp(1rem, 4vw, 4rem);
+  background: rgba(18, 7, 7, 0.82);
+  backdrop-filter: blur(14px);
+  border-bottom: 1px solid var(--border);
+}
+
+.brand {
+  color: var(--text);
+  text-decoration: none;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+nav {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+nav a {
+  color: var(--muted);
+  text-decoration: none;
+  font-weight: 700;
+}
+
+nav a:hover {
+  color: var(--gold);
+}
+
+.hero {
+  min-height: 78vh;
+  display: grid;
+  place-items: center;
+  padding: clamp(4rem, 10vw, 8rem) clamp(1rem, 4vw, 4rem);
+}
+
+.hero-content {
+  width: min(980px, 100%);
+  padding: clamp(2rem, 5vw, 4rem);
+  border: 1px solid var(--border);
+  border-radius: 32px;
+  background: linear-gradient(135deg, rgba(157, 28, 19, 0.45), rgba(255, 90, 31, 0.12));
+  box-shadow: var(--shadow);
+}
+
+.eyebrow {
+  margin: 0 0 0.75rem;
+  color: var(--gold);
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+}
+
+h1, h2, h3, p {
+  margin-top: 0;
+}
+
+h1 {
+  max-width: 850px;
+  margin-bottom: 1rem;
+  font-size: clamp(3rem, 9vw, 7.5rem);
+  line-height: 0.92;
+  letter-spacing: -0.07em;
+}
+
+h2 {
+  font-size: clamp(2rem, 5vw, 4rem);
+  line-height: 1;
+  letter-spacing: -0.05em;
+}
+
+.lead {
+  max-width: 720px;
+  font-size: clamp(1.2rem, 2.5vw, 1.7rem);
+  color: var(--muted);
+}
+
+.hero-actions {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+  margin-top: 2rem;
+}
+
+.button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 3rem;
+  padding: 0.85rem 1.25rem;
+  border-radius: 999px;
+  color: #210804;
+  background: linear-gradient(135deg, var(--gold), var(--ember));
+  text-decoration: none;
+  font-weight: 900;
+  box-shadow: 0 14px 36px rgba(255, 90, 31, 0.28);
+}
+
+.button.secondary {
+  color: var(--text);
+  background: transparent;
+  border: 1px solid var(--border);
+  box-shadow: none;
+}
+
+.section {
+  padding: clamp(4rem, 9vw, 7rem) clamp(1rem, 4vw, 4rem);
+  width: min(1180px, 100%);
+  margin: 0 auto;
+}
+
+.grid-section {
+  display: grid;
+  grid-template-columns: 0.8fr 1.2fr;
+  gap: 2rem;
+  align-items: start;
+}
+
+.card-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1rem;
+}
+
+.card,
+.panel,
+.contact-section {
+  border: 1px solid var(--border);
+  border-radius: 24px;
+  background: var(--panel);
+  box-shadow: var(--shadow);
+}
+
+.card,
+.panel {
+  padding: 1.5rem;
+}
+
+.card h3,
+.panel h3 {
+  color: var(--gold);
+}
+
+.card p,
+.panel p,
+.section p {
+  color: var(--muted);
+}
+
+.split {
+  display: grid;
+  grid-template-columns: 1.1fr 0.9fr;
+  gap: 2rem;
+  align-items: center;
+}
+
+.contact-section {
+  padding: clamp(2rem, 5vw, 4rem);
+  text-align: center;
+}
+
+.site-footer {
+  padding: 2rem clamp(1rem, 4vw, 4rem);
+  text-align: center;
+  color: var(--muted);
+  border-top: 1px solid var(--border);
+}
+
+@media (max-width: 850px) {
+  .site-header,
+  .grid-section,
+  .split {
+    display: block;
+  }
+
+  nav {
+    margin-top: 0.75rem;
+  }
+
+  .card-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .card,
+  .panel {
+    margin-top: 1rem;
+  }
+}
