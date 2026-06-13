@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Song List | Djembe Dragonfire</title>
-  <meta name="description" content="Browse a searchable sample of Djembe Dragonfire's Second Life performance song list." />
+  <meta name="description" content="Browse Djembe Dragonfire's searchable Second Life performance song list by song, artist, genre, mood, and theme." />
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
@@ -23,12 +23,24 @@
     <section class="page-hero">
       <p class="eyebrow">Browse the music</p>
       <h1>Song List</h1>
-      <p class="lead">Search by title, artist, category, mood, or style. This public browser is built from Djembe's AI Brain Master Song List.</p>
+      <p class="lead">Search the catalog by title, artist, genre, mood, or theme. Genre tabs are arranged to match the Master Song List / SL notecard style.</p>
     </section>
 
     <section class="section song-browser">
-      <label class="search-label" for="songSearch">Search songs</label>
-      <input id="songSearch" class="search-input" type="search" placeholder="Try Beggin, Adele, Broadway, jazz, Disney, country..." />
+      <div class="browser-toolbar">
+        <div>
+          <label class="search-label" for="songSearch">Main search</label>
+          <input id="songSearch" class="search-input" type="search" placeholder="Search title or artist..." />
+        </div>
+        <div>
+          <label class="search-label" for="moodFilter">Mood / theme</label>
+          <select id="moodFilter" class="search-input">
+            <option value="">All moods and themes</option>
+          </select>
+        </div>
+      </div>
+
+      <div id="genreTabs" class="genre-tabs" aria-label="Song genres"></div>
       <div class="song-meta"><span id="songCount"></span></div>
       <div id="songResults" class="song-results" aria-live="polite"></div>
     </section>

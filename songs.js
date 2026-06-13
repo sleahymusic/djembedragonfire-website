@@ -60,17 +60,57 @@ const songs = [
 ];
 
 const searchInput = document.getElementById('songSearch');
+const moodFilter = document.getElementById('moodFilter');
+const tabs = document.getElementById('genreTabs');
 const results = document.getElementById('songResults');
 const count = document.getElementById('songCount');
 
-function renderSongs(filter = '') {
-  const query = filter.trim().toLowerCase();
+const preferredGenreOrder = ['All', 'New Songs', 'Country', 'Classical/Broadway/Ballads/Oldies', 'Pop/Rock/EDM', 'Disney', 'Christmas'];
+let activeGenre = 'All';
+
+function normalizeList(value) {
+  return value.split(',').map(item => item.trim()).filter(Boolean);
+}
+
+function buildMoodOptions() {
+  const moods = new Set();
+  songs.forEach(song => {
+    normalizeList(`${song.mood}, ${song.style}, ${song.energy}`).forEach(tag => moods.add(tag));
+  });
+  [...moods].sort().forEach(mood => {
+    const option = document.createElement('option');
+    option.value = mood.toLowerCase();
+    option.textContent = mood;
+    moodFilter.appendChild(option);
+  });
+}
+
+function buildGenreTabs() {
+  const existingGenres = new Set(songs.map(song => song.category));
+  const genres = preferredGenreOrder.filter(genre => genre === 'All' || existingGenres.has(genre));
+  tabs.innerHTML = genres.map(genre => `<button class="genre-tab${genre === activeGenre ? ' active' : ''}" type="button" data-genre="${genre}">${genre}</button>`).join('');
+  tabs.querySelectorAll('button').forEach(button => {
+    button.addEventListener('click', () => {
+      activeGenre = button.dataset.genre;
+      buildGenreTabs();
+      renderSongs();
+    });
+  });
+}
+
+function renderSongs() {
+  const query = searchInput.value.trim().toLowerCase();
+  const mood = moodFilter.value;
   const filtered = songs.filter(song => {
-    const haystack = `${song.title} ${song.artist} ${song.category} ${song.mood} ${song.style} ${song.energy}`.toLowerCase();
-    return haystack.includes(query);
+    const titleArtist = `${song.title} ${song.artist}`.toLowerCase();
+    const allText = `${song.title} ${song.artist} ${song.category} ${song.mood} ${song.style} ${song.energy}`.toLowerCase();
+    const genreMatch = activeGenre === 'All' || song.category === activeGenre;
+    const queryMatch = !query || titleArtist.includes(query) || allText.includes(query);
+    const moodMatch = !mood || allText.includes(mood);
+    return genreMatch && queryMatch && moodMatch;
   });
 
-  count.textContent = `${filtered.length} songs shown from the first public sample. Full catalog import is next.`;
+  count.textContent = `${filtered.length} songs shown. Full Master Song List import is the next data pass.`;
   results.innerHTML = filtered.map(song => `
     <article class="song-card">
       <h3>${song.title}</h3>
@@ -84,5 +124,8 @@ function renderSongs(filter = '') {
   `).join('') || '<p class="empty-state">No songs matched that search.</p>';
 }
 
-searchInput.addEventListener('input', event => renderSongs(event.target.value));
+searchInput.addEventListener('input', renderSongs);
+moodFilter.addEventListener('change', renderSongs);
+buildMoodOptions();
+buildGenreTabs();
 renderSongs();
