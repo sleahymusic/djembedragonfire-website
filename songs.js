@@ -26,21 +26,21 @@ const preferredGenreOrder = [
 ];
 
 const choicePresets = [
-  { label: 'Make Me Smile', emoji: 'ðŸ˜Š', terms: ['joy'], description: 'Songs with warmth, fun, and lift.' },
-  { label: 'Break My Heart', emoji: 'ðŸ’”', terms: ['breakup', 'intimacy'], description: 'Emotional songs with ache and vulnerability.' },
-  { label: 'Inspire Me', emoji: 'âœ¨', terms: ['empowerment', 'devotion'], description: 'Songs that feel hopeful, strong, or grounding.' },
-  { label: 'Tell Me a Story', emoji: 'ðŸŽ­', terms: ['theatrical', 'showtunes'], description: 'Broadway, standards, and dramatic vocal moments.' },
-  { label: 'Dance Energy', emoji: 'ðŸ•º', terms: ['high', 'edm', 'joy'], description: 'Higher-energy songs for movement and momentum.' },
-  { label: 'Quiet & Intimate', emoji: 'ðŸ•¯ï¸', terms: ['low', 'intimacy'], description: 'Softer songs for close, emotional moments.' },
-  { label: 'Nostalgia Trip', emoji: 'ðŸŒ™', terms: ['nostalgia'], description: 'Songs that feel familiar, reflective, or memory-filled.' },
-  { label: 'Holiday Cheer', emoji: 'ðŸŽ„', terms: ['festive', 'holiday'], description: 'Christmas and seasonal favorites.' },
-  { label: 'Surprise Me', emoji: 'ðŸŽ²', terms: [], random: true, description: 'A random spark from the whole catalog.' }
+  { label: 'Make Me Smile', emoji: '&#128522;', terms: ['joy'], description: 'Songs with warmth, fun, and lift.' },
+  { label: 'Break My Heart', emoji: '&#128148;', terms: ['breakup', 'intimacy'], description: 'Emotional songs with ache and vulnerability.' },
+  { label: 'Inspire Me', emoji: '&#10024;', terms: ['empowerment', 'devotion'], description: 'Songs that feel hopeful, strong, or grounding.' },
+  { label: 'Tell Me a Story', emoji: '&#127917;', terms: ['theatrical', 'showtunes'], description: 'Broadway, standards, and dramatic vocal moments.' },
+  { label: 'Dance Energy', emoji: '&#128378;', terms: ['high', 'edm', 'joy'], description: 'Higher-energy songs for movement and momentum.' },
+  { label: 'Quiet & Intimate', emoji: '&#128367;', terms: ['low', 'intimacy'], description: 'Softer songs for close, emotional moments.' },
+  { label: 'Nostalgia Trip', emoji: '&#127769;', terms: ['nostalgia'], description: 'Songs that feel familiar, reflective, or memory-filled.' },
+  { label: 'Holiday Cheer', emoji: '&#127876;', terms: ['festive', 'holiday'], description: 'Christmas and seasonal favorites.' },
+  { label: 'Surprise Me', emoji: '&#127922;', terms: [], random: true, description: 'A random spark from the whole catalog.' }
 ];
 
 const weeklyPick = {
   title: 'Nessun Dorma',
   artist: 'Turandot',
-  note: 'A glimpse of the classical training behind the voice â€” dramatic, demanding, and unforgettable.',
+  note: 'A glimpse of the classical training behind the voice - dramatic, demanding, and unforgettable.',
   sample: 'audio/Nessun Dorma (Djembe 2024).mp3'
 };
 
@@ -235,50 +235,132 @@ function markSongRequestSentNow() {
 
 async function sendSongListRequest(song, button) {
   if (!song || !song.title || !song.artist) return;
+
   if (!canSendSongRequestNow()) {
-    alert('Please wait a moment before sending another request.');
+    openSongRequestModal(song, button, 'cooldown');
     return;
   }
 
-  const guestName = window.prompt('What name should Djembe see with this request?\n\nUse your Second Life name or display name.', 'Website guest');
-  if (guestName === null) return;
-
-  const note = window.prompt('Optional: add a dedication or short note for Djembe.', '') || '';
-  const payload = {
-    guestName: guestName.trim() || 'Website guest',
-    songTitle: song.title,
-    artist: song.artist,
-    note: note.trim(),
-    source: 'DjembeDragonfire.com song list',
-    website: ''
-  };
-
-  const oldText = button ? button.textContent : '';
-  if (button) {
-    button.disabled = true;
-    button.textContent = 'Sending...';
-  }
-
-  try {
-    const response = await fetchWithTimeout(SONG_REQUEST_ENDPOINT, {
-      method: 'POST',
-      headers: { 'content-type': 'application/json' },
-      body: JSON.stringify(payload)
-    }, SONG_REQUEST_TIMEOUT_MS);
-    const data = await response.json();
-    if (!response.ok || !data.ok) throw new Error(data.error || 'Request bridge error');
-    markSongRequestSentNow();
-    alert(data.reply || `Request sent to Djembe: ${payload.songTitle} - ${payload.artist}`);
-  } catch (error) {
-    console.error(error);
-    alert('The live request bridge did not answer. Please try again in a moment or ask Djembe in-world.');
-  } finally {
-    if (button) {
-      button.disabled = false;
-      button.textContent = oldText || 'Send request to Djembe now';
-    }
-  }
+  openSongRequestModal(song, button, 'ready');
 }
+
+function closeSongRequestModal() {
+  document.querySelector('.song-request-modal-backdrop')?.remove();
+}
+
+function openSongRequestModal(song, sourceButton, mode = 'ready') {
+  closeSongRequestModal();
+
+  const overlay = document.createElement('div');
+  overlay.className = 'song-request-modal-backdrop';
+  overlay.innerHTML = `
+    <div class="song-request-modal" role="dialog" aria-modal="true" aria-label="Request ${escapeHtml(song.title)} live">
+      <button class="song-request-modal-close" type="button" aria-label="Close request form">&times;</button>
+      <p class="eyebrow">Live Song Request</p>
+      <h2>Request Live</h2>
+      <p class="song-request-modal-song"><strong>${escapeHtml(song.title)}</strong><span>${escapeHtml(song.artist)}</span></p>
+      <p class="song-request-modal-copy">Send this request straight to Djembe's live show HUD.</p>
+      <label>
+        <span>Your name</span>
+        <input class="song-request-name" type="text" maxlength="80" placeholder="Second Life name or display name" autocomplete="name" />
+      </label>
+      <label>
+        <span>Dedication or note <em>optional</em></span>
+        <textarea class="song-request-note" maxlength="260" rows="4" placeholder="For someone special, a mood, or a short message..."></textarea>
+      </label>
+      <div class="song-request-modal-status" aria-live="polite"></div>
+      <div class="song-request-modal-actions">
+        <button class="button secondary song-request-cancel" type="button">Cancel</button>
+        <button class="button song-request-submit" type="button">Send to Djembe</button>
+      </div>
+    </div>
+  `;
+
+  document.body.appendChild(overlay);
+
+  const nameInput = overlay.querySelector('.song-request-name');
+  const noteInput = overlay.querySelector('.song-request-note');
+  const status = overlay.querySelector('.song-request-modal-status');
+  const submit = overlay.querySelector('.song-request-submit');
+  const cancel = overlay.querySelector('.song-request-cancel');
+  const close = overlay.querySelector('.song-request-modal-close');
+
+  const closeNow = () => closeSongRequestModal();
+  cancel.addEventListener('click', closeNow);
+  close.addEventListener('click', closeNow);
+  overlay.addEventListener('click', event => {
+    if (event.target === overlay) closeNow();
+  });
+  overlay.addEventListener('keydown', event => {
+    if (event.key === 'Escape') closeNow();
+  });
+
+  if (mode === 'cooldown') {
+    status.textContent = 'Please wait a moment before sending another live request.';
+    status.className = 'song-request-modal-status is-warning';
+    submit.disabled = true;
+  }
+
+  submit.addEventListener('click', async () => {
+    const guestName = nameInput.value.trim();
+    const note = noteInput.value.trim();
+
+    if (!guestName) {
+      status.textContent = 'Please enter the name Djembe should see with the request.';
+      status.className = 'song-request-modal-status is-warning';
+      nameInput.focus();
+      return;
+    }
+
+    const payload = {
+      guestName,
+      songTitle: song.title,
+      artist: song.artist,
+      note,
+      source: 'DjembeDragonfire.com song list',
+      website: ''
+    };
+
+    submit.disabled = true;
+    cancel.disabled = true;
+    if (sourceButton) {
+      sourceButton.disabled = true;
+      sourceButton.textContent = 'Sending...';
+    }
+    status.textContent = 'Sending your live request to Djembe...';
+    status.className = 'song-request-modal-status is-sending';
+
+    try {
+      const response = await fetchWithTimeout(SONG_REQUEST_ENDPOINT, {
+        method: 'POST',
+        headers: { 'content-type': 'application/json' },
+        body: JSON.stringify(payload)
+      }, SONG_REQUEST_TIMEOUT_MS);
+      const data = await response.json();
+      if (!response.ok || !data.ok) throw new Error(data.error || 'Request bridge error');
+      markSongRequestSentNow();
+      status.textContent = data.reply || `Request sent to Djembe: ${payload.songTitle} - ${payload.artist}`;
+      status.className = 'song-request-modal-status is-success';
+      submit.textContent = 'Sent';
+      close.textContent = 'OK';
+      close.classList.add('is-ok');
+    } catch (error) {
+      console.error(error);
+      status.textContent = 'The live request bridge did not answer. Please try again in a moment or ask Djembe in-world.';
+      status.className = 'song-request-modal-status is-error';
+      submit.disabled = false;
+      cancel.disabled = false;
+    } finally {
+      if (sourceButton) {
+        sourceButton.disabled = false;
+        sourceButton.textContent = 'Request Live';
+      }
+    }
+  });
+
+  window.setTimeout(() => nameInput.focus(), 50);
+}
+
 function renderSongOfWeek() {
   const found = songs.find(song => song.title === weeklyPick.title && song.artist === weeklyPick.artist) || songs.find(song => song.title === weeklyPick.title);
   const sample = weeklyPick.sample || (found ? sampleForSong(found) : '');
@@ -288,9 +370,9 @@ function renderSongOfWeek() {
       <p>${escapeHtml(weeklyPick.artist)}</p>
       <p>${escapeHtml(weeklyPick.note)}</p>
       ${sample ? `<audio controls preload="none" src="${escapeHtml(sample)}"></audio>` : '<p class="small-note">Audio sample coming soon.</p>'}
-      ${found ? `<button class="button secondary song-request-button" type="button" data-song-key="${escapeHtml(songKey(found))}">Send request to Djembe now</button>` : ''}
+      ${found ? `<button class="song-request-button song-request-live-button" type="button" data-song-key="${escapeHtml(songKey(found))}">Request Live</button>` : ''}
     </div>
-    <button class="favorite-button${found && favorites.has(songKey(found)) ? ' is-favorite' : ''}" type="button" data-song-key="${found ? escapeHtml(songKey(found)) : ''}">â™¥ Favorite</button>
+    <button class="favorite-button${found && favorites.has(songKey(found)) ? ' is-favorite' : ''}" type="button" data-song-key="${found ? escapeHtml(songKey(found)) : ''}">&#9829;</button>
   `;
 }
 
@@ -457,7 +539,7 @@ function renderFavorites() {
     favoriteSongs.innerHTML = '<p class="small-note">Tap the heart on any song to save it here on this device.</p>';
     return;
   }
-  favoriteSongs.innerHTML = favoriteList.map(song => `<button class="favorite-chip" type="button" data-title="${escapeHtml(song.title)}">â™¥ ${escapeHtml(song.title)} <span>${escapeHtml(song.artist)}</span></button>`).join('');
+  favoriteSongs.innerHTML = favoriteList.map(song => `<button class="favorite-chip" type="button" data-title="${escapeHtml(song.title)}">&#9829; ${escapeHtml(song.title)} <span>${escapeHtml(song.artist)}</span></button>`).join('');
   favoriteSongs.querySelectorAll('button').forEach(button => {
     button.addEventListener('click', () => {
       searchInput.value = button.dataset.title;
@@ -480,10 +562,10 @@ function renderSongs() {
     const sample = sampleForSong(song);
     return `<article class="song-card${highlightClass}">
       ${highlightClass ? '<p class="pick-label">Surprise pick</p>' : ''}
-      <div class="song-card-header"><div><h3>${escapeHtml(song.title)}</h3><p>${escapeHtml(song.artist)}</p></div><button class="favorite-button${favorites.has(key) ? ' is-favorite' : ''}" type="button" data-song-key="${escapeHtml(key)}" aria-label="Favorite ${escapeHtml(song.title)}">â™¥</button></div>
+      <div class="song-card-header"><div><h3>${escapeHtml(song.title)}</h3><p>${escapeHtml(song.artist)}</p></div><button class="favorite-button${favorites.has(key) ? ' is-favorite' : ''}" type="button" data-song-key="${escapeHtml(key)}" aria-label="Favorite ${escapeHtml(song.title)}">&#9829;</button></div>
       ${sample ? `<audio controls preload="none" src="${escapeHtml(sample)}"></audio>` : ''}
       <div class="song-tags"><span>${escapeHtml(song.category)}</span><span>${escapeHtml(song.energy)}</span>${normalizeList(song.mood).map(tag => `<span>${escapeHtml(tag)}</span>`).join('')}${normalizeList(song.style).map(tag => `<span>${escapeHtml(tag)}</span>`).join('')}</div>
-      <button class="button secondary song-request-button" type="button" data-song-key="${escapeHtml(key)}">Send request to Djembe now</button>
+      <button class="song-request-button song-request-live-button" type="button" data-song-key="${escapeHtml(key)}">Request Live</button>
     </article>`;
   }).join('') || '<p class="empty-state">No songs matched that search.</p>';
 }
