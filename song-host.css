@@ -46,7 +46,7 @@
 }
 
 .host-actions.is-thinking::after {
-  content: "Ollama is thinkingâ€¦";
+  content: "Ollama is thinkingÃ¢â‚¬Â¦";
   display: inline-flex;
   margin-top: 0.75rem;
   color: var(--gold);
@@ -72,12 +72,12 @@
 }
 
 .host-bubble-ai::before {
-  content: "ðŸŽ™ï¸";
+  content: "Ã°Å¸Å½â„¢Ã¯Â¸Â";
   margin-right: 0.35rem;
 }
 
 .host-bubble-guest::before {
-  content: "ðŸ’¬";
+  content: "Ã°Å¸â€™Â¬";
   margin-right: 0.35rem;
 }
 
@@ -245,5 +245,91 @@
 
   .song-host-floating .host-input-row {
     grid-template-columns: 1fr;
+  }
+}
+
+/* Force Song Host to bottom-right even before JS class initializes */
+#songHost.song-host-panel {
+  position: fixed !important;
+  right: 1.25rem !important;
+  bottom: 1.25rem !important;
+  z-index: 950 !important;
+  width: min(430px, calc(100vw - 2rem)) !important;
+  max-height: min(760px, calc(100vh - 2rem)) !important;
+  display: flex !important;
+  flex-direction: column !important;
+  overflow: hidden !important;
+  padding: 0 !important;
+  border-radius: 28px !important;
+  box-shadow: 0 32px 90px rgba(0, 0, 0, 0.68), 0 0 55px rgba(34, 211, 238, 0.12) !important;
+}
+
+#songHost.song-host-panel::after {
+  display: none !important;
+}
+
+#songHost.song-host-panel > .eyebrow,
+#songHost.song-host-panel > h2,
+#songHost.song-host-panel > .small-note,
+#songHost.song-host-panel > .host-messages,
+#songHost.song-host-panel > .host-actions {
+  margin-left: 1rem;
+  margin-right: 1rem;
+}
+
+#songHost.song-host-panel > .eyebrow {
+  margin-top: 1rem;
+  margin-bottom: 0.45rem;
+}
+
+#songHost.song-host-panel > h2 {
+  margin-bottom: 0.45rem;
+  font-size: 1.85rem;
+}
+
+#songHost.song-host-panel > .small-note {
+  margin-bottom: 0.85rem;
+  font-size: 0.95rem;
+}
+
+#songHost.song-host-panel .host-messages {
+  min-height: 160px;
+  max-height: 265px;
+  overflow-y: auto;
+  margin-bottom: 0.8rem;
+  padding: 0.85rem;
+  border: 1px solid rgba(255,255,255,0.12);
+  border-radius: 18px;
+  background: rgba(255,255,255,0.045);
+}
+
+#songHost.song-host-panel .host-actions {
+  margin-bottom: 1rem;
+}
+
+#songHost.song-host-panel.is-collapsed {
+  width: min(330px, calc(100vw - 2rem)) !important;
+  max-height: 4.4rem !important;
+}
+
+#songHost.song-host-panel.is-collapsed > .eyebrow,
+#songHost.song-host-panel.is-collapsed > h2,
+#songHost.song-host-panel.is-collapsed > .small-note,
+#songHost.song-host-panel.is-collapsed > .host-messages,
+#songHost.song-host-panel.is-collapsed > .host-actions {
+  display: none !important;
+}
+
+@media (max-width: 760px) {
+  #songHost.song-host-panel {
+    left: 0.75rem !important;
+    right: 0.75rem !important;
+    bottom: 0.75rem !important;
+    width: auto !important;
+    max-height: calc(100vh - 1.5rem) !important;
+  }
+
+  #songHost.song-host-panel.is-collapsed {
+    width: auto !important;
   }
 }
