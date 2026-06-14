@@ -9,6 +9,11 @@ const favoriteSongs = document.getElementById('favoriteSongs');
 const songOfWeek = document.getElementById('songOfWeek');
 const requestGuide = document.getElementById('requestGuide');
 
+const SONG_REQUEST_ENDPOINT = 'https://djembe-music-brain.sleahymusic.workers.dev/website/request';
+const SONG_REQUEST_TIMEOUT_MS = 30000;
+const songRequestCooldownKey = 'djembeDragonfireSongRequestLastSent';
+const SONG_REQUEST_CLIENT_COOLDOWN_MS = 30000;
+
 const preferredGenreOrder = [
   'All',
   'New Songs',
@@ -21,21 +26,21 @@ const preferredGenreOrder = [
 ];
 
 const choicePresets = [
-  { label: 'Make Me Smile', emoji: '😊', terms: ['joy'], description: 'Songs with warmth, fun, and lift.' },
-  { label: 'Break My Heart', emoji: '💔', terms: ['breakup', 'intimacy'], description: 'Emotional songs with ache and vulnerability.' },
-  { label: 'Inspire Me', emoji: '✨', terms: ['empowerment', 'devotion'], description: 'Songs that feel hopeful, strong, or grounding.' },
-  { label: 'Tell Me a Story', emoji: '🎭', terms: ['theatrical', 'showtunes'], description: 'Broadway, standards, and dramatic vocal moments.' },
-  { label: 'Dance Energy', emoji: '🕺', terms: ['high', 'edm', 'joy'], description: 'Higher-energy songs for movement and momentum.' },
-  { label: 'Quiet & Intimate', emoji: '🕯️', terms: ['low', 'intimacy'], description: 'Softer songs for close, emotional moments.' },
-  { label: 'Nostalgia Trip', emoji: '🌙', terms: ['nostalgia'], description: 'Songs that feel familiar, reflective, or memory-filled.' },
-  { label: 'Holiday Cheer', emoji: '🎄', terms: ['festive', 'holiday'], description: 'Christmas and seasonal favorites.' },
-  { label: 'Surprise Me', emoji: '🎲', terms: [], random: true, description: 'A random spark from the whole catalog.' }
+  { label: 'Make Me Smile', emoji: 'ðŸ˜Š', terms: ['joy'], description: 'Songs with warmth, fun, and lift.' },
+  { label: 'Break My Heart', emoji: 'ðŸ’”', terms: ['breakup', 'intimacy'], description: 'Emotional songs with ache and vulnerability.' },
+  { label: 'Inspire Me', emoji: 'âœ¨', terms: ['empowerment', 'devotion'], description: 'Songs that feel hopeful, strong, or grounding.' },
+  { label: 'Tell Me a Story', emoji: 'ðŸŽ­', terms: ['theatrical', 'showtunes'], description: 'Broadway, standards, and dramatic vocal moments.' },
+  { label: 'Dance Energy', emoji: 'ðŸ•º', terms: ['high', 'edm', 'joy'], description: 'Higher-energy songs for movement and momentum.' },
+  { label: 'Quiet & Intimate', emoji: 'ðŸ•¯ï¸', terms: ['low', 'intimacy'], description: 'Softer songs for close, emotional moments.' },
+  { label: 'Nostalgia Trip', emoji: 'ðŸŒ™', terms: ['nostalgia'], description: 'Songs that feel familiar, reflective, or memory-filled.' },
+  { label: 'Holiday Cheer', emoji: 'ðŸŽ„', terms: ['festive', 'holiday'], description: 'Christmas and seasonal favorites.' },
+  { label: 'Surprise Me', emoji: 'ðŸŽ²', terms: [], random: true, description: 'A random spark from the whole catalog.' }
 ];
 
 const weeklyPick = {
   title: 'Nessun Dorma',
   artist: 'Turandot',
-  note: 'A glimpse of the classical training behind the voice — dramatic, demanding, and unforgettable.',
+  note: 'A glimpse of the classical training behind the voice â€” dramatic, demanding, and unforgettable.',
   sample: 'audio/Nessun Dorma (Djembe 2024).mp3'
 };
 
@@ -207,6 +212,73 @@ function buildChoiceButtons() {
   });
 }
 
+
+function fetchWithTimeout(url, options, timeoutMs) {
+  const controller = new AbortController();
+  const timeout = window.setTimeout(() => controller.abort(), timeoutMs);
+  try {
+    return fetch(url, { ...options, signal: controller.signal });
+  } finally {
+    window.clearTimeout(timeout);
+  }
+}
+
+function canSendSongRequestNow() {
+  const last = Number(localStorage.getItem(songRequestCooldownKey) || 0);
+  const elapsed = Date.now() - last;
+  return elapsed >= SONG_REQUEST_CLIENT_COOLDOWN_MS;
+}
+
+function markSongRequestSentNow() {
+  localStorage.setItem(songRequestCooldownKey, String(Date.now()));
+}
+
+async function sendSongListRequest(song, button) {
+  if (!song || !song.title || !song.artist) return;
+  if (!canSendSongRequestNow()) {
+    alert('Please wait a moment before sending another request.');
+    return;
+  }
+
+  const guestName = window.prompt('What name should Djembe see with this request?\n\nUse your Second Life name or display name.', 'Website guest');
+  if (guestName === null) return;
+
+  const note = window.prompt('Optional: add a dedication or short note for Djembe.', '') || '';
+  const payload = {
+    guestName: guestName.trim() || 'Website guest',
+    songTitle: song.title,
+    artist: song.artist,
+    note: note.trim(),
+    source: 'DjembeDragonfire.com song list',
+    website: ''
+  };
+
+  const oldText = button ? button.textContent : '';
+  if (button) {
+    button.disabled = true;
+    button.textContent = 'Sending...';
+  }
+
+  try {
+    const response = await fetchWithTimeout(SONG_REQUEST_ENDPOINT, {
+      method: 'POST',
+      headers: { 'content-type': 'application/json' },
+      body: JSON.stringify(payload)
+    }, SONG_REQUEST_TIMEOUT_MS);
+    const data = await response.json();
+    if (!response.ok || !data.ok) throw new Error(data.error || 'Request bridge error');
+    markSongRequestSentNow();
+    alert(data.reply || `Request sent to Djembe: ${payload.songTitle} - ${payload.artist}`);
+  } catch (error) {
+    console.error(error);
+    alert('The live request bridge did not answer. Please try again in a moment or ask Djembe in-world.');
+  } finally {
+    if (button) {
+      button.disabled = false;
+      button.textContent = oldText || 'Send request to Djembe now';
+    }
+  }
+}
 function renderSongOfWeek() {
   const found = songs.find(song => song.title === weeklyPick.title && song.artist === weeklyPick.artist) || songs.find(song => song.title === weeklyPick.title);
   const sample = weeklyPick.sample || (found ? sampleForSong(found) : '');
@@ -216,8 +288,9 @@ function renderSongOfWeek() {
       <p>${escapeHtml(weeklyPick.artist)}</p>
       <p>${escapeHtml(weeklyPick.note)}</p>
       ${sample ? `<audio controls preload="none" src="${escapeHtml(sample)}"></audio>` : '<p class="small-note">Audio sample coming soon.</p>'}
+      ${found ? `<button class="button secondary song-request-button" type="button" data-song-key="${escapeHtml(songKey(found))}">Send request to Djembe now</button>` : ''}
     </div>
-    <button class="favorite-button${found && favorites.has(songKey(found)) ? ' is-favorite' : ''}" type="button" data-song-key="${found ? escapeHtml(songKey(found)) : ''}">♥ Favorite</button>
+    <button class="favorite-button${found && favorites.has(songKey(found)) ? ' is-favorite' : ''}" type="button" data-song-key="${found ? escapeHtml(songKey(found)) : ''}">â™¥ Favorite</button>
   `;
 }
 
@@ -384,7 +457,7 @@ function renderFavorites() {
     favoriteSongs.innerHTML = '<p class="small-note">Tap the heart on any song to save it here on this device.</p>';
     return;
   }
-  favoriteSongs.innerHTML = favoriteList.map(song => `<button class="favorite-chip" type="button" data-title="${escapeHtml(song.title)}">♥ ${escapeHtml(song.title)} <span>${escapeHtml(song.artist)}</span></button>`).join('');
+  favoriteSongs.innerHTML = favoriteList.map(song => `<button class="favorite-chip" type="button" data-title="${escapeHtml(song.title)}">â™¥ ${escapeHtml(song.title)} <span>${escapeHtml(song.artist)}</span></button>`).join('');
   favoriteSongs.querySelectorAll('button').forEach(button => {
     button.addEventListener('click', () => {
       searchInput.value = button.dataset.title;
@@ -407,9 +480,10 @@ function renderSongs() {
     const sample = sampleForSong(song);
     return `<article class="song-card${highlightClass}">
       ${highlightClass ? '<p class="pick-label">Surprise pick</p>' : ''}
-      <div class="song-card-header"><div><h3>${escapeHtml(song.title)}</h3><p>${escapeHtml(song.artist)}</p></div><button class="favorite-button${favorites.has(key) ? ' is-favorite' : ''}" type="button" data-song-key="${escapeHtml(key)}" aria-label="Favorite ${escapeHtml(song.title)}">♥</button></div>
+      <div class="song-card-header"><div><h3>${escapeHtml(song.title)}</h3><p>${escapeHtml(song.artist)}</p></div><button class="favorite-button${favorites.has(key) ? ' is-favorite' : ''}" type="button" data-song-key="${escapeHtml(key)}" aria-label="Favorite ${escapeHtml(song.title)}">â™¥</button></div>
       ${sample ? `<audio controls preload="none" src="${escapeHtml(sample)}"></audio>` : ''}
       <div class="song-tags"><span>${escapeHtml(song.category)}</span><span>${escapeHtml(song.energy)}</span>${normalizeList(song.mood).map(tag => `<span>${escapeHtml(tag)}</span>`).join('')}${normalizeList(song.style).map(tag => `<span>${escapeHtml(tag)}</span>`).join('')}</div>
+      <button class="button secondary song-request-button" type="button" data-song-key="${escapeHtml(key)}">Send request to Djembe now</button>
     </article>`;
   }).join('') || '<p class="empty-state">No songs matched that search.</p>';
 }
@@ -439,6 +513,14 @@ async function loadSongs() {
 }
 
 document.addEventListener('click', event => {
+  const requestButton = event.target.closest('.song-request-button');
+  if (requestButton) {
+    const key = requestButton.dataset.songKey;
+    const song = songs.find(item => songKey(item) === key);
+    sendSongListRequest(song, requestButton);
+    return;
+  }
+
   const favoriteButton = event.target.closest('.favorite-button');
   if (favoriteButton) toggleFavorite(favoriteButton.dataset.songKey);
 });
