@@ -3,6 +3,8 @@ const moodFilter = document.getElementById('moodFilter');
 const tabs = document.getElementById('genreTabs');
 const results = document.getElementById('songResults');
 const count = document.getElementById('songCount');
+const choiceButtons = document.getElementById('choiceButtons');
+const activeChoice = document.getElementById('activeChoice');
 
 const preferredGenreOrder = [
   'All',
@@ -15,8 +17,22 @@ const preferredGenreOrder = [
   'New'
 ];
 
+const choicePresets = [
+  { label: 'Make Me Smile', emoji: '😊', terms: ['joy'], description: 'Songs with warmth, fun, and lift.' },
+  { label: 'Break My Heart', emoji: '💔', terms: ['breakup', 'intimacy'], description: 'Emotional songs with ache and vulnerability.' },
+  { label: 'Inspire Me', emoji: '✨', terms: ['empowerment', 'devotion'], description: 'Songs that feel hopeful, strong, or grounding.' },
+  { label: 'Tell Me a Story', emoji: '🎭', terms: ['theatrical', 'showtunes'], description: 'Broadway, standards, and dramatic vocal moments.' },
+  { label: 'Dance Energy', emoji: '🕺', terms: ['high', 'edm', 'joy'], description: 'Higher-energy songs for movement and momentum.' },
+  { label: 'Quiet & Intimate', emoji: '🕯️', terms: ['low', 'intimacy'], description: 'Softer songs for close, emotional moments.' },
+  { label: 'Nostalgia Trip', emoji: '🌙', terms: ['nostalgia'], description: 'Songs that feel familiar, reflective, or memory-filled.' },
+  { label: 'Holiday Cheer', emoji: '🎄', terms: ['festive', 'holiday'], description: 'Christmas and seasonal favorites.' },
+  { label: 'Surprise Me', emoji: '🎲', terms: [], random: true, description: 'A random spark from the whole catalog.' }
+];
+
 let songs = [];
 let activeGenre = 'All';
+let activePreset = null;
+let highlightedSongTitle = null;
 
 function parseCsv(text) {
   const rows = [];
@@ -91,6 +107,10 @@ function normalizeList(value) {
     .filter(Boolean);
 }
 
+function songText(song) {
+  return `${song.title} ${song.artist} ${song.category} ${song.mood} ${song.style} ${song.energy}`.toLowerCase();
+}
+
 function buildMoodOptions() {
   moodFilter.innerHTML = '<option value="">All moods and themes</option>';
   const moods = new Set();
@@ -105,6 +125,46 @@ function buildMoodOptions() {
   });
 }
 
+function buildChoiceButtons() {
+  choiceButtons.innerHTML = choicePresets.map(preset => `
+    <button class="choice-button" type="button" data-label="${escapeHtml(preset.label)}">
+      <span>${preset.emoji}</span>
+      <strong>${preset.label}</strong>
+      <small>${preset.description}</small>
+    </button>
+  `).join('');
+
+  choiceButtons.querySelectorAll('button').forEach(button => {
+    button.addEventListener('click', () => applyChoice(button.dataset.label));
+  });
+}
+
+function applyChoice(label) {
+  const preset = choicePresets.find(item => item.label === label);
+  if (!preset) return;
+
+  activePreset = preset;
+  activeGenre = 'All';
+  searchInput.value = '';
+  moodFilter.value = '';
+  highlightedSongTitle = null;
+
+  const matching = getFilteredSongs({ presetOnly: preset });
+  if (preset.random && matching.length) {
+    const pick = matching[Math.floor(Math.random() * matching.length)];
+    highlightedSongTitle = pick.title;
+  }
+
+  buildGenreTabs();
+  renderSongs();
+}
+
+function clearChoice() {
+  activePreset = null;
+  highlightedSongTitle = null;
+  renderSongs();
+}
+
 function buildGenreTabs() {
   const existingGenres = new Set(songs.map(song => song.category));
   const orderedGenres = preferredGenreOrder.filter(genre => genre === 'All' || existingGenres.has(genre));
@@ -116,7 +176,7 @@ function buildGenreTabs() {
   tabs.innerHTML = genres.map(genre => {
     const activeClass = genre === activeGenre ? ' active' : '';
     const genreCount = genre === 'All' ? songs.length : songs.filter(song => song.category === genre).length;
-    return `<button class="genre-tab${activeClass}" type="button" data-genre="${genre}">${genre} <span>${genreCount}</span></button>`;
+    return `<button class="genre-tab${activeClass}" type="button" data-genre="${escapeHtml(genre)}">${escapeHtml(genre)} <span>${genreCount}</span></button>`;
   }).join('');
 
   tabs.querySelectorAll('button').forEach(button => {
@@ -128,33 +188,67 @@ function buildGenreTabs() {
   });
 }
 
-function renderSongs() {
+function songMatchesPreset(song, preset) {
+  if (!preset) return true;
+  if (preset.random) return true;
+  const allText = songText(song);
+  return preset.terms.some(term => allText.includes(term));
+}
+
+function getFilteredSongs(options = {}) {
+  const preset = options.presetOnly || activePreset;
   const query = searchInput.value.trim().toLowerCase();
   const mood = moodFilter.value;
 
-  const filtered = songs.filter(song => {
+  return songs.filter(song => {
     const titleArtist = `${song.title} ${song.artist}`.toLowerCase();
-    const allText = `${song.title} ${song.artist} ${song.category} ${song.mood} ${song.style} ${song.energy}`.toLowerCase();
+    const allText = songText(song);
     const genreMatch = activeGenre === 'All' || song.category === activeGenre;
     const queryMatch = !query || titleArtist.includes(query) || allText.includes(query);
     const moodMatch = !mood || allText.includes(mood);
-    return genreMatch && queryMatch && moodMatch;
+    const presetMatch = songMatchesPreset(song, preset);
+    return genreMatch && queryMatch && moodMatch && presetMatch;
   });
+}
 
+function renderActiveChoice(filteredCount) {
+  if (!activePreset) {
+    activeChoice.hidden = true;
+    activeChoice.innerHTML = '';
+    return;
+  }
+
+  const surprise = highlightedSongTitle ? `<strong>Surprise pick:</strong> ${escapeHtml(highlightedSongTitle)}.` : '';
+  activeChoice.hidden = false;
+  activeChoice.innerHTML = `
+    <span>${activePreset.emoji}</span>
+    <div><strong>${escapeHtml(activePreset.label)}</strong><br>${escapeHtml(activePreset.description)} ${surprise}</div>
+    <button type="button" id="clearChoice">Clear</button>
+  `;
+  document.getElementById('clearChoice').addEventListener('click', clearChoice);
+}
+
+function renderSongs() {
+  const filtered = getFilteredSongs();
   count.textContent = `${filtered.length} of ${songs.length} songs shown.`;
+  renderActiveChoice(filtered.length);
 
-  results.innerHTML = filtered.map(song => `
-    <article class="song-card">
-      <h3>${escapeHtml(song.title)}</h3>
-      <p>${escapeHtml(song.artist)}</p>
-      <div class="song-tags">
-        <span>${escapeHtml(song.category)}</span>
-        <span>${escapeHtml(song.energy)}</span>
-        ${normalizeList(song.mood).map(tag => `<span>${escapeHtml(tag)}</span>`).join('')}
-        ${normalizeList(song.style).map(tag => `<span>${escapeHtml(tag)}</span>`).join('')}
-      </div>
-    </article>
-  `).join('') || '<p class="empty-state">No songs matched that search.</p>';
+  results.innerHTML = filtered.map(song => {
+    const highlightClass = song.title === highlightedSongTitle ? ' featured-pick' : '';
+    return `
+      <article class="song-card${highlightClass}">
+        ${highlightClass ? '<p class="pick-label">Surprise pick</p>' : ''}
+        <h3>${escapeHtml(song.title)}</h3>
+        <p>${escapeHtml(song.artist)}</p>
+        <div class="song-tags">
+          <span>${escapeHtml(song.category)}</span>
+          <span>${escapeHtml(song.energy)}</span>
+          ${normalizeList(song.mood).map(tag => `<span>${escapeHtml(tag)}</span>`).join('')}
+          ${normalizeList(song.style).map(tag => `<span>${escapeHtml(tag)}</span>`).join('')}
+        </div>
+      </article>
+    `;
+  }).join('') || '<p class="empty-state">No songs matched that search.</p>';
 }
 
 function escapeHtml(value) {
@@ -173,6 +267,7 @@ async function loadSongs() {
     const csvText = await response.text();
     songs = csvRowsToSongs(parseCsv(csvText));
     buildMoodOptions();
+    buildChoiceButtons();
     buildGenreTabs();
     renderSongs();
   } catch (error) {
@@ -182,6 +277,12 @@ async function loadSongs() {
   }
 }
 
-searchInput.addEventListener('input', renderSongs);
-moodFilter.addEventListener('change', renderSongs);
+searchInput.addEventListener('input', () => {
+  highlightedSongTitle = null;
+  renderSongs();
+});
+moodFilter.addEventListener('change', () => {
+  highlightedSongTitle = null;
+  renderSongs();
+});
 loadSongs();

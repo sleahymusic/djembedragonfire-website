@@ -23,10 +23,16 @@
     <section class="page-hero">
       <p class="eyebrow">Browse the music</p>
       <h1>Song List</h1>
-      <p class="lead">Search the catalog by title, artist, genre, mood, or theme. Genre tabs are arranged to match the Master Song List / SL notecard style.</p>
+      <p class="lead">Search the catalog by title, artist, genre, mood, or theme. Or use Help Me Choose when you know how you want to feel.</p>
     </section>
 
     <section class="section song-browser">
+      <div class="choice-panel">
+        <p class="eyebrow">Help Me Choose</p>
+        <h2>What kind of song are you hoping for?</h2>
+        <div id="choiceButtons" class="choice-buttons" aria-label="Song mood shortcuts"></div>
+      </div>
+
       <div class="browser-toolbar">
         <div>
           <label class="search-label" for="songSearch">Main search</label>
@@ -40,6 +46,7 @@
         </div>
       </div>
 
+      <div id="activeChoice" class="active-choice" hidden></div>
       <div id="genreTabs" class="genre-tabs" aria-label="Song genres"></div>
       <div class="song-meta"><span id="songCount"></span></div>
       <div id="songResults" class="song-results" aria-live="polite"></div>
