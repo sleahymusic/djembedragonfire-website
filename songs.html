@@ -23,7 +23,7 @@
     <section class="page-hero">
       <p class="eyebrow">Browse the music</p>
       <h1>Song List</h1>
-      <p class="lead">Search the catalog by title, artist, genre, mood, or theme. Or use Help Me Choose when you know how you want to feel.</p>
+      <p class="lead">Search the catalog by title, artist, genre, mood, or theme. Or let the request guide help you choose.</p>
     </section>
 
     <section class="section song-browser">
@@ -31,6 +31,8 @@
         <p class="eyebrow">Song of the Week</p>
         <div id="songOfWeek" class="song-of-week"></div>
       </div>
+
+      <div id="requestGuide" class="choice-panel request-guide"></div>
 
       <div class="choice-panel">
         <p class="eyebrow">Help Me Choose</p>
@@ -68,7 +70,6 @@
   </footer>
 
   <script src="songs.js"></script>
-  <script src="songs-enhancements.js"></script>
   <script>
     document.getElementById('year').textContent = new Date().getFullYear();
   </script>
