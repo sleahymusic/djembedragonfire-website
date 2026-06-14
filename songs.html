@@ -7,6 +7,7 @@
   <meta name="description" content="Browse Djembe Dragonfire's searchable Second Life performance song list by song, artist, genre, mood, and theme." />
   <link rel="stylesheet" href="styles.css" />
   <link rel="stylesheet" href="contemporary.css" />
+  <link rel="stylesheet" href="song-host.css" />
 </head>
 <body>
   <div class="stage-lights" aria-hidden="true">
@@ -30,7 +31,7 @@
     <section class="page-hero">
       <p class="eyebrow">Browse the music</p>
       <h1>Song List</h1>
-      <p class="lead">Search the catalog by title, artist, genre, mood, or theme. Use Help Me Choose, then let the song host narrow it down to one request.</p>
+      <p class="lead">Search the catalog by title, artist, genre, mood, or theme. Use Help Me Choose, then let the Song Host narrow it down to one request.</p>
     </section>
 
     <section class="section song-browser">
@@ -46,8 +47,9 @@
       </div>
 
       <div id="songHost" class="choice-panel song-host-panel">
-        <p class="eyebrow">Song Host</p>
-        <h2>Want help choosing one request?</h2>
+        <p class="eyebrow">Ollama Song Host</p>
+        <h2>Talk through your request.</h2>
+        <p class="small-note">Tell the host what mood, energy, or style you want. It will help you narrow the catalog to one song before offering to send the request.</p>
         <div id="hostMessages" class="host-messages" aria-live="polite"></div>
         <div id="hostActions" class="host-actions"></div>
       </div>

@@ -1,12 +1,18 @@
 const hostMessages = document.getElementById('hostMessages');
 const hostActions = document.getElementById('hostActions');
 
+const SONG_HOST_ENDPOINT = 'https://facedesk-ai-brain.sleahymusic.workers.dev/website/song-host';
+const SONG_REQUEST_ENDPOINT = 'https://facedesk-ai-brain.sleahymusic.workers.dev/website/request';
+
 const hostState = {
   step: 0,
   terms: [],
   songs: [],
   recommendation: null,
-  guestName: ''
+  guestName: '',
+  history: [],
+  sessionId: `website-${Date.now()}-${Math.random().toString(36).slice(2)}`,
+  ollamaAvailable: true
 };
 
 const hostSteps = [
@@ -39,20 +45,22 @@ const hostSteps = [
   }
 ];
 
-function hostSay(text) {
+function hostSay(text, save = true) {
   const bubble = document.createElement('div');
   bubble.className = 'host-bubble host-bubble-ai';
   bubble.textContent = text;
   hostMessages.appendChild(bubble);
   hostMessages.scrollTop = hostMessages.scrollHeight;
+  if (save) hostState.history.push({ role: 'host', content: text });
 }
 
-function guestSay(text) {
+function guestSay(text, save = true) {
   const bubble = document.createElement('div');
   bubble.className = 'host-bubble host-bubble-guest';
   bubble.textContent = text;
   hostMessages.appendChild(bubble);
   hostMessages.scrollTop = hostMessages.scrollHeight;
+  if (save) hostState.history.push({ role: 'visitor', content: text });
 }
 
 function normalizeHostText(value) {
@@ -111,14 +119,130 @@ function hostRowsToSongs(rows) {
   })).filter(song => song.title && song.artist && song.title !== 'GATEWAY TEST SONG');
 }
 
-function rankedHostSongs() {
-  const terms = hostState.terms.map(normalizeHostText).filter(Boolean);
+function rankedHostSongs(extraTerms = []) {
+  const terms = [...hostState.terms, ...extraTerms].map(normalizeHostText).filter(Boolean);
   const ranked = hostState.songs.map(song => {
     const text = hostSongText(song);
     const score = terms.length ? terms.reduce((sum, term) => sum + (text.includes(term) ? 1 : 0), 0) : Math.random();
     return { ...song, score };
   }).filter(song => song.score > 0).sort((a, b) => b.score - a.score || a.title.localeCompare(b.title));
   return ranked.length ? ranked : [...hostState.songs].sort(() => Math.random() - 0.5);
+}
+
+function extractTermsFromText(text) {
+  const value = normalizeHostText(text);
+  const terms = [];
+  const map = [
+    ['happy', 'joy'], ['smile', 'joy'], ['fun', 'joy'], ['dance', 'high'], ['upbeat', 'high'],
+    ['sad', 'breakup'], ['heartbreak', 'breakup'], ['emotional', 'intimacy'], ['soft', 'low'],
+    ['quiet', 'low'], ['powerful', 'empowerment'], ['inspire', 'empowerment'], ['broadway', 'showtunes'],
+    ['theatre', 'theatrical'], ['theater', 'theatrical'], ['classical', 'standards'], ['country', 'country'],
+    ['christmas', 'festive'], ['holiday', 'holiday'], ['disney', 'disney'], ['nostalgic', 'nostalgia']
+  ];
+  map.forEach(([needle, tag]) => {
+    if (value.includes(needle)) terms.push(tag);
+  });
+  return terms;
+}
+
+function candidateSongsForOllama(message = '') {
+  const terms = extractTermsFromText(message);
+  return rankedHostSongs(terms).slice(0, 35).map(song => ({
+    title: song.title,
+    artist: song.artist,
+    category: song.category,
+    mood: song.mood,
+    style: song.style,
+    energy: song.energy
+  }));
+}
+
+function findSongMention(text) {
+  const lower = normalizeHostText(text);
+  return hostState.songs.find(song => lower.includes(normalizeHostText(song.title))) || null;
+}
+
+function setRecommendation(song) {
+  if (!song) return;
+  hostState.recommendation = song;
+}
+
+async function askOllama(message) {
+  const candidates = candidateSongsForOllama(message);
+  const response = await fetch(SONG_HOST_ENDPOINT, {
+    method: 'POST',
+    headers: { 'content-type': 'application/json' },
+    body: JSON.stringify({
+      sessionId: hostState.sessionId,
+      visitorName: hostState.guestName || 'Website visitor',
+      message,
+      history: hostState.history.slice(-8),
+      candidates,
+      currentPick: hostState.recommendation
+    })
+  });
+  const data = await response.json();
+  if (!response.ok || !data.ok) throw new Error(data.error || 'Song host bridge error');
+  return data.reply || '';
+}
+
+async function handleFreeTextSubmit() {
+  const input = hostActions.querySelector('.host-chat-input');
+  const message = input.value.trim();
+  if (!message) return;
+  input.value = '';
+  guestSay(message);
+
+  const mentioned = findSongMention(message);
+  if (mentioned) setRecommendation(mentioned);
+
+  hostActions.classList.add('is-thinking');
+  try {
+    const reply = await askOllama(message);
+    hostSay(reply);
+    const replyMention = findSongMention(reply);
+    if (replyMention) setRecommendation(replyMention);
+    renderConversationalActions();
+  } catch (error) {
+    console.error(error);
+    hostState.ollamaAvailable = false;
+    const [pick] = rankedHostSongs(extractTermsFromText(message));
+    setRecommendation(pick);
+    hostSay(`I’m having trouble reaching the live Ollama bridge, so I’ll use the local catalog for now. I’d try “${pick.title}” by ${pick.artist}. Want that as your request?`);
+    renderConversationalActions();
+  } finally {
+    hostActions.classList.remove('is-thinking');
+  }
+}
+
+function renderConversationalActions() {
+  hostActions.innerHTML = `
+    <div class="host-input-row">
+      <input class="search-input host-chat-input" type="text" placeholder="Tell me what you want to feel, or ask for a song idea..." />
+      <button class="button host-chat-send" type="button">Ask</button>
+    </div>
+    <div class="host-action-row">
+      <button class="button host-confirm" type="button" ${hostState.recommendation ? '' : 'disabled'}>Use current pick</button>
+      <button class="button secondary host-guided" type="button">Guide me with buttons</button>
+      <button class="button secondary host-again" type="button">Start over</button>
+    </div>
+  `;
+  hostActions.querySelector('.host-chat-send').addEventListener('click', handleFreeTextSubmit);
+  hostActions.querySelector('.host-chat-input').addEventListener('keydown', event => {
+    if (event.key === 'Enter') handleFreeTextSubmit();
+  });
+  hostActions.querySelector('.host-confirm').addEventListener('click', () => {
+    if (hostState.recommendation) askGuestName();
+  });
+  hostActions.querySelector('.host-guided').addEventListener('click', startGuidedFlow);
+  hostActions.querySelector('.host-again').addEventListener('click', resetHost);
+}
+
+function startGuidedFlow() {
+  hostState.step = 0;
+  hostState.terms = [];
+  guestSay('Guide me with buttons');
+  renderHostActions();
 }
 
 function renderHostActions() {
@@ -147,13 +271,15 @@ function renderHostActions() {
 
 function confirmRecommendation() {
   const [pick] = rankedHostSongs();
-  hostState.recommendation = pick;
+  setRecommendation(pick);
   hostSay(`I would request “${pick.title}” by ${pick.artist}. That feels like the strongest fit.`);
   hostActions.innerHTML = `
     <button class="button host-confirm" type="button">Yes, this is my request</button>
+    <button class="button secondary host-chat-more" type="button">Talk it through more</button>
     <button class="button secondary host-again" type="button">Try another path</button>
   `;
   hostActions.querySelector('.host-confirm').addEventListener('click', askGuestName);
+  hostActions.querySelector('.host-chat-more').addEventListener('click', renderConversationalActions);
   hostActions.querySelector('.host-again').addEventListener('click', resetHost);
 }
 
@@ -162,14 +288,14 @@ function askGuestName() {
   hostSay('Great. What name should Djembe see with the request?');
   hostActions.innerHTML = `
     <input class="search-input host-name-input" type="text" placeholder="Your SL name or display name" />
-    <button class="button host-send" type="button">Prepare request</button>
+    <button class="button host-send" type="button">Send request to Djembe</button>
     <button class="button secondary host-again" type="button">Cancel</button>
   `;
-  hostActions.querySelector('.host-send').addEventListener('click', prepareRequest);
+  hostActions.querySelector('.host-send').addEventListener('click', sendRequestToBridge);
   hostActions.querySelector('.host-again').addEventListener('click', resetHost);
 }
 
-function prepareRequest() {
+async function sendRequestToBridge() {
   const input = hostActions.querySelector('.host-name-input');
   hostState.guestName = input.value.trim() || 'Website guest';
   const song = hostState.recommendation;
@@ -177,10 +303,25 @@ function prepareRequest() {
     guestName: hostState.guestName,
     songTitle: song.title,
     artist: song.artist,
-    source: 'DjembeDragonfire.com song host'
+    note: 'Chosen through DjembeDragonfire.com Song Host'
   };
   guestSay(hostState.guestName);
-  hostSay(`Request ready: ${payload.guestName} would like “${payload.songTitle}” by ${payload.artist}. The bot bridge connection will send this to Djembe once the endpoint is connected.`);
+  hostActions.innerHTML = '<p class="small-note">Sending request to the bridge...</p>';
+
+  try {
+    const response = await fetch(SONG_REQUEST_ENDPOINT, {
+      method: 'POST',
+      headers: { 'content-type': 'application/json' },
+      body: JSON.stringify(payload)
+    });
+    const data = await response.json();
+    if (!response.ok || !data.ok) throw new Error(data.error || 'Request bridge error');
+    hostSay(data.reply || `Request sent: ${payload.guestName} would like “${payload.songTitle}” by ${payload.artist}.`);
+  } catch (error) {
+    console.error(error);
+    hostSay(`The live request bridge is not fully connected yet, but the request is ready: ${payload.guestName} would like “${payload.songTitle}” by ${payload.artist}.`);
+  }
+
   hostActions.innerHTML = `
     <button class="button host-copy" type="button">Copy request text</button>
     <button class="button secondary host-again" type="button">Start over</button>
@@ -196,9 +337,10 @@ function resetHost() {
   hostState.step = 0;
   hostState.terms = [];
   hostState.recommendation = null;
+  hostState.history = [];
   hostMessages.innerHTML = '';
-  hostSay('Hi, I’m the Djembe song host. I’ll help you narrow the catalog to one request.');
-  renderHostActions();
+  hostSay('Hi, I’m the Djembe song host. Tell me what kind of mood, energy, or style you want, and I’ll help narrow the catalog to one request.');
+  renderConversationalActions();
 }
 
 async function initSongHost() {
