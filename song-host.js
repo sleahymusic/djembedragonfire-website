@@ -3,6 +3,8 @@ const hostActions = document.getElementById('hostActions');
 
 const SONG_HOST_ENDPOINT = 'https://facedesk-ai-brain.sleahymusic.workers.dev/website/song-host';
 const SONG_REQUEST_ENDPOINT = 'https://facedesk-ai-brain.sleahymusic.workers.dev/website/request';
+const OLLAMA_TIMEOUT_MS = 12000;
+const OLLAMA_CANDIDATE_LIMIT = 10;
 
 const hostState = {
   step: 0,
@@ -65,6 +67,10 @@ function guestSay(text, save = true) {
 
 function normalizeHostText(value) {
   return String(value || '').toLowerCase();
+}
+
+function compact(value, max = 80) {
+  return String(value || '').replace(/\s+/g, ' ').trim().slice(0, max);
 }
 
 function hostSongText(song) {
@@ -147,13 +153,12 @@ function extractTermsFromText(text) {
 
 function candidateSongsForOllama(message = '') {
   const terms = extractTermsFromText(message);
-  return rankedHostSongs(terms).slice(0, 35).map(song => ({
-    title: song.title,
-    artist: song.artist,
-    category: song.category,
-    mood: song.mood,
-    style: song.style,
-    energy: song.energy
+  return rankedHostSongs(terms).slice(0, OLLAMA_CANDIDATE_LIMIT).map(song => ({
+    title: compact(song.title, 70),
+    artist: compact(song.artist, 70),
+    category: compact(song.category, 50),
+    mood: compact(song.mood, 90),
+    energy: compact(song.energy, 30)
   }));
 }
 
@@ -167,20 +172,33 @@ function setRecommendation(song) {
   hostState.recommendation = song;
 }
 
+async function fetchWithTimeout(url, options, timeoutMs) {
+  const controller = new AbortController();
+  const timeout = window.setTimeout(() => controller.abort(), timeoutMs);
+  try {
+    return await fetch(url, { ...options, signal: controller.signal });
+  } finally {
+    window.clearTimeout(timeout);
+  }
+}
+
 async function askOllama(message) {
   const candidates = candidateSongsForOllama(message);
-  const response = await fetch(SONG_HOST_ENDPOINT, {
+  const response = await fetchWithTimeout(SONG_HOST_ENDPOINT, {
     method: 'POST',
     headers: { 'content-type': 'application/json' },
     body: JSON.stringify({
       sessionId: hostState.sessionId,
       visitorName: hostState.guestName || 'Website visitor',
-      message,
-      history: hostState.history.slice(-8),
+      message: compact(message, 320),
+      history: hostState.history.slice(-3).map(turn => ({ role: turn.role, content: compact(turn.content, 220) })),
       candidates,
-      currentPick: hostState.recommendation
+      currentPick: hostState.recommendation ? {
+        title: hostState.recommendation.title,
+        artist: hostState.recommendation.artist
+      } : null
     })
-  });
+  }, OLLAMA_TIMEOUT_MS);
   const data = await response.json();
   if (!response.ok || !data.ok) throw new Error(data.error || 'Song host bridge error');
   return data.reply || '';
@@ -208,7 +226,7 @@ async function handleFreeTextSubmit() {
     hostState.ollamaAvailable = false;
     const [pick] = rankedHostSongs(extractTermsFromText(message));
     setRecommendation(pick);
-    hostSay(`I’m having trouble reaching the live Ollama bridge, so I’ll use the local catalog for now. I’d try “${pick.title}” by ${pick.artist}. Want that as your request?`);
+    hostSay(`The live Ollama host is taking too long, so I’ll keep the show moving with the local catalog. I’d try “${pick.title}” by ${pick.artist}. Want that as your request?`);
     renderConversationalActions();
   } finally {
     hostActions.classList.remove('is-thinking');
@@ -309,17 +327,17 @@ async function sendRequestToBridge() {
   hostActions.innerHTML = '<p class="small-note">Sending request to the bridge...</p>';
 
   try {
-    const response = await fetch(SONG_REQUEST_ENDPOINT, {
+    const response = await fetchWithTimeout(SONG_REQUEST_ENDPOINT, {
       method: 'POST',
       headers: { 'content-type': 'application/json' },
       body: JSON.stringify(payload)
-    });
+    }, OLLAMA_TIMEOUT_MS);
     const data = await response.json();
     if (!response.ok || !data.ok) throw new Error(data.error || 'Request bridge error');
     hostSay(data.reply || `Request sent: ${payload.guestName} would like “${payload.songTitle}” by ${payload.artist}.`);
   } catch (error) {
     console.error(error);
-    hostSay(`The live request bridge is not fully connected yet, but the request is ready: ${payload.guestName} would like “${payload.songTitle}” by ${payload.artist}.`);
+    hostSay(`The live request bridge did not answer quickly, but the request is ready: ${payload.guestName} would like “${payload.songTitle}” by ${payload.artist}.`);
   }
 
   hostActions.innerHTML = `
