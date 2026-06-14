@@ -1,5 +1,10 @@
+function setAudioPlayingState() {
+  const anyPlaying = [...document.querySelectorAll('audio')].some(audio => !audio.paused && !audio.ended);
+  document.body.classList.toggle('audio-playing', anyPlaying);
+}
+
 document.addEventListener('click', event => {
-  const button = event.target.closest('.burst-button, .button, .choice-button, .genre-tab, .guide-answer, .guide-result');
+  const button = event.target.closest('.burst-button, .button, .choice-button, .genre-tab, .guide-answer, .guide-result, .host-answer, .host-confirm, .host-again, .host-send, .host-copy');
   if (!button) return;
 
   const rect = button.getBoundingClientRect();
@@ -34,3 +39,17 @@ document.addEventListener('click', event => {
     window.setTimeout(() => dot.remove(), 820);
   }
 });
+
+document.addEventListener('play', event => {
+  if (event.target.matches('audio')) setAudioPlayingState();
+}, true);
+
+document.addEventListener('pause', event => {
+  if (event.target.matches('audio')) setAudioPlayingState();
+}, true);
+
+document.addEventListener('ended', event => {
+  if (event.target.matches('audio')) setAudioPlayingState();
+}, true);
+
+window.addEventListener('load', setAudioPlayingState);
