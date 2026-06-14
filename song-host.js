@@ -3,7 +3,7 @@ const hostActions = document.getElementById('hostActions');
 
 const SONG_HOST_ENDPOINT = 'https://djembe-music-brain.sleahymusic.workers.dev/website/song-host';
 const SONG_REQUEST_ENDPOINT = 'https://djembe-music-brain.sleahymusic.workers.dev/website/request';
-const OLLAMA_TIMEOUT_MS = 12000;
+const OLLAMA_TIMEOUT_MS = 45000;
 const OLLAMA_CANDIDATE_LIMIT = 10;
 
 const hostState = {
@@ -241,9 +241,7 @@ async function handleFreeTextSubmit() {
   } catch (error) {
     console.error(error);
     hostState.ollamaAvailable = false;
-    const [pick] = rankedHostSongs(extractTermsFromText(message));
-    setRecommendation(pick);
-    hostSay(`The live Djembe host is taking too long, so IÃ¢â‚¬â„¢ll keep the show moving with the local catalog. IÃ¢â‚¬â„¢d try Ã¢â‚¬Å“${pick.title}Ã¢â‚¬Â by ${pick.artist}. Want that as your request?`);
+    hostSay("The live Djembe host did not finish that thought. Add one more mood, style, or energy clue and I'll ask Ollama again.");
     renderConversationalActions();
   } finally {
     hostActions.classList.remove('is-thinking');
@@ -304,18 +302,28 @@ function renderHostActions() {
   });
 }
 
-function confirmRecommendation() {
-  const [pick] = rankedHostSongs();
-  setRecommendation(pick);
-  hostSay(`I would request Ã¢â‚¬Å“${pick.title}Ã¢â‚¬Â by ${pick.artist}. That feels like the strongest fit.`);
-  hostActions.innerHTML = `
-    <button class="button host-confirm" type="button">Yes, this is my request</button>
-    <button class="button secondary host-chat-more" type="button">Talk it through more</button>
-    <button class="button secondary host-again" type="button">Try another path</button>
-  `;
-  hostActions.querySelector('.host-confirm').addEventListener('click', askGuestName);
-  hostActions.querySelector('.host-chat-more').addEventListener('click', renderConversationalActions);
-  hostActions.querySelector('.host-again').addEventListener('click', resetHost);
+async function confirmRecommendation() {
+  const guidedTerms = hostState.terms.join(', ') || 'surprise me';
+  hostActions.innerHTML = '<p class="small-note">Asking the live Djembe host...</p>';
+  try {
+    const result = await askOllama(`Guided request terms: ${guidedTerms}. Please choose a fitting catalog request or ask one follow-up question.`);
+    const reply = result.reply || '';
+    hostSay(reply || 'The live Djembe host answered without display text. Try adding one more mood or style detail.');
+    const selectedFromPayload = result.selected_song
+      ? findSongByTitleArtist(result.selected_song.title, result.selected_song.artist)
+      : null;
+    if (selectedFromPayload) {
+      setRecommendation(selectedFromPayload);
+    } else {
+      const replyMention = findSongMention(reply);
+      if (replyMention) setRecommendation(replyMention);
+    }
+    renderConversationalActions();
+  } catch (error) {
+    console.error(error);
+    hostSay("The live Djembe host did not finish the guided choice. Tell me one more detail in your own words and I'll ask again.");
+    renderConversationalActions();
+  }
 }
 
 function askGuestName() {
@@ -351,10 +359,10 @@ async function sendRequestToBridge() {
     }, OLLAMA_TIMEOUT_MS);
     const data = await response.json();
     if (!response.ok || !data.ok) throw new Error(data.error || 'Request bridge error');
-    hostSay(data.reply || `Request sent: ${payload.guestName} would like Ã¢â‚¬Å“${payload.songTitle}Ã¢â‚¬Â by ${payload.artist}.`);
+    hostSay(data.reply || `Request sent: ${payload.guestName} would like "${payload.songTitle}" by ${payload.artist}.`);
   } catch (error) {
     console.error(error);
-    hostSay(`The live request bridge did not answer quickly, but the request is ready: ${payload.guestName} would like Ã¢â‚¬Å“${payload.songTitle}Ã¢â‚¬Â by ${payload.artist}.`);
+    hostSay(`The live request bridge did not answer quickly, but the request is ready: ${payload.guestName} would like "${payload.songTitle}" by ${payload.artist}.`);
   }
 
   hostActions.innerHTML = `
@@ -374,7 +382,7 @@ function resetHost() {
   hostState.recommendation = null;
   hostState.history = [];
   hostMessages.innerHTML = '';
-  hostSay('Hi, IÃ¢â‚¬â„¢m the Djembe song host. Tell me what kind of mood, energy, or style you want, and IÃ¢â‚¬â„¢ll help narrow the catalog to one request.');
+  hostSay("Hi, I'm the Djembe song host. Tell me what kind of mood, energy, or style you want, and I'll help narrow the catalog to one request.");
   renderConversationalActions();
 }
 
