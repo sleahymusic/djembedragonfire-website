@@ -3,7 +3,7 @@ const hostActions = document.getElementById('hostActions');
 
 const SONG_HOST_ENDPOINT = 'https://djembe-music-brain.sleahymusic.workers.dev/website/song-host';
 const SONG_REQUEST_ENDPOINT = 'https://djembe-music-brain.sleahymusic.workers.dev/website/request';
-const OLLAMA_TIMEOUT_MS = 45000;
+const OLLAMA_TIMEOUT_MS = 180000;
 const OLLAMA_CANDIDATE_LIMIT = 10;
 
 const hostState = {
