@@ -47,6 +47,44 @@ const hostSteps = [
   }
 ];
 
+function setupFloatingSongHost() {
+  const panel = document.getElementById('songHost');
+  if (!panel || panel.dataset.floatingReady === 'true') return;
+
+  panel.dataset.floatingReady = 'true';
+  panel.classList.add('song-host-floating', 'is-collapsed');
+
+  const header = document.createElement('button');
+  header.className = 'song-host-dock-header';
+  header.type = 'button';
+  header.setAttribute('aria-expanded', 'false');
+  header.innerHTML = `
+    <span class="song-host-dock-light" aria-hidden="true"></span>
+    <span class="song-host-dock-title"><small>Ollama Song Host</small><strong>Ask for a song</strong></span>
+    <span class="song-host-dock-state" aria-hidden="true">+</span>
+  `;
+
+  panel.insertBefore(header, panel.firstChild);
+
+  function setOpen(open) {
+    panel.classList.toggle('is-collapsed', !open);
+    panel.classList.toggle('is-open', open);
+    header.setAttribute('aria-expanded', open ? 'true' : 'false');
+    const state = header.querySelector('.song-host-dock-state');
+    if (state) state.textContent = open ? '-' : '+';
+    if (open) {
+      window.setTimeout(() => panel.querySelector('.host-chat-input')?.focus(), 80);
+    }
+  }
+
+  header.addEventListener('click', () => {
+    setOpen(panel.classList.contains('is-collapsed'));
+  });
+
+  panel.addEventListener('keydown', event => {
+    if (event.key === 'Escape') setOpen(false);
+  });
+}
 function hostSay(text, save = true) {
   const bubble = document.createElement('div');
   bubble.className = 'host-bubble host-bubble-ai';
@@ -388,15 +426,20 @@ function resetHost() {
 
 async function initSongHost() {
   if (!hostMessages || !hostActions) return;
+
+  setupFloatingSongHost();
+  resetHost();
+
   try {
     const response = await fetch('data/songs.csv', { cache: 'no-store' });
     const csvText = await response.text();
     hostState.songs = hostRowsToSongs(hostParseCsv(csvText));
-    resetHost();
   } catch (error) {
     console.error(error);
-    hostSay('I could not load the song catalog yet. Try the main search for now.');
+    hostSay('I could not load the local song catalog yet, but you can still type a request and I will ask the live Djembe host.');
+    renderConversationalActions();
   }
 }
+
 
 initSongHost();
