@@ -5,6 +5,8 @@ const results = document.getElementById('songResults');
 const count = document.getElementById('songCount');
 const choiceButtons = document.getElementById('choiceButtons');
 const activeChoice = document.getElementById('activeChoice');
+const favoriteSongs = document.getElementById('favoriteSongs');
+const songOfWeek = document.getElementById('songOfWeek');
 
 const preferredGenreOrder = [
   'All',
@@ -29,6 +31,20 @@ const choicePresets = [
   { label: 'Surprise Me', emoji: '🎲', terms: [], random: true, description: 'A random spark from the whole catalog.' }
 ];
 
+const weeklyPick = {
+  title: "Beggin'",
+  artist: 'Måneskin',
+  note: 'A high-energy performance song that demands commitment, control, and fire.',
+  sample: ''
+};
+
+const audioSamples = {
+  // Add sample filenames here later, for example:
+  // "Beggin'|Måneskin": "audio/beggin-sample.mp3"
+};
+
+const favoritesKey = 'djembeDragonfireFavoriteSongs';
+let favorites = new Set(JSON.parse(localStorage.getItem(favoritesKey) || '[]'));
 let songs = [];
 let activeGenre = 'All';
 let activePreset = null;
@@ -100,6 +116,10 @@ function csvRowsToSongs(rows) {
     .filter(song => song.title !== 'GATEWAY TEST SONG');
 }
 
+function songKey(song) {
+  return `${song.title}|${song.artist}`;
+}
+
 function normalizeList(value) {
   return String(value || '')
     .split(',')
@@ -137,6 +157,20 @@ function buildChoiceButtons() {
   choiceButtons.querySelectorAll('button').forEach(button => {
     button.addEventListener('click', () => applyChoice(button.dataset.label));
   });
+}
+
+function renderSongOfWeek() {
+  const found = songs.find(song => song.title === weeklyPick.title && song.artist === weeklyPick.artist) || songs.find(song => song.title === weeklyPick.title);
+  const sample = weeklyPick.sample || (found ? audioSamples[songKey(found)] : '');
+  songOfWeek.innerHTML = `
+    <div>
+      <h2>${escapeHtml(weeklyPick.title)}</h2>
+      <p>${escapeHtml(weeklyPick.artist)}</p>
+      <p>${escapeHtml(weeklyPick.note)}</p>
+      ${sample ? `<audio controls preload="none" src="${escapeHtml(sample)}"></audio>` : '<p class="small-note">Audio sample coming soon.</p>'}
+    </div>
+    <button class="favorite-button${found && favorites.has(songKey(found)) ? ' is-favorite' : ''}" type="button" data-song-key="${found ? escapeHtml(songKey(found)) : ''}">♥ Favorite</button>
+  `;
 }
 
 function applyChoice(label) {
@@ -211,7 +245,7 @@ function getFilteredSongs(options = {}) {
   });
 }
 
-function renderActiveChoice(filteredCount) {
+function renderActiveChoice() {
   if (!activePreset) {
     activeChoice.hidden = true;
     activeChoice.innerHTML = '';
@@ -228,18 +262,64 @@ function renderActiveChoice(filteredCount) {
   document.getElementById('clearChoice').addEventListener('click', clearChoice);
 }
 
+function toggleFavorite(key) {
+  if (!key) return;
+  if (favorites.has(key)) {
+    favorites.delete(key);
+  } else {
+    favorites.add(key);
+  }
+  localStorage.setItem(favoritesKey, JSON.stringify([...favorites]));
+  renderFavorites();
+  renderSongOfWeek();
+  renderSongs();
+}
+
+function renderFavorites() {
+  const favoriteList = songs.filter(song => favorites.has(songKey(song)));
+  if (!favoriteList.length) {
+    favoriteSongs.innerHTML = '<p class="small-note">Tap the heart on any song to save it here on this device.</p>';
+    return;
+  }
+
+  favoriteSongs.innerHTML = favoriteList.map(song => `
+    <button class="favorite-chip" type="button" data-title="${escapeHtml(song.title)}">
+      ♥ ${escapeHtml(song.title)} <span>${escapeHtml(song.artist)}</span>
+    </button>
+  `).join('');
+
+  favoriteSongs.querySelectorAll('button').forEach(button => {
+    button.addEventListener('click', () => {
+      searchInput.value = button.dataset.title;
+      activeGenre = 'All';
+      activePreset = null;
+      highlightedSongTitle = null;
+      buildGenreTabs();
+      renderSongs();
+    });
+  });
+}
+
 function renderSongs() {
   const filtered = getFilteredSongs();
   count.textContent = `${filtered.length} of ${songs.length} songs shown.`;
-  renderActiveChoice(filtered.length);
+  renderActiveChoice();
 
   results.innerHTML = filtered.map(song => {
     const highlightClass = song.title === highlightedSongTitle ? ' featured-pick' : '';
+    const key = songKey(song);
+    const sample = audioSamples[key];
     return `
       <article class="song-card${highlightClass}">
         ${highlightClass ? '<p class="pick-label">Surprise pick</p>' : ''}
-        <h3>${escapeHtml(song.title)}</h3>
-        <p>${escapeHtml(song.artist)}</p>
+        <div class="song-card-header">
+          <div>
+            <h3>${escapeHtml(song.title)}</h3>
+            <p>${escapeHtml(song.artist)}</p>
+          </div>
+          <button class="favorite-button${favorites.has(key) ? ' is-favorite' : ''}" type="button" data-song-key="${escapeHtml(key)}" aria-label="Favorite ${escapeHtml(song.title)}">♥</button>
+        </div>
+        ${sample ? `<audio controls preload="none" src="${escapeHtml(sample)}"></audio>` : ''}
         <div class="song-tags">
           <span>${escapeHtml(song.category)}</span>
           <span>${escapeHtml(song.energy)}</span>
@@ -249,6 +329,10 @@ function renderSongs() {
       </article>
     `;
   }).join('') || '<p class="empty-state">No songs matched that search.</p>';
+
+  results.querySelectorAll('.favorite-button').forEach(button => {
+    button.addEventListener('click', () => toggleFavorite(button.dataset.songKey));
+  });
 }
 
 function escapeHtml(value) {
@@ -269,6 +353,8 @@ async function loadSongs() {
     buildMoodOptions();
     buildChoiceButtons();
     buildGenreTabs();
+    renderFavorites();
+    renderSongOfWeek();
     renderSongs();
   } catch (error) {
     console.error(error);
@@ -276,6 +362,11 @@ async function loadSongs() {
     results.innerHTML = '<p class="empty-state">The song list data file is missing or could not be loaded.</p>';
   }
 }
+
+document.addEventListener('click', event => {
+  const favoriteButton = event.target.closest('.favorite-button');
+  if (favoriteButton) toggleFavorite(favoriteButton.dataset.songKey);
+});
 
 searchInput.addEventListener('input', () => {
   highlightedSongTitle = null;
