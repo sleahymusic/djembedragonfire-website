@@ -167,6 +167,15 @@ function findSongMention(text) {
   return hostState.songs.find(song => lower.includes(normalizeHostText(song.title))) || null;
 }
 
+function findSongByTitleArtist(title, artist) {
+  const titleNorm = normalizeHostText(title);
+  const artistNorm = normalizeHostText(artist);
+  return hostState.songs.find(song =>
+    normalizeHostText(song.title) === titleNorm &&
+    normalizeHostText(song.artist) === artistNorm
+  ) || hostState.songs.find(song => normalizeHostText(song.title) === titleNorm) || null;
+}
+
 function setRecommendation(song) {
   if (!song) return;
   hostState.recommendation = song;
@@ -201,7 +210,7 @@ async function askOllama(message) {
   }, OLLAMA_TIMEOUT_MS);
   const data = await response.json();
   if (!response.ok || !data.ok) throw new Error(data.error || 'Song host bridge error');
-  return data.reply || '';
+  return data;
 }
 
 async function handleFreeTextSubmit() {
@@ -216,17 +225,25 @@ async function handleFreeTextSubmit() {
 
   hostActions.classList.add('is-thinking');
   try {
-    const reply = await askOllama(message);
-    hostSay(reply);
-    const replyMention = findSongMention(reply);
-    if (replyMention) setRecommendation(replyMention);
+    const result = await askOllama(message);
+    const reply = result.reply || '';
+    hostSay(reply || 'The live Djembe host answered without display text. Try adding one more mood or style detail.');
+    const selectedFromPayload = result.selected_song
+      ? findSongByTitleArtist(result.selected_song.title, result.selected_song.artist)
+      : null;
+    if (selectedFromPayload) {
+      setRecommendation(selectedFromPayload);
+    } else {
+      const replyMention = findSongMention(reply);
+      if (replyMention) setRecommendation(replyMention);
+    }
     renderConversationalActions();
   } catch (error) {
     console.error(error);
     hostState.ollamaAvailable = false;
     const [pick] = rankedHostSongs(extractTermsFromText(message));
     setRecommendation(pick);
-    hostSay(`The live Djembe host is taking too long, so Iâ€™ll keep the show moving with the local catalog. Iâ€™d try â€œ${pick.title}â€ by ${pick.artist}. Want that as your request?`);
+    hostSay(`The live Djembe host is taking too long, so IÃ¢â‚¬â„¢ll keep the show moving with the local catalog. IÃ¢â‚¬â„¢d try Ã¢â‚¬Å“${pick.title}Ã¢â‚¬Â by ${pick.artist}. Want that as your request?`);
     renderConversationalActions();
   } finally {
     hostActions.classList.remove('is-thinking');
@@ -290,7 +307,7 @@ function renderHostActions() {
 function confirmRecommendation() {
   const [pick] = rankedHostSongs();
   setRecommendation(pick);
-  hostSay(`I would request â€œ${pick.title}â€ by ${pick.artist}. That feels like the strongest fit.`);
+  hostSay(`I would request Ã¢â‚¬Å“${pick.title}Ã¢â‚¬Â by ${pick.artist}. That feels like the strongest fit.`);
   hostActions.innerHTML = `
     <button class="button host-confirm" type="button">Yes, this is my request</button>
     <button class="button secondary host-chat-more" type="button">Talk it through more</button>
@@ -334,10 +351,10 @@ async function sendRequestToBridge() {
     }, OLLAMA_TIMEOUT_MS);
     const data = await response.json();
     if (!response.ok || !data.ok) throw new Error(data.error || 'Request bridge error');
-    hostSay(data.reply || `Request sent: ${payload.guestName} would like â€œ${payload.songTitle}â€ by ${payload.artist}.`);
+    hostSay(data.reply || `Request sent: ${payload.guestName} would like Ã¢â‚¬Å“${payload.songTitle}Ã¢â‚¬Â by ${payload.artist}.`);
   } catch (error) {
     console.error(error);
-    hostSay(`The live request bridge did not answer quickly, but the request is ready: ${payload.guestName} would like â€œ${payload.songTitle}â€ by ${payload.artist}.`);
+    hostSay(`The live request bridge did not answer quickly, but the request is ready: ${payload.guestName} would like Ã¢â‚¬Å“${payload.songTitle}Ã¢â‚¬Â by ${payload.artist}.`);
   }
 
   hostActions.innerHTML = `
@@ -357,7 +374,7 @@ function resetHost() {
   hostState.recommendation = null;
   hostState.history = [];
   hostMessages.innerHTML = '';
-  hostSay('Hi, Iâ€™m the Djembe song host. Tell me what kind of mood, energy, or style you want, and Iâ€™ll help narrow the catalog to one request.');
+  hostSay('Hi, IÃ¢â‚¬â„¢m the Djembe song host. Tell me what kind of mood, energy, or style you want, and IÃ¢â‚¬â„¢ll help narrow the catalog to one request.');
   renderConversationalActions();
 }
 
