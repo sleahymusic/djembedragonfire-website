@@ -1,8 +1,8 @@
 const hostMessages = document.getElementById('hostMessages');
 const hostActions = document.getElementById('hostActions');
 
-const SONG_HOST_ENDPOINT = 'https://facedesk-ai-brain.sleahymusic.workers.dev/website/song-host';
-const SONG_REQUEST_ENDPOINT = 'https://facedesk-ai-brain.sleahymusic.workers.dev/website/request';
+const SONG_HOST_ENDPOINT = 'https://djembe-music-brain.sleahymusic.workers.dev/website/song-host';
+const SONG_REQUEST_ENDPOINT = 'https://djembe-music-brain.sleahymusic.workers.dev/website/request';
 const OLLAMA_TIMEOUT_MS = 12000;
 const OLLAMA_CANDIDATE_LIMIT = 10;
 
@@ -226,7 +226,7 @@ async function handleFreeTextSubmit() {
     hostState.ollamaAvailable = false;
     const [pick] = rankedHostSongs(extractTermsFromText(message));
     setRecommendation(pick);
-    hostSay(`The live Ollama host is taking too long, so I’ll keep the show moving with the local catalog. I’d try “${pick.title}” by ${pick.artist}. Want that as your request?`);
+    hostSay(`The live Djembe host is taking too long, so Iâ€™ll keep the show moving with the local catalog. Iâ€™d try â€œ${pick.title}â€ by ${pick.artist}. Want that as your request?`);
     renderConversationalActions();
   } finally {
     hostActions.classList.remove('is-thinking');
@@ -290,7 +290,7 @@ function renderHostActions() {
 function confirmRecommendation() {
   const [pick] = rankedHostSongs();
   setRecommendation(pick);
-  hostSay(`I would request “${pick.title}” by ${pick.artist}. That feels like the strongest fit.`);
+  hostSay(`I would request â€œ${pick.title}â€ by ${pick.artist}. That feels like the strongest fit.`);
   hostActions.innerHTML = `
     <button class="button host-confirm" type="button">Yes, this is my request</button>
     <button class="button secondary host-chat-more" type="button">Talk it through more</button>
@@ -334,10 +334,10 @@ async function sendRequestToBridge() {
     }, OLLAMA_TIMEOUT_MS);
     const data = await response.json();
     if (!response.ok || !data.ok) throw new Error(data.error || 'Request bridge error');
-    hostSay(data.reply || `Request sent: ${payload.guestName} would like “${payload.songTitle}” by ${payload.artist}.`);
+    hostSay(data.reply || `Request sent: ${payload.guestName} would like â€œ${payload.songTitle}â€ by ${payload.artist}.`);
   } catch (error) {
     console.error(error);
-    hostSay(`The live request bridge did not answer quickly, but the request is ready: ${payload.guestName} would like “${payload.songTitle}” by ${payload.artist}.`);
+    hostSay(`The live request bridge did not answer quickly, but the request is ready: ${payload.guestName} would like â€œ${payload.songTitle}â€ by ${payload.artist}.`);
   }
 
   hostActions.innerHTML = `
@@ -357,7 +357,7 @@ function resetHost() {
   hostState.recommendation = null;
   hostState.history = [];
   hostMessages.innerHTML = '';
-  hostSay('Hi, I’m the Djembe song host. Tell me what kind of mood, energy, or style you want, and I’ll help narrow the catalog to one request.');
+  hostSay('Hi, Iâ€™m the Djembe song host. Tell me what kind of mood, energy, or style you want, and Iâ€™ll help narrow the catalog to one request.');
   renderConversationalActions();
 }
 
