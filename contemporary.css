@@ -1,12 +1,5 @@
 .home-page { overflow-x: hidden; }
 
-:root {
-  --music-energy: 0;
-  --beam-intensity: 0.55;
-  --beam-blur: 16px;
-  --strobe-opacity: 0;
-}
-
 .ambient-particles, .stage-lights { position: fixed; inset: 0; pointer-events: none; overflow: hidden; z-index: 0; }
 .ambient-particles span { position: absolute; width: 0.5rem; height: 0.5rem; border-radius: 999px; background: radial-gradient(circle, rgba(246,199,108,0.95), rgba(229,75,122,0.2), transparent 70%); box-shadow: 0 0 24px rgba(246,199,108,0.55); animation: floatParticle 14s linear infinite; opacity: 0.7; }
 .ambient-particles span:nth-child(1) { left: 10%; animation-delay: 0s; animation-duration: 18s; }
@@ -36,18 +29,8 @@
     radial-gradient(ellipse at center, rgba(255,248,242,0.08), transparent 38%),
     repeating-linear-gradient(110deg, rgba(255,255,255,0.025) 0 1px, transparent 1px 12px);
   filter: blur(10px);
-  opacity: calc(0.26 + var(--music-energy) * 0.22);
-  animation: hazeDrift 22s ease-in-out infinite alternate;
-}
-
-.stage-lights::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: rgba(255,255,255,var(--strobe-opacity));
-  mix-blend-mode: overlay;
-  opacity: var(--strobe-opacity);
-  transition: opacity 70ms linear;
+  opacity: 0.30;
+  animation: hazeDrift 24s ease-in-out infinite alternate;
 }
 
 .light-beam {
@@ -56,11 +39,12 @@
   width: 34vw;
   height: 150vh;
   transform-origin: 50% 0%;
-  opacity: calc(0.30 + var(--music-energy) * 0.48);
-  filter: blur(var(--beam-blur)) saturate(calc(1.05 + var(--music-energy) * 0.65));
+  opacity: 0.42;
+  filter: blur(13px) saturate(1.16);
   clip-path: polygon(47% 0, 53% 0, 100% 100%, 0 100%);
-  animation: sweepLight 10s ease-in-out infinite alternate;
+  animation: sweepLight 12s ease-in-out infinite alternate;
   transform-style: preserve-3d;
+  will-change: transform, opacity;
 }
 
 .light-beam::before,
@@ -73,37 +57,33 @@
 
 .light-beam::before {
   background:
-    radial-gradient(ellipse at 50% 4%, rgba(255,255,255,0.95), rgba(255,255,255,0.22) 10%, transparent 20%),
+    radial-gradient(ellipse at 50% 4%, rgba(255,255,255,0.92), rgba(255,255,255,0.20) 10%, transparent 20%),
     linear-gradient(to bottom,
-      rgba(255,248,242,0.78),
-      rgba(246,199,108,0.42) 14%,
-      rgba(229,75,122,0.18) 46%,
+      rgba(255,248,242,0.72),
+      rgba(246,199,108,0.36) 14%,
+      rgba(229,75,122,0.15) 46%,
       transparent 82%);
 }
 
 .light-beam::after {
   background:
-    linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.20) 48%, rgba(255,255,255,0.34) 50%, rgba(255,255,255,0.20) 52%, transparent 100%),
-    repeating-linear-gradient(to bottom, transparent 0 3.5rem, rgba(255,255,255,0.035) 3.5rem 3.65rem);
-  opacity: calc(0.28 + var(--music-energy) * 0.28);
+    linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.16) 48%, rgba(255,255,255,0.28) 50%, rgba(255,255,255,0.16) 52%, transparent 100%),
+    repeating-linear-gradient(to bottom, transparent 0 3.5rem, rgba(255,255,255,0.026) 3.5rem 3.65rem);
+  opacity: 0.32;
 }
 
 .beam-one { left: -2vw; transform: rotate(-18deg) rotateX(18deg) translateZ(-60px); }
-.beam-two { left: 32vw; animation-duration: 12s; animation-delay: -3s; transform: rotate(7deg) rotateX(26deg) translateZ(40px); }
-.beam-two::before { background: radial-gradient(ellipse at 50% 4%, rgba(255,255,255,0.9), rgba(34,211,238,0.32) 13%, transparent 22%), linear-gradient(to bottom, rgba(255,248,242,0.66), rgba(34,211,238,0.42) 15%, rgba(139,92,246,0.20) 50%, transparent 83%); }
-.beam-three { right: -2vw; animation-duration: 11s; animation-delay: -6s; transform: rotate(18deg) rotateX(18deg) translateZ(-20px); }
-.beam-three::before { background: radial-gradient(ellipse at 50% 4%, rgba(255,255,255,0.9), rgba(229,75,122,0.34) 12%, transparent 22%), linear-gradient(to bottom, rgba(255,248,242,0.65), rgba(229,75,122,0.44) 16%, rgba(246,199,108,0.18) 52%, transparent 83%); }
+.beam-two { left: 32vw; animation-duration: 14s; animation-delay: -3s; transform: rotate(7deg) rotateX(26deg) translateZ(40px); }
+.beam-two::before { background: radial-gradient(ellipse at 50% 4%, rgba(255,255,255,0.86), rgba(34,211,238,0.28) 13%, transparent 22%), linear-gradient(to bottom, rgba(255,248,242,0.58), rgba(34,211,238,0.34) 15%, rgba(139,92,246,0.16) 50%, transparent 83%); }
+.beam-three { right: -2vw; animation-duration: 13s; animation-delay: -6s; transform: rotate(18deg) rotateX(18deg) translateZ(-20px); }
+.beam-three::before { background: radial-gradient(ellipse at 50% 4%, rgba(255,255,255,0.86), rgba(229,75,122,0.30) 12%, transparent 22%), linear-gradient(to bottom, rgba(255,248,242,0.58), rgba(229,75,122,0.36) 16%, rgba(246,199,108,0.14) 52%, transparent 83%); }
 
-.audio-playing .stage-lights { opacity: 1; }
-.audio-playing .light-beam { animation-duration: calc(4.2s - var(--music-energy) * 1.4s); }
-.audio-analyzed .light-beam { opacity: calc(0.36 + var(--beam-intensity) * 0.48); }
-.beat-hit .stage-lights::after { opacity: 0.42; }
-.beat-hit .stage-hero, .beat-hit .sample-card, .beat-hit .player-card { filter: brightness(1.08) saturate(1.08); }
-.audio-fallback-pulse .light-beam { animation-duration: 3.9s; }
+.audio-playing .stage-lights { opacity: 0.88; }
+.audio-playing .light-beam { opacity: 0.58; animation-duration: 8.5s; }
 
 @keyframes sweepLight {
-  from { transform: rotate(-24deg) rotateX(20deg) translateX(-5vw) translateZ(-80px); }
-  to { transform: rotate(24deg) rotateX(30deg) translateX(5vw) translateZ(70px); }
+  from { transform: rotate(-22deg) rotateX(20deg) translateX(-5vw) translateZ(-70px); }
+  to { transform: rotate(22deg) rotateX(28deg) translateX(5vw) translateZ(60px); }
 }
 
 @keyframes hazeDrift {
@@ -164,9 +144,9 @@
 .button-pressed { transform: translateY(2px) scale(0.97) !important; filter: brightness(1.2); box-shadow: 0 0 34px rgba(246,199,108,0.45) !important; }
 .button-pressed::after { animation: buttonSheen 420ms ease-out; }
 @keyframes buttonSheen { to { transform: translateX(120%) rotate(18deg); } }
-.burst-dot { position: fixed; width: 0.45rem; height: 0.45rem; border-radius: 999px; background: var(--gold); box-shadow: 0 0 18px currentColor; pointer-events: none; z-index: 999; animation: burstAway 760ms ease-out forwards; }
-.burst-ring { position: fixed; width: 1rem; height: 1rem; margin-left: -0.5rem; margin-top: -0.5rem; border-radius: 999px; border: 2px solid rgba(246,199,108,0.85); box-shadow: 0 0 34px rgba(246,199,108,0.55), inset 0 0 18px rgba(229,75,122,0.35); pointer-events: none; z-index: 998; animation: burstRing 740ms ease-out forwards; }
-@keyframes burstRing { to { transform: scale(7); opacity: 0; } }
+.burst-dot { position: fixed; width: 0.45rem; height: 0.45rem; border-radius: 999px; background: var(--gold); box-shadow: 0 0 18px currentColor; pointer-events: none; z-index: 999; animation: burstAway 720ms ease-out forwards; }
+.burst-ring { position: fixed; width: 1rem; height: 1rem; margin-left: -0.5rem; margin-top: -0.5rem; border-radius: 999px; border: 2px solid rgba(246,199,108,0.85); box-shadow: 0 0 34px rgba(246,199,108,0.55), inset 0 0 18px rgba(229,75,122,0.35); pointer-events: none; z-index: 998; animation: burstRing 700ms ease-out forwards; }
+@keyframes burstRing { to { transform: scale(6); opacity: 0; } }
 @keyframes burstAway { to { transform: translate(var(--x), var(--y)) scale(0.1) rotate(180deg); opacity: 0; } }
 .reveal-card { animation: revealUp 800ms ease both; }
 .stage-portrait.reveal-card { animation-delay: 120ms; }
@@ -183,5 +163,4 @@
 
 @media (prefers-reduced-motion: reduce) {
   .ambient-particles span, .hero-orbit, .reveal-card, .light-beam, .stage-lights::before { animation: none; }
-  .stage-lights::after { display: none; }
 }
