@@ -52,19 +52,22 @@ function setupFloatingSongHost() {
   if (!panel || panel.dataset.floatingReady === 'true') return;
 
   panel.dataset.floatingReady = 'true';
-  panel.classList.add('song-host-floating', 'is-collapsed');
+  panel.classList.add('song-host-floating', 'song-host-right-rail', 'is-open');
+  panel.classList.remove('is-collapsed');
 
-  const header = document.createElement('button');
-  header.className = 'song-host-dock-header';
-  header.type = 'button';
-  header.setAttribute('aria-expanded', 'false');
-  header.innerHTML = `
-    <span class="song-host-dock-light" aria-hidden="true"></span>
-    <span class="song-host-dock-title"><small>Ollama Song Host</small><strong>Ask for a song</strong></span>
-    <span class="song-host-dock-state" aria-hidden="true">+</span>
-  `;
-
-  panel.insertBefore(header, panel.firstChild);
+  let header = panel.querySelector('.song-host-dock-header');
+  if (!header) {
+    header = document.createElement('button');
+    header.className = 'song-host-dock-header';
+    header.type = 'button';
+    header.setAttribute('aria-expanded', 'true');
+    header.innerHTML = `
+      <span class="song-host-dock-light" aria-hidden="true"></span>
+      <span class="song-host-dock-title"><small>Ollama Song Host</small><strong>Ask for a song</strong></span>
+      <span class="song-host-dock-state" aria-hidden="true">-</span>
+    `;
+    panel.insertBefore(header, panel.firstChild);
+  }
 
   function setOpen(open) {
     panel.classList.toggle('is-collapsed', !open);
@@ -84,7 +87,10 @@ function setupFloatingSongHost() {
   panel.addEventListener('keydown', event => {
     if (event.key === 'Escape') setOpen(false);
   });
+
+  setOpen(true);
 }
+
 function hostSay(text, save = true) {
   const bubble = document.createElement('div');
   bubble.className = 'host-bubble host-bubble-ai';
