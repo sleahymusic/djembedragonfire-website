@@ -1,5 +1,12 @@
 .home-page { overflow-x: hidden; }
 
+:root {
+  --music-energy: 0;
+  --beam-intensity: 0.55;
+  --beam-blur: 16px;
+  --strobe-opacity: 0;
+}
+
 .ambient-particles, .stage-lights { position: fixed; inset: 0; pointer-events: none; overflow: hidden; z-index: 0; }
 .ambient-particles span { position: absolute; width: 0.5rem; height: 0.5rem; border-radius: 999px; background: radial-gradient(circle, rgba(246,199,108,0.95), rgba(229,75,122,0.2), transparent 70%); box-shadow: 0 0 24px rgba(246,199,108,0.55); animation: floatParticle 14s linear infinite; opacity: 0.7; }
 .ambient-particles span:nth-child(1) { left: 10%; animation-delay: 0s; animation-duration: 18s; }
@@ -10,14 +17,99 @@
 .ambient-particles span:nth-child(6) { left: 93%; animation-delay: -6s; animation-duration: 26s; }
 @keyframes floatParticle { from { transform: translate3d(0, 110vh, 0) scale(0.6); } 50% { transform: translate3d(2rem, 45vh, 0) scale(1.4); } to { transform: translate3d(-1rem, -10vh, 0) scale(0.8); } }
 
-.stage-lights { opacity: 0.65; mix-blend-mode: screen; }
-.light-beam { position: absolute; top: -18vh; width: 36vw; height: 140vh; transform-origin: top center; filter: blur(16px); opacity: 0.34; background: linear-gradient(to bottom, rgba(246,199,108,0.5), rgba(229,75,122,0.16), transparent 72%); clip-path: polygon(44% 0, 56% 0, 100% 100%, 0 100%); animation: sweepLight 9s ease-in-out infinite alternate; }
-.beam-one { left: 2vw; transform: rotate(-18deg); }
-.beam-two { left: 32vw; background: linear-gradient(to bottom, rgba(34,211,238,0.45), rgba(139,92,246,0.18), transparent 72%); animation-duration: 11s; animation-delay: -3s; }
-.beam-three { right: 0; background: linear-gradient(to bottom, rgba(229,75,122,0.45), rgba(246,199,108,0.14), transparent 72%); animation-duration: 10s; animation-delay: -6s; }
+.stage-lights {
+  opacity: 0.72;
+  mix-blend-mode: screen;
+  perspective: 900px;
+  transform-style: preserve-3d;
+  background:
+    radial-gradient(circle at 50% 8%, rgba(255,248,242,0.06), transparent 18rem),
+    radial-gradient(circle at 16% 80%, rgba(229,75,122,0.08), transparent 28rem),
+    radial-gradient(circle at 82% 82%, rgba(34,211,238,0.075), transparent 26rem);
+}
+
+.stage-lights::before {
+  content: "";
+  position: absolute;
+  inset: -10%;
+  background:
+    radial-gradient(ellipse at center, rgba(255,248,242,0.08), transparent 38%),
+    repeating-linear-gradient(110deg, rgba(255,255,255,0.025) 0 1px, transparent 1px 12px);
+  filter: blur(10px);
+  opacity: calc(0.26 + var(--music-energy) * 0.22);
+  animation: hazeDrift 22s ease-in-out infinite alternate;
+}
+
+.stage-lights::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(255,255,255,var(--strobe-opacity));
+  mix-blend-mode: overlay;
+  opacity: var(--strobe-opacity);
+  transition: opacity 70ms linear;
+}
+
+.light-beam {
+  position: absolute;
+  top: -22vh;
+  width: 34vw;
+  height: 150vh;
+  transform-origin: 50% 0%;
+  opacity: calc(0.30 + var(--music-energy) * 0.48);
+  filter: blur(var(--beam-blur)) saturate(calc(1.05 + var(--music-energy) * 0.65));
+  clip-path: polygon(47% 0, 53% 0, 100% 100%, 0 100%);
+  animation: sweepLight 10s ease-in-out infinite alternate;
+  transform-style: preserve-3d;
+}
+
+.light-beam::before,
+.light-beam::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  clip-path: inherit;
+}
+
+.light-beam::before {
+  background:
+    radial-gradient(ellipse at 50% 4%, rgba(255,255,255,0.95), rgba(255,255,255,0.22) 10%, transparent 20%),
+    linear-gradient(to bottom,
+      rgba(255,248,242,0.78),
+      rgba(246,199,108,0.42) 14%,
+      rgba(229,75,122,0.18) 46%,
+      transparent 82%);
+}
+
+.light-beam::after {
+  background:
+    linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.20) 48%, rgba(255,255,255,0.34) 50%, rgba(255,255,255,0.20) 52%, transparent 100%),
+    repeating-linear-gradient(to bottom, transparent 0 3.5rem, rgba(255,255,255,0.035) 3.5rem 3.65rem);
+  opacity: calc(0.28 + var(--music-energy) * 0.28);
+}
+
+.beam-one { left: -2vw; transform: rotate(-18deg) rotateX(18deg) translateZ(-60px); }
+.beam-two { left: 32vw; animation-duration: 12s; animation-delay: -3s; transform: rotate(7deg) rotateX(26deg) translateZ(40px); }
+.beam-two::before { background: radial-gradient(ellipse at 50% 4%, rgba(255,255,255,0.9), rgba(34,211,238,0.32) 13%, transparent 22%), linear-gradient(to bottom, rgba(255,248,242,0.66), rgba(34,211,238,0.42) 15%, rgba(139,92,246,0.20) 50%, transparent 83%); }
+.beam-three { right: -2vw; animation-duration: 11s; animation-delay: -6s; transform: rotate(18deg) rotateX(18deg) translateZ(-20px); }
+.beam-three::before { background: radial-gradient(ellipse at 50% 4%, rgba(255,255,255,0.9), rgba(229,75,122,0.34) 12%, transparent 22%), linear-gradient(to bottom, rgba(255,248,242,0.65), rgba(229,75,122,0.44) 16%, rgba(246,199,108,0.18) 52%, transparent 83%); }
+
 .audio-playing .stage-lights { opacity: 1; }
-.audio-playing .light-beam { opacity: 0.72; filter: blur(10px) saturate(1.45); animation-duration: 3.6s; }
-@keyframes sweepLight { from { transform: rotate(-24deg) translateX(-4vw); } to { transform: rotate(24deg) translateX(5vw); } }
+.audio-playing .light-beam { animation-duration: calc(4.2s - var(--music-energy) * 1.4s); }
+.audio-analyzed .light-beam { opacity: calc(0.36 + var(--beam-intensity) * 0.48); }
+.beat-hit .stage-lights::after { opacity: 0.42; }
+.beat-hit .stage-hero, .beat-hit .sample-card, .beat-hit .player-card { filter: brightness(1.08) saturate(1.08); }
+.audio-fallback-pulse .light-beam { animation-duration: 3.9s; }
+
+@keyframes sweepLight {
+  from { transform: rotate(-24deg) rotateX(20deg) translateX(-5vw) translateZ(-80px); }
+  to { transform: rotate(24deg) rotateX(30deg) translateX(5vw) translateZ(70px); }
+}
+
+@keyframes hazeDrift {
+  from { transform: translate3d(-2%, 1%, 0) scale(1); }
+  to { transform: translate3d(2%, -1%, 0) scale(1.08); }
+}
 
 .modern-header, main, .site-footer { position: relative; z-index: 1; }
 .stage-hero { position: relative; min-height: 92vh; display: grid; grid-template-columns: 1.05fr 0.95fr; gap: clamp(2rem, 5vw, 5rem); align-items: center; width: min(1360px, 100%); margin: 0 auto; padding: clamp(4rem, 10vw, 8rem) clamp(1rem, 4vw, 4rem); }
@@ -90,5 +182,6 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .ambient-particles span, .hero-orbit, .reveal-card, .light-beam { animation: none; }
+  .ambient-particles span, .hero-orbit, .reveal-card, .light-beam, .stage-lights::before { animation: none; }
+  .stage-lights::after { display: none; }
 }
