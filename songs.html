@@ -7,7 +7,6 @@
   <meta name="description" content="Browse Djembe Dragonfire's searchable Second Life performance song list by song, artist, genre, mood, and theme." />
   <link rel="stylesheet" href="styles.css" />
   <link rel="stylesheet" href="contemporary.css" />
-  <link rel="stylesheet" href="song-host.css?v=20260614200537" />
 </head>
 <body>
   <div class="stage-lights" aria-hidden="true">
@@ -31,7 +30,7 @@
     <section class="page-hero">
       <p class="eyebrow">Browse the music</p>
       <h1>Song List</h1>
-      <p class="lead">Search the catalog by title, artist, genre, mood, or theme. Use Help Me Choose, then let the Song Host narrow it down to one request.</p>
+      <p class="lead">Search the catalog by title, artist, genre, mood, or theme. Use Help Me Choose, browse favorites, and send a live request when a song feels right.</p>
     </section>
 
     <section class="section song-browser">
@@ -45,15 +44,6 @@
         <h2>What kind of song are you hoping for?</h2>
         <div id="choiceButtons" class="choice-buttons" aria-label="Song mood shortcuts"></div>
       </div>
-
-      <div id="songHost" class="choice-panel song-host-panel">
-        <p class="eyebrow">Ollama Song Host</p>
-        <h2>Talk through your request.</h2>
-        <p class="small-note">Tell the host what mood, energy, or style you want. It will help you narrow the catalog to one song before offering to send the request.</p>
-        <div id="hostMessages" class="host-messages" aria-live="polite"></div>
-        <div id="hostActions" class="host-actions"></div>
-      </div>
-
       <div class="favorites-panel">
         <p class="eyebrow">Your Favorites</p>
         <div id="favoriteSongs" class="favorite-songs"></div>
@@ -84,7 +74,6 @@
   </footer>
 
   <script src="songs.js"></script>
-  <script src="song-host.js?v=20260614200537"></script>
   <script src="site.js"></script>
   <script>
     document.getElementById('year').textContent = new Date().getFullYear();
