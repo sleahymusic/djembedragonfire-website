@@ -4,14 +4,15 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Video & Media | Djembe Dragonfire</title>
-  <meta name="description" content="Watch featured Djembe Dragonfire video and media. This page can later become a home for live video and stream embeds." />
+  <meta name="description" content="Watch and listen to Djembe Dragonfire media, including featured video, audio samples, performance photos, and future live video." />
   <link rel="icon" href="favicon.svg" type="image/svg+xml" />
   <link rel="shortcut icon" href="favicon.svg" type="image/svg+xml" />
   <link rel="stylesheet" href="styles.css" />
   <link rel="stylesheet" href="contemporary.css" />
+  <link rel="stylesheet" href="performance-effects.css" />
   <style>
     .media-page .page-hero { padding-bottom: clamp(2rem, 5vw, 4rem); }
-    .media-feature {
+    .media-feature, .media-samples-shell, .media-gallery-shell {
       position: relative;
       overflow: hidden;
       border: 1px solid rgba(255,255,255,0.16);
@@ -24,14 +25,14 @@
       box-shadow: 0 34px 100px rgba(0,0,0,0.46);
       backdrop-filter: blur(16px);
     }
-    .media-feature::before {
+    .media-feature::before, .media-samples-shell::before, .media-gallery-shell::before {
       content: "";
       position: absolute;
       inset: -1px;
       background: linear-gradient(135deg, rgba(246,199,108,0.22), transparent, rgba(229,75,122,0.20));
       pointer-events: none;
     }
-    .media-feature > * { position: relative; z-index: 1; }
+    .media-feature > *, .media-samples-shell > *, .media-gallery-shell > * { position: relative; z-index: 1; }
     .video-frame-wrap {
       position: relative;
       width: 100%;
@@ -65,8 +66,27 @@
     .media-card h3 { color: var(--gold); }
     .coming-soon-list { display: grid; gap: 0.65rem; margin: 0; padding: 0; list-style: none; color: var(--muted); }
     .coming-soon-list li::before { content: "✦"; color: var(--gold); margin-right: 0.45rem; }
+    .media-samples-heading { display: grid; grid-template-columns: 1fr minmax(260px, 420px); gap: 1rem; align-items: end; margin-bottom: 1.2rem; }
+    .sample-visualizer-card {
+      margin: 0;
+      padding: 0.85rem;
+      border: 1px solid rgba(246,199,108,0.20);
+      border-radius: 24px;
+      background:
+        radial-gradient(circle at 20% 0%, rgba(246,199,108,0.16), transparent 9rem),
+        radial-gradient(circle at 84% 40%, rgba(229,75,122,0.16), transparent 9rem),
+        rgba(255,255,255,0.045);
+      overflow: hidden;
+    }
+    .sample-visualizer-card .player-visualizer-label { margin-bottom: 0.4rem; }
+    .sample-visualizer-card .player-visualizer-label::after { content: "Pick a sample"; }
+    .audio-playing .sample-visualizer-card .player-visualizer-label::after { content: "Playing"; color: #7df0a6; }
+    .sample-visualizer-card .fake-visualizer { height: 58px; grid-template-columns: repeat(13, minmax(0, 1fr)); }
+    .media-page .sample-card { min-height: 330px; }
+    .media-page .sample-card audio { position: relative; z-index: 2; }
+    .media-page .modern-gallery { margin-top: 1.2rem; }
     @media (max-width: 900px) {
-      .media-info-grid { grid-template-columns: 1fr; }
+      .media-info-grid, .media-samples-heading { grid-template-columns: 1fr; }
     }
   </style>
 </head>
@@ -87,7 +107,7 @@
     <a class="brand" href="index.html">Djembe Dragonfire</a>
     <nav aria-label="Main navigation">
       <a href="index.html#listen">Listen</a>
-      <a href="index.html#samples">Samples</a>
+      <a href="#samples">Samples</a>
       <a href="index.html#shows">Shows</a>
       <a href="songs.html">Song List</a>
       <a href="links.html">Links</a>
@@ -99,8 +119,8 @@
   <main>
     <section class="page-hero">
       <p class="eyebrow">Video & Media</p>
-      <h1>Watch the moment.</h1>
-      <p class="lead">Featured video lives here now. Later, this page can also hold a live video window, show clips, venue promos, and more performance media.</p>
+      <h1>Watch and hear the fire.</h1>
+      <p class="lead">Videos, recordings, and performance photos live here so the homepage can stay focused on the live room, reviews, shows, and booking.</p>
     </section>
 
     <section class="section media-feature">
@@ -124,6 +144,40 @@
             <li>Behind-the-scenes media</li>
           </ul>
         </article>
+      </div>
+    </section>
+
+    <section id="samples" class="section media-samples-shell">
+      <div class="media-samples-heading">
+        <div>
+          <p class="eyebrow">Listening Samples</p>
+          <h2>Hear the range.</h2>
+          <p>Pick a sample and the page shifts into a small media pulse while the stage lights wake up.</p>
+        </div>
+        <div class="sample-visualizer-card" aria-hidden="true">
+          <div class="player-visualizer-label">Sample pulse</div>
+          <div class="fake-visualizer">
+            <span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span>
+          </div>
+        </div>
+      </div>
+      <div class="sample-grid">
+        <article class="sample-card"><span class="sample-number">01</span><h3>Nessun Dorma</h3><p>A glimpse of the classical training behind the voice.</p><audio controls preload="none" src="audio/Nessun Dorma (Djembe 2024).mp3"></audio></article>
+        <article class="sample-card"><span class="sample-number">02</span><h3>Closer</h3><p>Modern emotional energy with a Djembe cover twist.</p><audio controls preload="none" src="audio/Closer (The Chainsmokers - Djembe cover).mp3"></audio></article>
+        <article class="sample-card"><span class="sample-number">03</span><h3>Living</h3><p>Uplifting, groove-driven, and easy to move with.</p><audio controls preload="none" src="audio/Living (Bakermat Djembe Cover).mp3"></audio></article>
+        <article class="sample-card"><span class="sample-number">04</span><h3>Smooth</h3><p>Charisma, rhythm, and a little playful heat.</p><audio controls preload="none" src="audio/smooth Djembe.mp3"></audio></article>
+        <article class="sample-card wide-sample"><span class="sample-number">05</span><h3>Wonderwall</h3><p>A familiar classic that invites everyone into the moment.</p><audio controls preload="none" src="audio/Wonderwall - (Djembe).mp3"></audio></article>
+      </div>
+    </section>
+
+    <section id="gallery" class="section media-gallery-shell">
+      <p class="eyebrow">Gallery</p>
+      <h2>Performance highlights</h2>
+      <div class="gallery-grid modern-gallery">
+        <figure class="photo-card"><img src="images/DjembePromo5.png" alt="Djembe Dragonfire promotional portrait" /></figure>
+        <figure class="photo-card"><img src="images/djembe.png" alt="Djembe Dragonfire close-up promotional image" /></figure>
+        <figure class="photo-card"><img src="images/DjembePromo.png" alt="Djembe Dragonfire live singer promo image" /></figure>
+        <figure class="photo-card wide"><img src="images/DjembePromo4.png" alt="Djembe Dragonfire stage performance promo image" /></figure>
       </div>
     </section>
   </main>
