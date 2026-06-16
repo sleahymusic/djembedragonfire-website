@@ -9,6 +9,7 @@
   <link rel="shortcut icon" href="favicon.svg" type="image/svg+xml" />
   <link rel="stylesheet" href="styles.css" />
   <link rel="stylesheet" href="contemporary.css" />
+  <link rel="stylesheet" href="performance-effects.css" />
 </head>
 <body class="home-page">
   <div class="cinematic-backdrop" aria-hidden="true">
@@ -80,10 +81,16 @@
         <h2>The live room is one click away.</h2>
         <p>When Djembe is on the air, press play and step into the room. The stage lights wake up when audio is playing.</p>
       </div>
-      <div class="player-card neon-card">
+      <div class="player-card neon-card has-visualizer">
         <p id="streamLivePill" class="live-pill" aria-live="polite">Checking stream</p>
         <h3>Djembe Dragonfire</h3>
         <p id="streamNowPlaying" class="small-note" hidden></p>
+        <div class="player-visualizer-wrap" aria-hidden="true">
+          <div class="player-visualizer-label">Stage pulse</div>
+          <div class="fake-visualizer">
+            <span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span>
+          </div>
+        </div>
         <audio controls preload="none">
           <source src="https://stream.djembedragonfire.com/stream" type="audio/mpeg" />
           Your browser does not support the audio element.
