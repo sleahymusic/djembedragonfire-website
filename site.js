@@ -1,5 +1,23 @@
 const STREAM_STATUS_URL = 'https://stream.djembedragonfire.com/status';
 
+function installStickyHeaderFix() {
+  if (document.getElementById('stickyHeaderFix')) return;
+
+  const style = document.createElement('style');
+  style.id = 'stickyHeaderFix';
+  style.textContent = `
+    .site-header,
+    .site-header.modern-header {
+      position: sticky !important;
+      top: 0 !important;
+      z-index: 1000 !important;
+    }
+  `;
+  document.head.appendChild(style);
+}
+
+installStickyHeaderFix();
+
 function setAudioPlayingState() {
   const anyPlaying = [...document.querySelectorAll('audio')].some(audio => !audio.paused && !audio.ended);
   document.body.classList.toggle('audio-playing', anyPlaying);
