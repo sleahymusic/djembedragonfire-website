@@ -10,6 +10,7 @@
   <link rel="stylesheet" href="styles.css" />
   <link rel="stylesheet" href="contemporary.css" />
   <link rel="stylesheet" href="performance-effects.css" />
+  <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
   <style>
     .contact-page .page-hero { padding-bottom: clamp(2rem, 5vw, 4rem); }
     .contact-hub-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1rem; align-items: stretch; }
@@ -84,6 +85,17 @@
     .permission-row { display: flex; align-items: flex-start; gap: 0.7rem; color: var(--muted); }
     .permission-row input { width: auto; margin-top: 0.3rem; }
     .optional-note { color: rgba(255,248,242,0.62); font-size: 0.88rem; font-weight: 700; }
+    .turnstile-wrap {
+      display: grid;
+      gap: 0.55rem;
+      padding: 1rem;
+      border: 1px solid rgba(246,199,108,0.22);
+      border-radius: 20px;
+      background: rgba(255,255,255,0.045);
+    }
+    .turnstile-wrap strong { color: var(--gold); }
+    .turnstile-wrap .small-note { margin: 0; }
+    .cf-turnstile { max-width: 100%; overflow: hidden; }
     .form-status {
       min-height: 3.2rem;
       padding: 0.9rem 1rem;
@@ -142,10 +154,10 @@
     </section>
 
     <section class="section contact-status-card" aria-label="Contact form status">
-      <div class="contact-status-icon">2A</div>
+      <div class="contact-status-icon">2C</div>
       <div>
-        <strong>Direct website form frontend is being prepared.</strong>
-        <p>This page no longer opens a visitor's email app. Phase 2B will connect the form to the Cloudflare email worker so submissions arrive directly at <strong>djembedragonfiresl@gmail.com</strong>.</p>
+        <strong>Direct website form with anti-spam protection.</strong>
+        <p>Messages send through the Cloudflare contact worker to <strong>djembedragonfiresl@gmail.com</strong>. Turnstile helps block automated spam before the email is sent.</p>
       </div>
     </section>
 
@@ -184,7 +196,7 @@
     <section id="message" class="section direct-contact-card">
       <p class="eyebrow">Website Form</p>
       <h2>Message Djembe Dragonfire.</h2>
-      <p>Choose the type of message and include the details Djembe or Rave will need. The form is ready for the Phase 2B worker connection and will not launch an email app.</p>
+      <p>Choose the type of message and include the details Djembe or Rave will need. The form sends directly through the website after the anti-spam check is complete.</p>
 
       <form id="directContactForm" novalidate>
         <input class="honeypot" id="contactWebsite" name="website" tabindex="-1" autocomplete="off" />
@@ -256,7 +268,13 @@
           <span>I understand this form sends my message to Djembe Dragonfire / booking support for follow-up and review approval.</span>
         </label>
 
-        <div id="formStatus" class="form-status" role="status" aria-live="polite">Phase 2A frontend ready. Phase 2B will connect the Worker endpoint for live email delivery.</div>
+        <div class="turnstile-wrap">
+          <strong>Anti-spam check</strong>
+          <p class="small-note">This quick check helps keep automated spam away from the contact inbox.</p>
+          <div class="cf-turnstile" data-sitekey="0x4AAAAAADmE3DilM-yxxowC" data-theme="dark"></div>
+        </div>
+
+        <div id="formStatus" class="form-status" role="status" aria-live="polite">Complete the form and anti-spam check, then press Send from Website.</div>
 
         <div class="contact-action-row">
           <button id="submitContactButton" class="button burst-button" type="submit">Send from Website</button>
@@ -269,7 +287,7 @@
       <p class="eyebrow">How approval works</p>
       <h2>Audience Notes stay curated.</h2>
       <div class="approval-steps">
-        <div class="approval-step"><strong>1. Guest sends note</strong><span class="small-note">The website form sends the message to Djembe once Phase 2B is connected.</span></div>
+        <div class="approval-step"><strong>1. Guest sends note</strong><span class="small-note">The protected website form sends the message directly to Djembe.</span></div>
         <div class="approval-step"><strong>2. Djembe reviews it</strong><span class="small-note">Only appropriate, approved excerpts are selected.</span></div>
         <div class="approval-step"><strong>3. Site is updated</strong><span class="small-note">Approved quotes can be added to the homepage Audience Notes section.</span></div>
       </div>
@@ -300,6 +318,17 @@
       return field ? field.value.trim() : '';
     }
 
+    function getTurnstileToken() {
+      const field = form.querySelector('[name="cf-turnstile-response"]');
+      return field ? field.value.trim() : '';
+    }
+
+    function resetTurnstile() {
+      if (window.turnstile && typeof window.turnstile.reset === 'function') {
+        window.turnstile.reset();
+      }
+    }
+
     function syncReviewFields() {
       const isReview = messageType.value === 'review';
       rating.disabled = !isReview;
@@ -318,7 +347,8 @@
     form.addEventListener('reset', () => {
       window.setTimeout(() => {
         syncReviewFields();
-        setStatus('Phase 2A frontend ready. Phase 2B will connect the Worker endpoint for live email delivery.');
+        resetTurnstile();
+        setStatus('Complete the form and anti-spam check, then press Send from Website.');
       }, 0);
     });
 
@@ -327,11 +357,17 @@
 
       const email = getValue('contactEmail');
       const secondLife = getValue('contactSecondLife');
+      const turnstileToken = getTurnstileToken();
 
       if (!form.reportValidity()) return;
 
       if (!email && !secondLife) {
         setStatus('Please include either an email address or a Second Life contact so someone can follow up.', 'is-error');
+        return;
+      }
+
+      if (!turnstileToken) {
+        setStatus('Please complete the anti-spam check before sending your message.', 'is-error');
         return;
       }
 
@@ -349,6 +385,7 @@
         reviewPermission: reviewPermission.checked,
         privacyConfirm: document.getElementById('privacyConfirm').checked,
         website: getValue('contactWebsite'),
+        turnstileToken,
         page: window.location.href,
         submittedAt: new Date().toISOString()
       };
@@ -376,8 +413,10 @@
 
         setStatus('Message sent successfully. Thank you — your note has been delivered to Djembe Dragonfire.', 'is-success');
         form.reset();
+        resetTurnstile();
       } catch (error) {
-        setStatus('The website form is designed and ready, but the Phase 2B email worker is not connected yet. No email app was opened. Once the worker is deployed, this button will send directly to djembedragonfiresl@gmail.com.', 'is-error');
+        setStatus(error.message || 'The message could not be sent. Please try again in a moment.', 'is-error');
+        resetTurnstile();
       } finally {
         submitButton.disabled = false;
       }
