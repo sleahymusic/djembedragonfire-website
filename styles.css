@@ -45,27 +45,58 @@ body::before {
 .site-header {
   position: sticky;
   top: 0;
-  z-index: 10;
+  z-index: 1000;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 1rem;
-  padding: 1rem clamp(1rem, 4vw, 4rem);
-  background: rgba(8, 6, 10, 0.82);
-  backdrop-filter: blur(16px);
-  border-bottom: 1px solid var(--border);
+  gap: clamp(1rem, 2vw, 2rem);
+  min-height: 76px;
+  padding: 0.65rem clamp(1rem, 3.4vw, 4rem);
+  background:
+    linear-gradient(135deg, rgba(8, 6, 10, 0.96), rgba(29, 9, 23, 0.88)),
+    radial-gradient(circle at 8% 50%, rgba(166,25,46,0.20), transparent 16rem);
+  backdrop-filter: blur(18px) saturate(1.12);
+  border-bottom: 1px solid rgba(246,199,108,0.20);
+  box-shadow: 0 16px 42px rgba(0,0,0,0.40);
+  isolation: isolate;
 }
 
 .brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.72rem;
   color: var(--text);
   text-decoration: none;
-  font-weight: 900;
-  letter-spacing: 0.04em;
+  font-family: "Cinzel", "Copperplate Gothic Light", Copperplate, Georgia, "Times New Roman", serif;
+  font-size: clamp(1.5rem, 2.25vw, 2.05rem);
+  line-height: 0.9;
+  font-weight: 950;
+  letter-spacing: 0.085em;
   text-transform: uppercase;
+  white-space: nowrap;
+  text-shadow: 0 0 18px rgba(229,75,122,0.42), 0 2px 0 rgba(0,0,0,0.70);
 }
 
-nav { display: flex; gap: 1rem; flex-wrap: wrap; justify-content: flex-end; }
-nav a { color: var(--muted); text-decoration: none; font-weight: 800; font-size: 0.95rem; }
+.brand::before {
+  content: "";
+  flex: 0 0 auto;
+  width: clamp(2rem, 3vw, 2.65rem);
+  height: clamp(2rem, 3vw, 2.65rem);
+  border-radius: 999px;
+  background:
+    radial-gradient(circle at 35% 25%, rgba(255,248,242,0.42), transparent 34%),
+    url("favicon.svg") center / 72% 72% no-repeat,
+    radial-gradient(circle, rgba(166,25,46,0.96), rgba(48,8,17,0.96) 70%);
+  box-shadow: 0 0 20px rgba(229,75,122,0.58), 0 0 0 1px rgba(246,199,108,0.34), inset 0 0 16px rgba(0,0,0,0.36);
+}
+
+.brand:hover {
+  color: var(--gold);
+  filter: brightness(1.08);
+}
+
+nav { display: flex; gap: clamp(0.55rem, 1.1vw, 1rem); flex-wrap: wrap; justify-content: flex-end; align-items: center; }
+nav a { color: var(--muted); text-decoration: none; font-weight: 850; font-size: 0.95rem; text-shadow: 0 1px 0 rgba(0,0,0,0.55); }
 nav a:hover { color: var(--gold); }
 
 .hero {
@@ -167,7 +198,11 @@ audio { width: 100%; margin: 1rem 0; }
 @media (max-width: 900px) {
   body { background-attachment: scroll; }
   .site-header, .hero, .listen-section, .split, .shows-section, .browser-toolbar, .song-of-week { display: block; }
+  .site-header { min-height: auto; }
+  .brand { font-size: clamp(1.35rem, 7vw, 1.8rem); }
+  .brand::before { width: 2.25rem; height: 2.25rem; }
   nav { justify-content: flex-start; margin-top: 0.75rem; }
+  nav a { font-size: 0.92rem; }
   .hero-card { margin-top: 1rem; min-height: 360px; }
   .hero-photo-card img { min-height: 360px; }
   .cards-section, .gallery-grid, .song-results, .choice-buttons { grid-template-columns: 1fr; }
