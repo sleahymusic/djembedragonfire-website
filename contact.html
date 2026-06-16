@@ -4,40 +4,65 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Contact & Reviews | Djembe Dragonfire</title>
-  <meta name="description" content="Contact Djembe Dragonfire for Second Life bookings, venue questions, and audience reviews. Reviews are manually approved before appearing on the website." />
+  <meta name="description" content="Contact Djembe Dragonfire for Second Life bookings, venue questions, guest messages, and audience reviews. Reviews are manually approved before appearing on the website." />
   <link rel="icon" href="favicon.svg" type="image/svg+xml" />
   <link rel="shortcut icon" href="favicon.svg" type="image/svg+xml" />
   <link rel="stylesheet" href="styles.css" />
   <link rel="stylesheet" href="contemporary.css" />
+  <link rel="stylesheet" href="performance-effects.css" />
   <style>
     .contact-page .page-hero { padding-bottom: clamp(2rem, 5vw, 4rem); }
     .contact-hub-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1rem; align-items: stretch; }
-    .contact-hub-card, .review-form-card, .approval-card {
+    .contact-hub-card, .direct-contact-card, .approval-card, .contact-status-card {
       position: relative;
       overflow: hidden;
       border: 1px solid rgba(255,255,255,0.16);
       border-radius: 30px;
       padding: clamp(1.35rem, 4vw, 2.3rem);
-      background: radial-gradient(circle at top right, rgba(246,199,108,0.13), transparent 16rem), linear-gradient(145deg, rgba(8,6,10,0.78), rgba(255,255,255,0.055));
+      background:
+        radial-gradient(circle at top right, rgba(246,199,108,0.13), transparent 16rem),
+        radial-gradient(circle at bottom left, rgba(229,75,122,0.10), transparent 15rem),
+        linear-gradient(145deg, rgba(8,6,10,0.80), rgba(255,255,255,0.055));
       box-shadow: 0 30px 90px rgba(0,0,0,0.36);
       backdrop-filter: blur(14px);
     }
-    .contact-hub-card::before, .review-form-card::before, .approval-card::before {
+    .contact-hub-card::before, .direct-contact-card::before, .approval-card::before, .contact-status-card::before {
       content: "";
       position: absolute;
       inset: -1px;
       background: linear-gradient(135deg, rgba(246,199,108,0.18), transparent, rgba(229,75,122,0.18));
       pointer-events: none;
     }
-    .contact-hub-card > *, .review-form-card > *, .approval-card > * { position: relative; z-index: 1; }
-    .contact-hub-card h2, .review-form-card h2, .approval-card h2 { font-size: clamp(2rem, 4vw, 3rem); }
+    .contact-hub-card > *, .direct-contact-card > *, .approval-card > *, .contact-status-card > * { position: relative; z-index: 1; }
+    .contact-hub-card h2, .direct-contact-card h2, .approval-card h2 { font-size: clamp(2rem, 4vw, 3rem); }
+    .contact-status-card {
+      display: grid;
+      grid-template-columns: auto 1fr;
+      gap: 1rem;
+      align-items: center;
+      margin-bottom: 1rem;
+      padding: 1.2rem 1.35rem;
+      border-color: rgba(246,199,108,0.24);
+    }
+    .contact-status-icon {
+      display: grid;
+      place-items: center;
+      width: 3rem;
+      height: 3rem;
+      border-radius: 999px;
+      color: #1c0710;
+      background: linear-gradient(135deg, var(--gold), var(--rose));
+      box-shadow: 0 0 24px rgba(246,199,108,0.32);
+      font-weight: 950;
+    }
+    .contact-status-card p { margin: 0; color: var(--muted); }
     .contact-action-row { display: flex; flex-wrap: wrap; gap: 0.8rem; margin-top: 1.2rem; }
     .contact-detail-list { display: grid; gap: 0.7rem; margin: 1.2rem 0 0; padding: 0; list-style: none; color: var(--muted); }
     .contact-detail-list strong { color: var(--gold); }
-    .review-form-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1rem; }
-    .review-form-card form { display: grid; gap: 1rem; margin-top: 1.25rem; }
-    .review-form-card label span { display: block; margin-bottom: 0.45rem; color: var(--gold); font-weight: 900; }
-    .review-form-card input, .review-form-card select, .review-form-card textarea {
+    .direct-form-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1rem; }
+    .direct-contact-card form { display: grid; gap: 1rem; margin-top: 1.25rem; }
+    .direct-contact-card label span, .direct-contact-card fieldset legend { display: block; margin-bottom: 0.45rem; color: var(--gold); font-weight: 900; }
+    .direct-contact-card input, .direct-contact-card select, .direct-contact-card textarea {
       width: 100%;
       border: 1px solid rgba(255,255,255,0.18);
       border-radius: 18px;
@@ -48,24 +73,37 @@
       font-size: 1rem;
       outline: none;
     }
-    .review-form-card select option { color: #111; }
-    .review-form-card textarea { min-height: 9rem; resize: vertical; }
-    .review-form-card input:focus, .review-form-card select:focus, .review-form-card textarea:focus {
+    .direct-contact-card select option { color: #111; }
+    .direct-contact-card textarea { min-height: 10rem; resize: vertical; }
+    .direct-contact-card input:focus, .direct-contact-card select:focus, .direct-contact-card textarea:focus {
       border-color: rgba(246,199,108,0.72);
       box-shadow: 0 0 0 4px rgba(246,199,108,0.11);
     }
-    .review-form-card .full-span { grid-column: 1 / -1; }
-    .review-permission { display: flex; align-items: flex-start; gap: 0.7rem; color: var(--muted); }
-    .review-permission input { width: auto; margin-top: 0.3rem; }
-    .review-output { margin-top: 1.25rem; padding: 1rem; border: 1px solid rgba(246,199,108,0.22); border-radius: 20px; background: rgba(255,255,255,0.055); }
-    .review-output pre { white-space: pre-wrap; color: var(--muted); font: inherit; margin: 0.75rem 0; }
+    .direct-contact-card .full-span { grid-column: 1 / -1; }
+    .direct-contact-card fieldset { border: 0; padding: 0; margin: 0; }
+    .permission-row { display: flex; align-items: flex-start; gap: 0.7rem; color: var(--muted); }
+    .permission-row input { width: auto; margin-top: 0.3rem; }
+    .optional-note { color: rgba(255,248,242,0.62); font-size: 0.88rem; font-weight: 700; }
+    .form-status {
+      min-height: 3.2rem;
+      padding: 0.9rem 1rem;
+      border: 1px solid rgba(255,255,255,0.14);
+      border-radius: 18px;
+      color: var(--muted);
+      background: rgba(255,255,255,0.045);
+    }
+    .form-status.is-sending { border-color: rgba(34,211,238,0.42); color: var(--cyan); }
+    .form-status.is-success { border-color: rgba(125,240,166,0.48); color: #7df0a6; }
+    .form-status.is-error { border-color: rgba(255,138,138,0.48); color: #ffaaaa; }
     .approval-steps { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1rem; margin-top: 1rem; }
     .approval-step { padding: 1rem; border: 1px solid rgba(255,255,255,0.14); border-radius: 22px; background: rgba(255,255,255,0.055); }
     .approval-step strong { display: block; color: var(--gold); font-size: 1.2rem; }
+    .honeypot { position: absolute; left: -9999px; width: 1px; height: 1px; opacity: 0; }
     @media (max-width: 900px) {
-      .contact-hub-grid, .review-form-grid, .approval-steps { grid-template-columns: 1fr; }
+      .contact-hub-grid, .direct-form-grid, .approval-steps { grid-template-columns: 1fr; }
       .contact-hub-card + .contact-hub-card, .approval-step + .approval-step { margin-top: 1rem; }
-      .review-form-card .full-span { grid-column: auto; }
+      .direct-contact-card .full-span { grid-column: auto; }
+      .contact-status-card { grid-template-columns: 1fr; }
     }
   </style>
 </head>
@@ -86,7 +124,7 @@
     <a class="brand" href="index.html">Djembe Dragonfire</a>
     <nav aria-label="Main navigation">
       <a href="index.html#listen">Listen</a>
-      <a href="index.html#samples">Samples</a>
+      <a href="media.html#samples">Samples</a>
       <a href="index.html#reviews">Audience Notes</a>
       <a href="index.html#shows">Shows</a>
       <a href="songs.html">Song List</a>
@@ -99,15 +137,23 @@
   <main>
     <section class="page-hero">
       <p class="eyebrow">Contact & Reviews</p>
-      <h1>Say hello, book a show, or leave a note.</h1>
-      <p class="lead">Use this page for venue inquiries, booking coordination, guest messages, and audience reviews. Reviews are reviewed before they appear publicly in Audience Notes.</p>
+      <h1>Send a message from the website.</h1>
+      <p class="lead">Use this page for booking inquiries, venue coordination, guest messages, and audience reviews. Reviews are checked before anything appears publicly in Audience Notes.</p>
+    </section>
+
+    <section class="section contact-status-card" aria-label="Contact form status">
+      <div class="contact-status-icon">2A</div>
+      <div>
+        <strong>Direct website form frontend is being prepared.</strong>
+        <p>This page no longer opens a visitor's email app. Phase 2B will connect the form to the Cloudflare email worker so submissions arrive directly at <strong>djembedragonfiresl@gmail.com</strong>.</p>
+      </div>
     </section>
 
     <section class="section contact-hub-grid" aria-label="Contact options">
       <article class="contact-hub-card">
         <p class="eyebrow">Booking</p>
         <h2>Bring Djembe to your venue.</h2>
-        <p>For scheduling, venue inquiries, and show coordination, please contact <strong>Rave Wilder</strong> in Second Life.</p>
+        <p>For scheduling, venue inquiries, and show coordination, the preferred Second Life booking contact is <strong>Rave Wilder</strong>.</p>
         <ul class="contact-detail-list">
           <li><strong>Booking contact:</strong> Rave Wilder</li>
           <li><strong>Rave UUID:</strong> 2df659e6-441f-4901-8d2c-e19331427b92</li>
@@ -120,85 +166,110 @@
       </article>
 
       <article class="contact-hub-card">
-        <p class="eyebrow">Guest messages</p>
+        <p class="eyebrow">Reviews</p>
         <h2>Share a moment from the show.</h2>
-        <p>Send a note about a favorite song, a venue memory, or a moment that stayed with you. Approved excerpts may be added to the Audience Notes section.</p>
+        <p>Send a note about a favorite song, a venue memory, or a moment that stayed with you. Approved excerpts may be added to the homepage Audience Notes section.</p>
         <ul class="contact-detail-list">
-          <li><strong>Review inbox:</strong> djembedragonfiresl@gmail.com</li>
-          <li><strong>Helpful details:</strong> your display name, venue, date, and favorite song</li>
-          <li><strong>Approval:</strong> notes are checked before anything appears publicly</li>
+          <li><strong>Helpful details:</strong> display name, venue, date, and favorite song</li>
+          <li><strong>Approval:</strong> reviews are checked before being posted</li>
+          <li><strong>Attribution:</strong> approved excerpts can use a display name or shortened credit</li>
         </ul>
         <div class="contact-action-row">
-          <a class="button burst-button" href="#reviews">Leave a review</a>
+          <a class="button burst-button" href="#message">Use the website form</a>
           <a class="button secondary burst-button" href="songs.html">Browse songs</a>
         </div>
       </article>
     </section>
 
-    <section id="reviews" class="section review-form-card">
-      <p class="eyebrow">Audience review</p>
-      <h2>Leave a note for approval.</h2>
-      <p>Fill this out after a show. The button prepares an email with your review details so it can be approved before being posted on the website.</p>
+    <section id="message" class="section direct-contact-card">
+      <p class="eyebrow">Website Form</p>
+      <h2>Message Djembe Dragonfire.</h2>
+      <p>Choose the type of message and include the details Djembe or Rave will need. The form is ready for the Phase 2B worker connection and will not launch an email app.</p>
 
-      <form id="audienceReviewForm">
-        <div class="review-form-grid">
+      <form id="directContactForm" novalidate>
+        <input class="honeypot" id="contactWebsite" name="website" tabindex="-1" autocomplete="off" />
+        <div class="direct-form-grid">
+          <label>
+            <span>Message type</span>
+            <select id="messageType" name="type" required>
+              <option value="booking">Booking inquiry</option>
+              <option value="review">Audience review</option>
+              <option value="general">General message</option>
+              <option value="media">Media / link update</option>
+            </select>
+          </label>
           <label>
             <span>Your display name</span>
-            <input id="reviewName" name="name" autocomplete="name" placeholder="Example: Rave Wilder" required />
+            <input id="contactName" name="name" autocomplete="name" placeholder="Example: Rave Wilder" required />
           </label>
           <label>
-            <span>Venue or event</span>
-            <input id="reviewVenue" name="venue" placeholder="Example: The venue name" />
+            <span>Email address <em class="optional-note">optional if SL contact is included</em></span>
+            <input id="contactEmail" name="email" type="email" autocomplete="email" placeholder="you@example.com" />
           </label>
           <label>
-            <span>Show date</span>
-            <input id="reviewDate" name="date" type="date" />
+            <span>Second Life contact <em class="optional-note">optional if email is included</em></span>
+            <input id="contactSecondLife" name="secondLife" placeholder="Display name, username, or profile info" />
           </label>
           <label>
-            <span>Rating</span>
-            <select id="reviewRating" name="rating">
+            <span>Preferred reply method</span>
+            <select id="replyMethod" name="replyMethod">
+              <option value="Second Life IM">Second Life IM</option>
+              <option value="Email">Email</option>
+              <option value="Either">Either is fine</option>
+              <option value="No reply needed">No reply needed</option>
+            </select>
+          </label>
+          <label>
+            <span>Venue or event <em class="optional-note">optional</em></span>
+            <input id="contactVenue" name="venue" placeholder="Venue, event name, or show location" />
+          </label>
+          <label>
+            <span>Event or show date <em class="optional-note">optional</em></span>
+            <input id="contactDate" name="date" type="date" />
+          </label>
+          <label>
+            <span>Rating <em class="optional-note">for reviews</em></span>
+            <select id="contactRating" name="rating">
+              <option value="">Not a review</option>
               <option value="★★★★★">★★★★★</option>
               <option value="★★★★☆">★★★★☆</option>
               <option value="★★★☆☆">★★★☆☆</option>
             </select>
           </label>
           <label class="full-span">
-            <span>Favorite song or moment</span>
-            <input id="reviewFavorite" name="favorite" placeholder="Example: Nessun Dorma, Beggin', the crowd singalong..." />
+            <span>Favorite song or moment <em class="optional-note">for reviews</em></span>
+            <input id="contactFavorite" name="favorite" placeholder="Example: Nessun Dorma, Beggin', the crowd singalong..." />
           </label>
           <label class="full-span">
-            <span>Your review</span>
-            <textarea id="reviewText" name="review" placeholder="What would you like people to remember about Djembe's show?" required></textarea>
+            <span>Message</span>
+            <textarea id="contactMessage" name="message" placeholder="Tell us about the booking, review, question, or update." required></textarea>
           </label>
         </div>
 
-        <label class="review-permission">
-          <input id="reviewPermission" type="checkbox" required />
-          <span>I understand this note will be reviewed first, and I give permission for an approved excerpt to appear on DjembeDragonfire.com with my display name or a shortened attribution.</span>
+        <label class="permission-row" id="reviewPermissionRow">
+          <input id="reviewPermission" name="reviewPermission" type="checkbox" />
+          <span>If this is a review, I give permission for an approved excerpt to appear on DjembeDragonfire.com with my display name or a shortened attribution.</span>
         </label>
 
+        <label class="permission-row">
+          <input id="privacyConfirm" name="privacyConfirm" type="checkbox" required />
+          <span>I understand this form sends my message to Djembe Dragonfire / booking support for follow-up and review approval.</span>
+        </label>
+
+        <div id="formStatus" class="form-status" role="status" aria-live="polite">Phase 2A frontend ready. Phase 2B will connect the Worker endpoint for live email delivery.</div>
+
         <div class="contact-action-row">
-          <button class="button burst-button" type="submit">Prepare Review Email</button>
-          <a class="button secondary burst-button" href="mailto:djembedragonfiresl@gmail.com?subject=Djembe%20Dragonfire%20Message">Send a general email</a>
+          <button id="submitContactButton" class="button burst-button" type="submit">Send from Website</button>
+          <button class="button secondary burst-button" type="reset">Clear form</button>
         </div>
       </form>
-
-      <div id="reviewOutput" class="review-output" hidden>
-        <h3>Review email ready</h3>
-        <p class="small-note">Your email app should open automatically. If it does not, copy the text below and send it to <strong>djembedragonfiresl@gmail.com</strong>.</p>
-        <div class="contact-action-row">
-          <a id="reviewMailLink" class="button burst-button" href="mailto:djembedragonfiresl@gmail.com">Open email again</a>
-          <button id="copyReviewButton" class="button secondary burst-button" type="button">Copy review text</button>
-        </div>
-        <pre id="reviewPreview"></pre>
-      </div>
     </section>
 
     <section class="section approval-card">
       <p class="eyebrow">How approval works</p>
       <h2>Audience Notes stay curated.</h2>
       <div class="approval-steps">
-        <div class="approval-step"><strong>1. Guest sends note</strong><span class="small-note">The review form prepares a structured email.</span></div>
+        <div class="approval-step"><strong>1. Guest sends note</strong><span class="small-note">The website form sends the message to Djembe once Phase 2B is connected.</span></div>
         <div class="approval-step"><strong>2. Djembe reviews it</strong><span class="small-note">Only appropriate, approved excerpts are selected.</span></div>
         <div class="approval-step"><strong>3. Site is updated</strong><span class="small-note">Approved quotes can be added to the homepage Audience Notes section.</span></div>
       </div>
@@ -211,57 +282,104 @@
   <script>
     document.getElementById('year').textContent = new Date().getFullYear();
 
-    const form = document.getElementById('audienceReviewForm');
-    const output = document.getElementById('reviewOutput');
-    const preview = document.getElementById('reviewPreview');
-    const mailLink = document.getElementById('reviewMailLink');
-    const copyButton = document.getElementById('copyReviewButton');
+    const CONTACT_ENDPOINT = 'https://contact.djembedragonfire.com/submit';
+    const form = document.getElementById('directContactForm');
+    const formStatus = document.getElementById('formStatus');
+    const submitButton = document.getElementById('submitContactButton');
+    const messageType = document.getElementById('messageType');
+    const rating = document.getElementById('contactRating');
+    const reviewPermission = document.getElementById('reviewPermission');
 
-    function value(id) {
+    function setStatus(message, className = '') {
+      formStatus.className = `form-status${className ? ` ${className}` : ''}`;
+      formStatus.textContent = message;
+    }
+
+    function getValue(id) {
       const field = document.getElementById(id);
       return field ? field.value.trim() : '';
     }
 
-    function buildReviewBody() {
-      return [
-        'Djembe Dragonfire Audience Review',
-        '',
-        `Display name: ${value('reviewName') || '(not provided)'}`,
-        `Venue or event: ${value('reviewVenue') || '(not provided)'}`,
-        `Show date: ${value('reviewDate') || '(not provided)'}`,
-        `Rating: ${value('reviewRating') || '(not provided)'}`,
-        `Favorite song or moment: ${value('reviewFavorite') || '(not provided)'}`,
-        '',
-        'Review:',
-        value('reviewText') || '(not provided)',
-        '',
-        'Permission:',
-        'I understand this note will be reviewed first, and I give permission for an approved excerpt to appear on DjembeDragonfire.com with my display name or a shortened attribution.'
-      ].join('\n');
+    function syncReviewFields() {
+      const isReview = messageType.value === 'review';
+      rating.disabled = !isReview;
+      reviewPermission.required = isReview;
+      if (!isReview) {
+        rating.value = '';
+        reviewPermission.checked = false;
+      } else if (!rating.value) {
+        rating.value = '★★★★★';
+      }
     }
 
-    form.addEventListener('submit', event => {
-      event.preventDefault();
-      if (!form.reportValidity()) return;
+    messageType.addEventListener('change', syncReviewFields);
+    syncReviewFields();
 
-      const body = buildReviewBody();
-      const subject = `Audience Review for Djembe Dragonfire - ${value('reviewName') || 'Guest'}`;
-      const href = `mailto:djembedragonfiresl@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
-
-      preview.textContent = body;
-      mailLink.href = href;
-      output.hidden = false;
-      window.location.href = href;
+    form.addEventListener('reset', () => {
+      window.setTimeout(() => {
+        syncReviewFields();
+        setStatus('Phase 2A frontend ready. Phase 2B will connect the Worker endpoint for live email delivery.');
+      }, 0);
     });
 
-    copyButton.addEventListener('click', async () => {
-      const text = preview.textContent || buildReviewBody();
+    form.addEventListener('submit', async event => {
+      event.preventDefault();
+
+      const email = getValue('contactEmail');
+      const secondLife = getValue('contactSecondLife');
+
+      if (!form.reportValidity()) return;
+
+      if (!email && !secondLife) {
+        setStatus('Please include either an email address or a Second Life contact so someone can follow up.', 'is-error');
+        return;
+      }
+
+      const payload = {
+        type: getValue('messageType'),
+        name: getValue('contactName'),
+        email,
+        secondLife,
+        replyMethod: getValue('replyMethod'),
+        venue: getValue('contactVenue'),
+        date: getValue('contactDate'),
+        rating: getValue('contactRating'),
+        favorite: getValue('contactFavorite'),
+        message: getValue('contactMessage'),
+        reviewPermission: reviewPermission.checked,
+        privacyConfirm: document.getElementById('privacyConfirm').checked,
+        website: getValue('contactWebsite'),
+        page: window.location.href,
+        submittedAt: new Date().toISOString()
+      };
+
+      submitButton.disabled = true;
+      setStatus('Sending message through the website...', 'is-sending');
+
       try {
-        await navigator.clipboard.writeText(text);
-        copyButton.textContent = 'Copied!';
-        window.setTimeout(() => { copyButton.textContent = 'Copy review text'; }, 1800);
+        const response = await fetch(CONTACT_ENDPOINT, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload)
+        });
+
+        let result = {};
+        try {
+          result = await response.json();
+        } catch (error) {
+          result = {};
+        }
+
+        if (!response.ok || result.ok === false) {
+          throw new Error(result.error || `Contact service returned ${response.status}`);
+        }
+
+        setStatus('Message sent successfully. Thank you — your note has been delivered to Djembe Dragonfire.', 'is-success');
+        form.reset();
       } catch (error) {
-        copyButton.textContent = 'Select text to copy';
+        setStatus('The website form is designed and ready, but the Phase 2B email worker is not connected yet. No email app was opened. Once the worker is deployed, this button will send directly to djembedragonfiresl@gmail.com.', 'is-error');
+      } finally {
+        submitButton.disabled = false;
       }
     });
   </script>
