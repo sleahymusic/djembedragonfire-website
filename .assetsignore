@@ -1,0 +1,16 @@
+# Do not publish deployment/config/source files as static website assets.
+worker.js
+wrangler.toml
+wrangler.json
+wrangler.jsonc
+*.ps1
+*.bak
+*.proposal.json
+README.md
+node_modules
+.wrangler
+.git
+.github
+_Pending Edits
+_Applied Edits
+_Backups
