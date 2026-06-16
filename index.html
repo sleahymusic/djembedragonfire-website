@@ -39,11 +39,11 @@
   <main>
     <section class="live-status-strip" aria-label="Performance status">
       <div>
-        <span class="status-dot"></span>
-        <strong>Live performer site</strong>
-        <span>Listen anytime. Check the calendar for upcoming Second Life shows.</span>
+        <span id="streamStatusDot" class="status-dot" style="background: #f6c76c; box-shadow: 0 0 18px rgba(246,199,108,0.5);" aria-hidden="true"></span>
+        <strong id="streamStatusHeadline">Checking stream status</strong>
+        <span id="streamStatusText" aria-live="polite">The homepage will show LIVE NOW whenever Djembe is on the air.</span>
       </div>
-      <a class="text-link" href="#shows">View upcoming performances</a>
+      <a id="streamStatusAction" class="text-link" href="#shows">View upcoming performances</a>
     </section>
 
     <section class="stage-hero cinematic-hero">
@@ -79,14 +79,15 @@
         <p>When Djembe is on the air, press play and step into the room. The stage lights wake up when audio is playing.</p>
       </div>
       <div class="player-card neon-card">
-        <p class="live-pill">Live stream</p>
+        <p id="streamLivePill" class="live-pill" aria-live="polite">Checking stream</p>
         <h3>Djembe Dragonfire</h3>
+        <p id="streamNowPlaying" class="small-note" hidden></p>
         <audio controls preload="none">
-          <source src="http://stream.gclef320kbps.com:8010/stream?type=http&amp;nocache=12" type="audio/mpeg" />
+          <source src="https://stream.djembedragonfire.com/stream" type="audio/mpeg" />
           Your browser does not support the audio element.
         </audio>
-        <p class="small-note">Direct SHOUTcast stream using the stream endpoint from the source player. If it does not start, open the backup stream link while Djembe is live.</p>
-        <a class="text-link" href="http://stream.gclef320kbps.com:8010/stream?type=http&amp;nocache=12" target="_blank" rel="noopener">Open backup stream</a>
+        <p class="small-note">Secure SHOUTcast stream relay by DjembeDragonfire.com. If it does not start, the stream may be offline.</p>
+        <a class="text-link" href="https://stream.djembedragonfire.com/stream" target="_blank" rel="noopener">Open direct stream relay</a>
       </div>
     </section>
 

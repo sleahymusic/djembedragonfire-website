@@ -1,6 +1,120 @@
+const STREAM_STATUS_URL = 'https://stream.djembedragonfire.com/status';
+
 function setAudioPlayingState() {
   const anyPlaying = [...document.querySelectorAll('audio')].some(audio => !audio.paused && !audio.ended);
   document.body.classList.toggle('audio-playing', anyPlaying);
+}
+
+function getListenerText(listeners) {
+  if (!Number.isFinite(listeners) || listeners < 1) return 'The live stream is on the air';
+  if (listeners === 1) return '1 listener tuned in';
+  return `${listeners} listeners tuned in`;
+}
+
+function setStreamStatusUi(state, data = {}) {
+  const dot = document.getElementById('streamStatusDot');
+  const headline = document.getElementById('streamStatusHeadline');
+  const text = document.getElementById('streamStatusText');
+  const action = document.getElementById('streamStatusAction');
+  const pill = document.getElementById('streamLivePill');
+  const nowPlaying = document.getElementById('streamNowPlaying');
+
+  if (!dot || !headline || !text || !action || !pill) return;
+
+  const rawListeners = data.listeners;
+  const listeners = rawListeners === undefined || rawListeners === null || rawListeners === '' ? NaN : Number(rawListeners);
+  const title = typeof data.title === 'string' ? data.title.trim() : '';
+
+  document.body.classList.toggle('stream-is-live', state === 'live');
+
+  if (state === 'live') {
+    dot.style.background = '#7df0a6';
+    dot.style.boxShadow = '0 0 22px rgba(125,240,166,0.95)';
+    headline.textContent = 'LIVE NOW';
+    text.textContent = title
+      ? `${getListenerText(listeners)} — ${title}`
+      : `${getListenerText(listeners)}. Press play to join the room.`;
+    action.href = '#listen';
+    action.textContent = 'Listen live now';
+    pill.textContent = 'LIVE NOW';
+    pill.title = 'Djembe is currently live';
+
+    if (nowPlaying) {
+      nowPlaying.hidden = false;
+      nowPlaying.textContent = title ? `Now playing: ${title}` : 'Djembe is live now. Press play to listen.';
+    }
+    return;
+  }
+
+  if (state === 'offline') {
+    dot.style.background = '#6f5d65';
+    dot.style.boxShadow = '0 0 16px rgba(216,185,173,0.28)';
+    headline.textContent = 'Not live right now';
+    text.textContent = 'The stream is offline. Check the calendar for upcoming Second Life shows.';
+    action.href = '#shows';
+    action.textContent = 'View upcoming performances';
+    pill.textContent = 'Stream offline';
+    pill.title = 'The stream is offline right now';
+
+    if (nowPlaying) {
+      nowPlaying.hidden = true;
+      nowPlaying.textContent = '';
+    }
+    return;
+  }
+
+  if (state === 'unknown') {
+    dot.style.background = '#f6c76c';
+    dot.style.boxShadow = '0 0 18px rgba(246,199,108,0.5)';
+    headline.textContent = 'Stream status unavailable';
+    text.textContent = 'The player may still work. Try pressing play, or check the calendar for show times.';
+    action.href = '#listen';
+    action.textContent = 'Try the live player';
+    pill.textContent = 'Status unknown';
+    pill.title = 'The stream status check could not be reached';
+
+    if (nowPlaying) {
+      nowPlaying.hidden = true;
+      nowPlaying.textContent = '';
+    }
+    return;
+  }
+
+  dot.style.background = '#f6c76c';
+  dot.style.boxShadow = '0 0 18px rgba(246,199,108,0.5)';
+  headline.textContent = 'Checking stream status';
+  text.textContent = 'The homepage will show LIVE NOW whenever Djembe is on the air.';
+  action.href = '#shows';
+  action.textContent = 'View upcoming performances';
+  pill.textContent = 'Checking stream';
+  pill.title = 'Checking whether Djembe is live';
+
+  if (nowPlaying) {
+    nowPlaying.hidden = true;
+    nowPlaying.textContent = '';
+  }
+}
+
+async function checkLiveStreamStatus() {
+  try {
+    const response = await fetch(`${STREAM_STATUS_URL}?t=${Date.now()}`, {
+      cache: 'no-store',
+      headers: { accept: 'application/json' }
+    });
+
+    if (!response.ok) throw new Error(`Stream status returned ${response.status}`);
+
+    const data = await response.json();
+    setStreamStatusUi(data.live ? 'live' : 'offline', data);
+  } catch (error) {
+    setStreamStatusUi('unknown');
+  }
+}
+
+function startLiveStreamStatusChecks() {
+  setStreamStatusUi('checking');
+  checkLiveStreamStatus();
+  window.setInterval(checkLiveStreamStatus, 60000);
 }
 
 document.addEventListener('click', event => {
@@ -52,4 +166,7 @@ document.addEventListener('ended', event => {
   if (event.target.matches('audio')) setAudioPlayingState();
 }, true);
 
-window.addEventListener('load', setAudioPlayingState);
+window.addEventListener('load', () => {
+  setAudioPlayingState();
+  startLiveStreamStatusChecks();
+});
