@@ -10,6 +10,7 @@
   <link rel="stylesheet" href="styles.css" />
   <link rel="stylesheet" href="contemporary.css" />
   <link rel="stylesheet" href="performance-effects.css" />
+  <link rel="stylesheet" href="site-polish.css" />
 </head>
 <body class="home-page">
   <div class="cinematic-backdrop" aria-hidden="true">
@@ -100,6 +101,43 @@
       </div>
     </section>
 
+    <section class="section homepage-spotlights" aria-label="Show highlights">
+      <article class="show-mode-card">
+        <span id="showModePill" class="spotlight-pill">Checking</span>
+        <p class="eyebrow">Show Mode</p>
+        <h2 id="nextShowTitle">Next Performance</h2>
+        <p id="showModeLiveLine">Checking whether Djembe is live now.</p>
+        <dl class="show-detail-list">
+          <div><dt>Date</dt><dd id="nextShowDate">See calendar below</dd></div>
+          <div><dt>Time</dt><dd id="nextShowTime">Pacific / SLT</dd></div>
+          <div><dt>Venue</dt><dd id="nextShowVenue">Second Life venue to be announced</dd></div>
+        </dl>
+        <p id="nextShowNote" class="small-note">The Google Calendar remains the source of truth for upcoming shows. Use this card for the next highlighted performance, a special event, or a venue spotlight.</p>
+        <div class="contact-action-row">
+          <a id="showModeLiveAction" class="button burst-button" href="#shows">View calendar</a>
+          <a id="nextShowCalendarLink" class="button secondary burst-button" href="#shows">View the calendar</a>
+        </div>
+      </article>
+
+      <article id="feature" class="feature-week-card">
+        <p id="featureWeekEyebrow" class="eyebrow">Feature of the Week</p>
+        <h2 id="featureWeekTitle">New Song Spotlight</h2>
+        <div class="feature-meta">
+          <span id="featureWeekSong">TBA: next song in the fire</span>
+          <span id="featureWeekArtist">Original artist / version to be added</span>
+          <span id="featureWeekStatus">In rehearsal / coming soon</span>
+        </div>
+        <p id="featureWeekDescription">Use this spotlight for a new song Djembe is preparing, a returning favorite, a themed performance moment, or an original YouTube reference. This does not need to be a Djembe recording — it can simply tell guests what is coming into the show and why it matters.</p>
+        <div id="featureVideoWrap" class="feature-video-wrap" hidden>
+          <iframe id="featureVideoFrame" title="Feature of the Week reference video" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+        </div>
+        <div class="contact-action-row">
+          <a id="featureWeekAction" class="button burst-button" href="songs.html">Browse the full song list</a>
+          <a id="featureOriginalLink" class="button secondary burst-button" href="https://www.youtube.com/" target="_blank" rel="noopener noreferrer" hidden>Open original reference</a>
+        </div>
+      </article>
+    </section>
+
     <section id="about" class="section story-strip signature-story">
       <div class="story-photo-stack" aria-hidden="true">
         <img src="images/djembe.png" alt="" />
@@ -127,14 +165,14 @@
           <p class="eyebrow">Audience Notes</p>
           <h2>What people remember.</h2>
         </div>
-        <p class="review-note">Curated listener notes and venue impressions. <a class="text-link" href="contact.html#reviews">Leave a review for approval</a>.</p>
+        <p class="review-note">Curated listener notes and venue impressions. <a class="text-link" href="contact.html#message">Leave a review for approval</a>.</p>
       </div>
-      <div class="review-grid">
+      <div id="approvedReviewsGrid" class="review-grid">
         <article class="review-card"><span>★★★★★</span><p>“Djembe makes every song feel like a story being told just for the room.”</p><strong>Listener impression</strong></article>
         <article class="review-card"><span>★★★★★</span><p>“Playful one moment, breathtakingly serious the next — that contrast is the magic.”</p><strong>Audience note</strong></article>
         <article class="review-card"><span>★★★★★</span><p>“The kind of voice that can lift a crowd, quiet a room, or make everyone smile.”</p><strong>Venue-ready energy</strong></article>
       </div>
-      <p class="small-note">Want your note considered for this section? <a class="text-link" href="contact.html#reviews">Send an audience review</a>. Approved excerpts can be added here.</p>
+      <p class="small-note">Want your note considered for this section? <a class="text-link" href="contact.html#message">Send an audience review</a>. Approved excerpts can be added through <code>data/reviews.json</code>.</p>
     </section>
 
     <section id="shows" class="section shows-section calendar-section">
@@ -145,7 +183,7 @@
     <section id="contact" class="section contact-section modern-contact booking-suite">
       <p class="eyebrow">Booking & Connection</p>
       <h2>Bring Djembe Dragonfire to your Second Life venue.</h2>
-      <p>For bookings, venue inquiries, scheduling, and show coordination, please contact <strong>Rave Wilder</strong> in Second Life. Guests can also use the Contact page to leave a review for approval.</p>
+      <p>For bookings, venue inquiries, scheduling, and show coordination, please contact <strong>Rave Wilder</strong> in Second Life. Guests can also use the Contact page to send a protected website message or leave a review for approval.</p>
       <div class="booking-grid">
         <div class="booking-card">
           <h3>Booking Contact</h3>
@@ -157,7 +195,7 @@
           <h3>Guests & Reviews</h3>
           <p>Browse the song list before the show, use Help Me Choose to find a request, or leave an audience note for approval after the show.</p>
           <a class="button secondary burst-button" href="songs.html">Help guests pick a request</a>
-          <a class="text-link" href="contact.html#reviews">Leave an audience review</a>
+          <a class="text-link" href="contact.html#message">Leave an audience review</a>
         </div>
       </div>
       <p class="small-note">Rave Wilder UUID: 2df659e6-441f-4901-8d2c-e19331427b92</p>

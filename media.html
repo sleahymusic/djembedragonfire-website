@@ -10,6 +10,7 @@
   <link rel="stylesheet" href="styles.css" />
   <link rel="stylesheet" href="contemporary.css" />
   <link rel="stylesheet" href="performance-effects.css" />
+  <link rel="stylesheet" href="site-polish.css" />
   <style>
     .media-page .page-hero { padding-bottom: clamp(2rem, 5vw, 4rem); }
     .media-feature, .media-samples-shell, .media-gallery-shell {
@@ -120,10 +121,17 @@
     <section class="page-hero">
       <p class="eyebrow">Video & Media</p>
       <h1>Watch and hear the fire.</h1>
-      <p class="lead">Videos, recordings, and performance photos live here so the homepage can stay focused on the live room, reviews, shows, and booking.</p>
+      <p class="lead">Videos, recordings, performance photos, and weekly feature spotlights live here so the homepage can stay focused on the live room, reviews, shows, and booking.</p>
     </section>
 
-    <section class="section media-feature">
+    <nav class="media-jump-row" aria-label="Media page shortcuts">
+      <a href="#video">Featured Video</a>
+      <a href="#feature">Feature of the Week</a>
+      <a href="#samples">Listening Samples</a>
+      <a href="#gallery">Gallery</a>
+    </nav>
+
+    <section id="video" class="section media-feature">
       <p class="eyebrow">Featured Video</p>
       <h2>Djembe Dragonfire video feature</h2>
       <div class="video-frame-wrap">
@@ -144,6 +152,24 @@
             <li>Behind-the-scenes media</li>
           </ul>
         </article>
+      </div>
+    </section>
+
+    <section id="feature" class="section feature-week-card media-feature-of-week">
+      <p id="featureWeekEyebrow" class="eyebrow">Feature of the Week</p>
+      <h2 id="featureWeekTitle">New Song Spotlight</h2>
+      <div class="feature-meta">
+        <span id="featureWeekSong">TBA: next song in the fire</span>
+        <span id="featureWeekArtist">Original artist / version to be added</span>
+        <span id="featureWeekStatus">In rehearsal / coming soon</span>
+      </div>
+      <p id="featureWeekDescription">Use this spotlight for a new song Djembe is preparing, a returning favorite, a themed performance moment, or an original YouTube reference. This does not need to be a Djembe recording — it can simply tell guests what is coming into the show and why it matters.</p>
+      <div id="featureVideoWrap" class="feature-video-wrap" hidden>
+        <iframe id="featureVideoFrame" title="Feature of the Week reference video" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+      </div>
+      <div class="contact-action-row">
+        <a id="featureWeekAction" class="button burst-button" href="songs.html">Browse the full song list</a>
+        <a id="featureOriginalLink" class="button secondary burst-button" href="https://www.youtube.com/" target="_blank" rel="noopener noreferrer" hidden>Open original reference</a>
       </div>
     </section>
 

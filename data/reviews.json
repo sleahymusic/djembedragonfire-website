@@ -1,0 +1,27 @@
+{
+  "updated": "2026-06-16",
+  "notes": "Only approved public excerpts should be placed here. The homepage loads approved reviews from this file and falls back to built-in cards if the file cannot load.",
+  "reviews": [
+    {
+      "approved": true,
+      "rating": "★★★★★",
+      "quote": "Djembe makes every song feel like a story being told just for the room.",
+      "attribution": "Listener impression",
+      "date": ""
+    },
+    {
+      "approved": true,
+      "rating": "★★★★★",
+      "quote": "Playful one moment, breathtakingly serious the next — that contrast is the magic.",
+      "attribution": "Audience note",
+      "date": ""
+    },
+    {
+      "approved": true,
+      "rating": "★★★★★",
+      "quote": "The kind of voice that can lift a crowd, quiet a room, or make everyone smile.",
+      "attribution": "Venue-ready energy",
+      "date": ""
+    }
+  ]
+}
