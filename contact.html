@@ -14,7 +14,7 @@
   <style>
     .contact-page .page-hero { padding-bottom: clamp(2rem, 5vw, 4rem); }
     .contact-hub-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1rem; align-items: stretch; }
-    .contact-hub-card, .direct-contact-card, .approval-card, .contact-status-card {
+    .contact-hub-card, .direct-contact-card, .approval-card {
       position: relative;
       overflow: hidden;
       border: 1px solid rgba(255,255,255,0.16);
@@ -27,36 +27,15 @@
       box-shadow: 0 30px 90px rgba(0,0,0,0.36);
       backdrop-filter: blur(14px);
     }
-    .contact-hub-card::before, .direct-contact-card::before, .approval-card::before, .contact-status-card::before {
+    .contact-hub-card::before, .direct-contact-card::before, .approval-card::before {
       content: "";
       position: absolute;
       inset: -1px;
       background: linear-gradient(135deg, rgba(246,199,108,0.18), transparent, rgba(229,75,122,0.18));
       pointer-events: none;
     }
-    .contact-hub-card > *, .direct-contact-card > *, .approval-card > *, .contact-status-card > * { position: relative; z-index: 1; }
+    .contact-hub-card > *, .direct-contact-card > *, .approval-card > * { position: relative; z-index: 1; }
     .contact-hub-card h2, .direct-contact-card h2, .approval-card h2 { font-size: clamp(2rem, 4vw, 3rem); }
-    .contact-status-card {
-      display: grid;
-      grid-template-columns: auto 1fr;
-      gap: 1rem;
-      align-items: center;
-      margin-bottom: 1rem;
-      padding: 1.2rem 1.35rem;
-      border-color: rgba(246,199,108,0.24);
-    }
-    .contact-status-icon {
-      display: grid;
-      place-items: center;
-      width: 3rem;
-      height: 3rem;
-      border-radius: 999px;
-      color: #1c0710;
-      background: linear-gradient(135deg, var(--gold), var(--rose));
-      box-shadow: 0 0 24px rgba(246,199,108,0.32);
-      font-weight: 950;
-    }
-    .contact-status-card p { margin: 0; color: var(--muted); }
     .contact-action-row { display: flex; flex-wrap: wrap; gap: 0.8rem; margin-top: 1.2rem; }
     .contact-detail-list { display: grid; gap: 0.7rem; margin: 1.2rem 0 0; padding: 0; list-style: none; color: var(--muted); }
     .contact-detail-list strong { color: var(--gold); }
@@ -115,7 +94,6 @@
       .contact-hub-grid, .direct-form-grid, .approval-steps { grid-template-columns: 1fr; }
       .contact-hub-card + .contact-hub-card, .approval-step + .approval-step { margin-top: 1rem; }
       .direct-contact-card .full-span { grid-column: auto; }
-      .contact-status-card { grid-template-columns: 1fr; }
     }
   </style>
 </head>
@@ -151,14 +129,6 @@
       <p class="eyebrow">Contact & Reviews</p>
       <h1>Send a message from the website.</h1>
       <p class="lead">Use this page for booking inquiries, venue coordination, guest messages, and audience reviews. Reviews are checked before anything appears publicly in Audience Notes.</p>
-    </section>
-
-    <section class="section contact-status-card" aria-label="Contact form status">
-      <div class="contact-status-icon">2C</div>
-      <div>
-        <strong>Direct website form with anti-spam protection.</strong>
-        <p>Messages send through the Cloudflare contact worker to <strong>djembedragonfiresl@gmail.com</strong>. Turnstile helps block automated spam before the email is sent.</p>
-      </div>
     </section>
 
     <section class="section contact-hub-grid" aria-label="Contact options">
@@ -287,9 +257,9 @@
       <p class="eyebrow">How approval works</p>
       <h2>Audience Notes stay curated.</h2>
       <div class="approval-steps">
-        <div class="approval-step"><strong>1. Guest sends note</strong><span class="small-note">The protected website form sends the message directly to Djembe.</span></div>
-        <div class="approval-step"><strong>2. Djembe reviews it</strong><span class="small-note">Only appropriate, approved excerpts are selected.</span></div>
-        <div class="approval-step"><strong>3. Site is updated</strong><span class="small-note">Approved quotes can be added to the homepage Audience Notes section.</span></div>
+        <div class="approval-step"><strong>1. Guest sends note</strong><span class="small-note">The protected website form emails the full review to Djembe.</span></div>
+        <div class="approval-step"><strong>2. Djembe approves excerpt</strong><span class="small-note">Only appropriate notes with review permission are selected for public use.</span></div>
+        <div class="approval-step"><strong>3. Site is updated</strong><span class="small-note">Approved excerpts are added to the homepage Audience Notes through data/reviews.json.</span></div>
       </div>
     </section>
   </main>
