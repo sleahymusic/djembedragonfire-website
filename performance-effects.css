@@ -1,28 +1,156 @@
-/* Performance-focused stage lighting and lightweight player visualizer.
-   Loaded after contemporary.css so these rules override the heavier defaults. */
+/* Djembe Dragonfire motion layer.
+   Restores the cinematic curtain drift, floating particles, sweeping stage lights,
+   and CSS-only sound bars after external optimization tools disabled motion. */
 
+/* Curtain / cinematic background movement */
+.home-page .cinematic-backdrop {
+  position: fixed !important;
+  inset: 0 !important;
+  z-index: -2 !important;
+  overflow: hidden !important;
+  pointer-events: none !important;
+  background: #050307 !important;
+}
+
+.home-page .cinematic-bg {
+  display: block !important;
+  position: absolute !important;
+  inset: -8% !important;
+  background-position: center !important;
+  background-size: cover !important;
+  opacity: 0.42 !important;
+  transform-origin: center !important;
+  animation: djembeCurtainDrift 34s ease-in-out infinite alternate !important;
+  will-change: transform !important;
+  filter: saturate(1.08) contrast(1.03) !important;
+}
+
+.home-page .bg-one {
+  background-image: linear-gradient(140deg, rgba(8,6,10,0.54), rgba(22,8,19,0.30)), url("images/Background1.jpg") !important;
+}
+
+.home-page .bg-two {
+  background-image: linear-gradient(140deg, rgba(8,6,10,0.58), rgba(229,75,122,0.12)), url("images/Background2.jpg") !important;
+  opacity: 0.20 !important;
+  mix-blend-mode: screen !important;
+  animation-delay: -12s !important;
+  animation-duration: 42s !important;
+}
+
+.home-page .cinematic-backdrop::after {
+  content: "" !important;
+  position: absolute !important;
+  inset: 0 !important;
+  background:
+    linear-gradient(to bottom, rgba(5,3,7,0.08), rgba(5,3,7,0.62) 74%, rgba(5,3,7,0.86)),
+    radial-gradient(circle at 50% 12%, rgba(246,199,108,0.16), transparent 24rem),
+    radial-gradient(circle at 82% 32%, rgba(34,211,238,0.12), transparent 24rem) !important;
+}
+
+@keyframes djembeCurtainDrift {
+  from { transform: scale(1.02) translate3d(-1%, -1%, 0); }
+  to { transform: scale(1.12) translate3d(1.5%, 1%, 0); }
+}
+
+/* Floating ambient particles */
+.home-page .ambient-particles {
+  display: block !important;
+  visibility: visible !important;
+  position: fixed !important;
+  inset: 0 !important;
+  z-index: 0 !important;
+  pointer-events: none !important;
+  overflow: hidden !important;
+  opacity: 1 !important;
+  contain: none !important;
+}
+
+.home-page .ambient-particles span {
+  display: block !important;
+  position: absolute !important;
+  width: 0.5rem !important;
+  height: 0.5rem !important;
+  border-radius: 999px !important;
+  opacity: 0.72 !important;
+  background: radial-gradient(circle, rgba(246,199,108,0.95), rgba(229,75,122,0.22), transparent 72%) !important;
+  box-shadow: 0 0 24px rgba(246,199,108,0.55) !important;
+  animation-name: djembeParticleFloat !important;
+  animation-timing-function: linear !important;
+  animation-iteration-count: infinite !important;
+  will-change: transform, opacity !important;
+}
+
+.home-page .ambient-particles span:nth-child(1) { left: 10% !important; animation-delay: 0s !important; animation-duration: 18s !important; }
+.home-page .ambient-particles span:nth-child(2) { left: 28% !important; animation-delay: -4s !important; animation-duration: 22s !important; }
+.home-page .ambient-particles span:nth-child(3) { left: 47% !important; animation-delay: -8s !important; animation-duration: 19s !important; }
+.home-page .ambient-particles span:nth-child(4) { left: 68% !important; animation-delay: -2s !important; animation-duration: 24s !important; }
+.home-page .ambient-particles span:nth-child(5) { left: 82% !important; animation-delay: -10s !important; animation-duration: 20s !important; }
+.home-page .ambient-particles span:nth-child(6) { left: 93% !important; animation-delay: -6s !important; animation-duration: 26s !important; }
+
+@keyframes djembeParticleFloat {
+  from { transform: translate3d(0, 110vh, 0) scale(0.6); opacity: 0.16; }
+  50% { transform: translate3d(2rem, 45vh, 0) scale(1.4); opacity: 0.82; }
+  to { transform: translate3d(-1rem, -10vh, 0) scale(0.8); opacity: 0.10; }
+}
+
+/* Stage lights */
 .home-page .stage-lights {
-  opacity: 0.78;
-  mix-blend-mode: normal;
+  display: block !important;
+  visibility: visible !important;
+  position: fixed !important;
+  inset: 0 !important;
+  z-index: 0 !important;
+  pointer-events: none !important;
+  overflow: hidden !important;
+  opacity: 0.84 !important;
+  mix-blend-mode: screen !important;
+  perspective: 900px !important;
+  transform-style: preserve-3d !important;
+  contain: none !important;
   background:
     radial-gradient(circle at 50% 8%, rgba(255,248,242,0.08), transparent 16rem),
     radial-gradient(circle at 16% 80%, rgba(229,75,122,0.10), transparent 24rem),
-    radial-gradient(circle at 82% 82%, rgba(34,211,238,0.09), transparent 24rem);
+    radial-gradient(circle at 82% 82%, rgba(34,211,238,0.09), transparent 24rem) !important;
 }
 
 .home-page .stage-lights::before {
-  filter: blur(5px);
-  opacity: 0.22;
-  animation-duration: 32s;
+  content: "" !important;
+  position: absolute !important;
+  inset: -10% !important;
+  background:
+    radial-gradient(ellipse at center, rgba(255,248,242,0.08), transparent 38%),
+    repeating-linear-gradient(110deg, rgba(255,255,255,0.025) 0 1px, transparent 1px 12px) !important;
+  opacity: 0.28 !important;
+  filter: blur(8px) !important;
+  animation: djembeHazeDrift 24s ease-in-out infinite alternate !important;
+  will-change: transform !important;
 }
 
 .home-page .light-beam {
-  width: 26vw;
-  height: 126vh;
-  opacity: 0.44;
-  filter: blur(7px) saturate(1.08);
-  animation: sweepLight 15s ease-in-out infinite alternate;
-  will-change: transform, opacity;
+  display: block !important;
+  position: absolute !important;
+  top: -22vh !important;
+  width: 28vw !important;
+  height: 132vh !important;
+  transform-origin: 50% 0% !important;
+  opacity: 0.50 !important;
+  filter: blur(8px) saturate(1.12) !important;
+  clip-path: polygon(47% 0, 53% 0, 100% 100%, 0 100%) !important;
+  transform-style: preserve-3d !important;
+  animation-name: djembeSweepLight !important;
+  animation-timing-function: ease-in-out !important;
+  animation-iteration-count: infinite !important;
+  animation-direction: alternate !important;
+  animation-duration: 12s !important;
+  will-change: transform, opacity !important;
+}
+
+.home-page .light-beam::before,
+.home-page .light-beam::after {
+  content: "" !important;
+  position: absolute !important;
+  inset: 0 !important;
+  clip-path: inherit !important;
 }
 
 .home-page .light-beam::before {
@@ -32,51 +160,60 @@
       rgba(255,248,242,0.70),
       rgba(246,199,108,0.40) 14%,
       rgba(229,75,122,0.18) 46%,
-      transparent 82%);
+      transparent 82%) !important;
 }
 
 .home-page .light-beam::after {
-  opacity: 0.22;
+  opacity: 0.24 !important;
+  background:
+    linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.16) 48%, rgba(255,255,255,0.28) 50%, rgba(255,255,255,0.16) 52%, transparent 100%),
+    repeating-linear-gradient(to bottom, transparent 0 3.5rem, rgba(255,255,255,0.026) 3.5rem 3.65rem) !important;
 }
+
+.home-page .beam-one { left: -2vw !important; animation-delay: 0s !important; }
+.home-page .beam-two { left: 32vw !important; animation-duration: 14s !important; animation-delay: -3s !important; }
+.home-page .beam-three { right: -2vw !important; animation-duration: 13s !important; animation-delay: -6s !important; }
 
 .home-page .beam-two::before {
   background:
     radial-gradient(ellipse at 50% 4%, rgba(255,255,255,0.86), rgba(34,211,238,0.24) 13%, transparent 22%),
-    linear-gradient(to bottom, rgba(255,248,242,0.56), rgba(34,211,238,0.34) 15%, rgba(139,92,246,0.15) 50%, transparent 83%);
+    linear-gradient(to bottom, rgba(255,248,242,0.56), rgba(34,211,238,0.34) 15%, rgba(139,92,246,0.15) 50%, transparent 83%) !important;
 }
 
 .home-page .beam-three::before {
   background:
     radial-gradient(ellipse at 50% 4%, rgba(255,255,255,0.86), rgba(229,75,122,0.26) 12%, transparent 22%),
-    linear-gradient(to bottom, rgba(255,248,242,0.56), rgba(229,75,122,0.36) 16%, rgba(246,199,108,0.15) 52%, transparent 83%);
+    linear-gradient(to bottom, rgba(255,248,242,0.56), rgba(229,75,122,0.36) 16%, rgba(246,199,108,0.15) 52%, transparent 83%) !important;
 }
 
 .home-page.audio-playing .stage-lights {
-  opacity: 0.98;
+  opacity: 1 !important;
   background:
     radial-gradient(circle at 50% 8%, rgba(255,248,242,0.13), transparent 17rem),
     radial-gradient(circle at 16% 80%, rgba(229,75,122,0.16), transparent 26rem),
-    radial-gradient(circle at 82% 82%, rgba(34,211,238,0.14), transparent 26rem);
-}
-
-.home-page.audio-playing .stage-lights::before {
-  opacity: 0.32;
-  animation-duration: 22s;
+    radial-gradient(circle at 82% 82%, rgba(34,211,238,0.14), transparent 26rem) !important;
 }
 
 .home-page.audio-playing .light-beam {
-  opacity: 0.70;
-  filter: blur(8px) saturate(1.18) brightness(1.14);
-  animation: sweepLight 7s ease-in-out infinite alternate;
-}
-.home-page.audio-playing .beam-two { animation-duration: 7.8s; }
-.home-page.audio-playing .beam-three { animation-duration: 7.3s; }
-
-@keyframes sweepLight {
-  from { transform: rotate(-28deg) rotateX(20deg) translateX(-7vw) translateZ(-60px); }
-  to { transform: rotate(28deg) rotateX(28deg) translateX(7vw) translateZ(56px); }
+  opacity: 0.76 !important;
+  filter: blur(8px) saturate(1.22) brightness(1.16) !important;
+  animation-duration: 7s !important;
 }
 
+.home-page.audio-playing .beam-two { animation-duration: 7.8s !important; }
+.home-page.audio-playing .beam-three { animation-duration: 7.3s !important; }
+
+@keyframes djembeSweepLight {
+  from { transform: rotate(-26deg) rotateX(20deg) translateX(-7vw) translateZ(-64px); }
+  to { transform: rotate(26deg) rotateX(28deg) translateX(7vw) translateZ(56px); }
+}
+
+@keyframes djembeHazeDrift {
+  from { transform: translate3d(-2%, 1%, 0) scale(1); }
+  to { transform: translate3d(2%, -1%, 0) scale(1.08); }
+}
+
+/* CSS-only player / sample sound bars */
 .player-card.has-visualizer {
   isolation: isolate;
 }
@@ -129,220 +266,75 @@
 
 .fake-visualizer {
   position: relative;
-  display: grid;
-  grid-template-columns: repeat(13, minmax(0, 1fr));
-  align-items: end;
+  display: grid !important;
+  grid-template-columns: repeat(13, minmax(0, 1fr)) !important;
+  align-items: end !important;
   gap: clamp(0.22rem, 1vw, 0.48rem);
   height: 82px;
+  visibility: visible !important;
+  opacity: 1 !important;
 }
 
 .fake-visualizer span {
-  min-width: 4px;
-  height: 100%;
+  display: block !important;
+  min-width: 4px !important;
+  height: 100% !important;
   border-radius: 999px 999px 0 0;
-  transform-origin: center bottom;
+  transform-origin: center bottom !important;
   transform: scaleY(var(--idle, 0.20));
-  opacity: 0.42;
+  opacity: 0.42 !important;
   background:
     linear-gradient(to top,
       rgba(229,75,122,0.78),
       rgba(246,199,108,0.92) 58%,
-      rgba(255,248,242,0.92));
+      rgba(255,248,242,0.92)) !important;
   box-shadow: 0 0 14px rgba(246,199,108,0.22);
-  animation: visualizerPulse var(--speed, 880ms) ease-in-out infinite alternate;
-  animation-play-state: paused;
+  animation-name: djembeVisualizerPulse !important;
+  animation-timing-function: ease-in-out !important;
+  animation-iteration-count: infinite !important;
+  animation-direction: alternate !important;
+  animation-duration: var(--speed, 880ms) !important;
+  animation-play-state: paused !important;
+  will-change: transform, opacity !important;
 }
 
-.fake-visualizer span:nth-child(1) { --idle: 0.18; --low: 0.22; --high: 0.58; --speed: 980ms; animation-delay: -120ms; }
-.fake-visualizer span:nth-child(2) { --idle: 0.26; --low: 0.28; --high: 0.78; --speed: 760ms; animation-delay: -360ms; }
-.fake-visualizer span:nth-child(3) { --idle: 0.34; --low: 0.32; --high: 0.92; --speed: 840ms; animation-delay: -220ms; }
-.fake-visualizer span:nth-child(4) { --idle: 0.22; --low: 0.20; --high: 0.68; --speed: 920ms; animation-delay: -480ms; }
-.fake-visualizer span:nth-child(5) { --idle: 0.40; --low: 0.38; --high: 1.00; --speed: 700ms; animation-delay: -160ms; }
-.fake-visualizer span:nth-child(6) { --idle: 0.28; --low: 0.26; --high: 0.74; --speed: 820ms; animation-delay: -520ms; }
-.fake-visualizer span:nth-child(7) { --idle: 0.46; --low: 0.42; --high: 1.00; --speed: 680ms; animation-delay: -280ms; }
-.fake-visualizer span:nth-child(8) { --idle: 0.30; --low: 0.28; --high: 0.82; --speed: 860ms; animation-delay: -430ms; }
-.fake-visualizer span:nth-child(9) { --idle: 0.38; --low: 0.34; --high: 0.96; --speed: 740ms; animation-delay: -190ms; }
-.fake-visualizer span:nth-child(10) { --idle: 0.24; --low: 0.24; --high: 0.70; --speed: 900ms; animation-delay: -390ms; }
-.fake-visualizer span:nth-child(11) { --idle: 0.32; --low: 0.30; --high: 0.88; --speed: 790ms; animation-delay: -250ms; }
-.fake-visualizer span:nth-child(12) { --idle: 0.24; --low: 0.24; --high: 0.66; --speed: 960ms; animation-delay: -460ms; }
-.fake-visualizer span:nth-child(13) { --idle: 0.18; --low: 0.20; --high: 0.54; --speed: 1040ms; animation-delay: -310ms; }
+.fake-visualizer span:nth-child(1) { --idle: 0.18; --low: 0.22; --high: 0.58; --speed: 980ms; animation-delay: -120ms !important; }
+.fake-visualizer span:nth-child(2) { --idle: 0.26; --low: 0.28; --high: 0.78; --speed: 760ms; animation-delay: -360ms !important; }
+.fake-visualizer span:nth-child(3) { --idle: 0.34; --low: 0.32; --high: 0.92; --speed: 840ms; animation-delay: -220ms !important; }
+.fake-visualizer span:nth-child(4) { --idle: 0.22; --low: 0.20; --high: 0.68; --speed: 920ms; animation-delay: -480ms !important; }
+.fake-visualizer span:nth-child(5) { --idle: 0.40; --low: 0.38; --high: 1.00; --speed: 700ms; animation-delay: -160ms !important; }
+.fake-visualizer span:nth-child(6) { --idle: 0.28; --low: 0.26; --high: 0.74; --speed: 820ms; animation-delay: -520ms !important; }
+.fake-visualizer span:nth-child(7) { --idle: 0.46; --low: 0.42; --high: 1.00; --speed: 680ms; animation-delay: -280ms !important; }
+.fake-visualizer span:nth-child(8) { --idle: 0.30; --low: 0.28; --high: 0.82; --speed: 860ms; animation-delay: -430ms !important; }
+.fake-visualizer span:nth-child(9) { --idle: 0.38; --low: 0.34; --high: 0.96; --speed: 740ms; animation-delay: -190ms !important; }
+.fake-visualizer span:nth-child(10) { --idle: 0.24; --low: 0.24; --high: 0.70; --speed: 900ms; animation-delay: -390ms !important; }
+.fake-visualizer span:nth-child(11) { --idle: 0.32; --low: 0.30; --high: 0.88; --speed: 790ms; animation-delay: -250ms !important; }
+.fake-visualizer span:nth-child(12) { --idle: 0.24; --low: 0.24; --high: 0.66; --speed: 960ms; animation-delay: -460ms !important; }
+.fake-visualizer span:nth-child(13) { --idle: 0.18; --low: 0.20; --high: 0.54; --speed: 1040ms; animation-delay: -310ms !important; }
 
 .audio-playing .fake-visualizer span {
-  opacity: 0.94;
-  animation-play-state: running;
+  opacity: 0.96 !important;
+  animation-play-state: running !important;
 }
 
 .audio-playing .fake-visualizer span:nth-child(3n) {
-  background: linear-gradient(to top, rgba(34,211,238,0.64), rgba(246,199,108,0.92) 62%, rgba(255,248,242,0.95));
+  background: linear-gradient(to top, rgba(34,211,238,0.64), rgba(246,199,108,0.92) 62%, rgba(255,248,242,0.95)) !important;
 }
 
-@keyframes visualizerPulse {
+@keyframes djembeVisualizerPulse {
   from { transform: scaleY(var(--low, 0.25)); }
   to { transform: scaleY(var(--high, 0.85)); }
 }
 
 @media (max-width: 700px) {
   .home-page .light-beam {
-    width: 32vw;
-    height: 118vh;
-    filter: blur(6px) saturate(1.06);
+    width: 32vw !important;
+    height: 118vh !important;
+    filter: blur(6px) saturate(1.06) !important;
   }
 
   .fake-visualizer {
-    height: 62px;
-    gap: 0.22rem;
-  }
-}
-
-/* Motion rescue layer.
-   This intentionally affects only the decorative stage effects and CSS-only visualizers. */
-@media (prefers-reduced-motion: no-preference) {
-  .home-page .ambient-particles,
-  .home-page .stage-lights {
-    display: block !important;
-    visibility: visible !important;
-    pointer-events: none !important;
-    overflow: hidden !important;
-  }
-
-  .home-page .ambient-particles {
-    position: fixed !important;
-    inset: 0 !important;
-    z-index: 0 !important;
-    opacity: 1 !important;
-    contain: none !important;
-  }
-
-  .home-page .ambient-particles span {
-    display: block !important;
-    position: absolute !important;
-    width: 0.5rem !important;
-    height: 0.5rem !important;
-    border-radius: 999px !important;
-    opacity: 0.72 !important;
-    background: radial-gradient(circle, rgba(246,199,108,0.95), rgba(229,75,122,0.22), transparent 72%) !important;
-    box-shadow: 0 0 24px rgba(246,199,108,0.55) !important;
-    animation-name: floatParticleRescue !important;
-    animation-timing-function: linear !important;
-    animation-iteration-count: infinite !important;
-    will-change: transform, opacity !important;
-  }
-
-  .home-page .ambient-particles span:nth-child(1) { left: 10% !important; animation-delay: 0s !important; animation-duration: 18s !important; }
-  .home-page .ambient-particles span:nth-child(2) { left: 28% !important; animation-delay: -4s !important; animation-duration: 22s !important; }
-  .home-page .ambient-particles span:nth-child(3) { left: 47% !important; animation-delay: -8s !important; animation-duration: 19s !important; }
-  .home-page .ambient-particles span:nth-child(4) { left: 68% !important; animation-delay: -2s !important; animation-duration: 24s !important; }
-  .home-page .ambient-particles span:nth-child(5) { left: 82% !important; animation-delay: -10s !important; animation-duration: 20s !important; }
-  .home-page .ambient-particles span:nth-child(6) { left: 93% !important; animation-delay: -6s !important; animation-duration: 26s !important; }
-
-  .home-page .stage-lights {
-    position: fixed !important;
-    inset: 0 !important;
-    z-index: 0 !important;
-    opacity: 0.84 !important;
-    mix-blend-mode: screen !important;
-    perspective: 900px !important;
-    transform-style: preserve-3d !important;
-    contain: none !important;
-  }
-
-  .home-page .stage-lights::before {
-    content: "" !important;
-    position: absolute !important;
-    inset: -10% !important;
-    opacity: 0.28 !important;
-    filter: blur(8px) !important;
-    animation: hazeDriftRescue 24s ease-in-out infinite alternate !important;
-  }
-
-  .home-page .light-beam {
-    display: block !important;
-    position: absolute !important;
-    top: -22vh !important;
-    width: 28vw !important;
-    height: 132vh !important;
-    transform-origin: 50% 0% !important;
-    opacity: 0.50 !important;
-    filter: blur(8px) saturate(1.12) !important;
-    clip-path: polygon(47% 0, 53% 0, 100% 100%, 0 100%) !important;
-    animation-name: sweepLightRescue !important;
-    animation-timing-function: ease-in-out !important;
-    animation-iteration-count: infinite !important;
-    animation-direction: alternate !important;
-    animation-duration: 12s !important;
-    will-change: transform, opacity !important;
-  }
-
-  .home-page .beam-one { left: -2vw !important; animation-delay: 0s !important; }
-  .home-page .beam-two { left: 32vw !important; animation-duration: 14s !important; animation-delay: -3s !important; }
-  .home-page .beam-three { right: -2vw !important; animation-duration: 13s !important; animation-delay: -6s !important; }
-
-  .home-page.audio-playing .stage-lights { opacity: 1 !important; }
-  .home-page.audio-playing .light-beam {
-    opacity: 0.76 !important;
-    filter: blur(8px) saturate(1.22) brightness(1.16) !important;
-    animation-duration: 7s !important;
-  }
-
-  .fake-visualizer {
-    display: grid !important;
-    grid-template-columns: repeat(13, minmax(0, 1fr)) !important;
-    align-items: end !important;
-    visibility: visible !important;
-    opacity: 1 !important;
-  }
-
-  .fake-visualizer span {
-    display: block !important;
-    min-width: 4px !important;
-    height: 100% !important;
-    transform-origin: center bottom !important;
-    animation-name: visualizerPulseRescue !important;
-    animation-timing-function: ease-in-out !important;
-    animation-iteration-count: infinite !important;
-    animation-direction: alternate !important;
-    animation-duration: var(--speed, 880ms) !important;
-    animation-play-state: paused !important;
-    will-change: transform, opacity !important;
-  }
-
-  .audio-playing .fake-visualizer span,
-  .fake-visualizer.is-previewing span {
-    animation-play-state: running !important;
-    opacity: 0.96 !important;
-  }
-}
-
-@keyframes floatParticleRescue {
-  from { transform: translate3d(0, 110vh, 0) scale(0.6); opacity: 0.16; }
-  50% { transform: translate3d(2rem, 45vh, 0) scale(1.4); opacity: 0.82; }
-  to { transform: translate3d(-1rem, -10vh, 0) scale(0.8); opacity: 0.10; }
-}
-
-@keyframes sweepLightRescue {
-  from { transform: rotate(-26deg) rotateX(20deg) translateX(-7vw) translateZ(-64px); }
-  to { transform: rotate(26deg) rotateX(28deg) translateX(7vw) translateZ(56px); }
-}
-
-@keyframes hazeDriftRescue {
-  from { transform: translate3d(-2%, 1%, 0) scale(1); }
-  to { transform: translate3d(2%, -1%, 0) scale(1.08); }
-}
-
-@keyframes visualizerPulseRescue {
-  from { transform: scaleY(var(--low, 0.25)); }
-  to { transform: scaleY(var(--high, 0.85)); }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .home-page .light-beam,
-  .home-page.audio-playing .light-beam,
-  .home-page .ambient-particles span,
-  .fake-visualizer span {
-    animation: none;
-  }
-
-  .fake-visualizer span {
-    transform: scaleY(var(--idle, 0.22));
+    height: 62px !important;
+    gap: 0.22rem !important;
   }
 }
