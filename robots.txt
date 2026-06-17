@@ -1,0 +1,10 @@
+# Djembe Dragonfire website crawler policy
+# Search indexing is welcome. AI model training is not granted by this file.
+
+User-agent: *
+Allow: /
+
+Sitemap: https://www.djembedragonfire.com/sitemap.xml
+
+# Content signals
+Content-Signal: search=yes, ai-input=no, ai-train=no

@@ -6,7 +6,7 @@ const count = document.getElementById('songCount');
 const choiceButtons = document.getElementById('choiceButtons');
 const activeChoice = document.getElementById('activeChoice');
 const favoriteSongs = document.getElementById('favoriteSongs');
-const songOfWeek = document.getElementById('songOfWeek');
+const songOfWeek = document.getElementById('songOfWeek'); // Optional: homepage-only feature removed from Song List UI.
 const requestGuide = document.getElementById('requestGuide');
 
 const SONG_REQUEST_ENDPOINT = 'https://djembe-music-brain.sleahymusic.workers.dev/website/request';
@@ -362,6 +362,7 @@ function openSongRequestModal(song, sourceButton, mode = 'ready') {
 }
 
 function renderSongOfWeek() {
+  if (!songOfWeek) return;
   const found = songs.find(song => song.title === weeklyPick.title && song.artist === weeklyPick.artist) || songs.find(song => song.title === weeklyPick.title);
   const sample = weeklyPick.sample || (found ? sampleForSong(found) : '');
   songOfWeek.innerHTML = `
@@ -529,7 +530,6 @@ function toggleFavorite(key) {
   else favorites.add(key);
   localStorage.setItem(favoritesKey, JSON.stringify([...favorites]));
   renderFavorites();
-  renderSongOfWeek();
   renderSongs();
 }
 
@@ -584,7 +584,6 @@ async function loadSongs() {
     buildChoiceButtons();
     buildGenreTabs();
     renderFavorites();
-    renderSongOfWeek();
     renderRequestGuide();
     renderSongs();
   } catch (error) {

@@ -187,6 +187,7 @@
 }
 
 .feature-video-wrap {
+  position: relative;
   margin: 1rem 0;
   border: 1px solid rgba(255,255,255,0.16);
   border-radius: 22px;
