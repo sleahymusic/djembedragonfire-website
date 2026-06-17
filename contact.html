@@ -75,7 +75,6 @@
     .turnstile-wrap strong { color: var(--gold); }
     .turnstile-wrap .small-note { margin: 0; }
     .cf-turnstile { max-width: 100%; overflow: hidden; }
-    .contact-method-note { margin: 0.35rem 0 0; color: rgba(255,248,242,0.68); font-size: 0.92rem; }
     .form-status {
       min-height: 3.2rem;
       padding: 0.9rem 1rem;
@@ -169,7 +168,7 @@
       <h2>Message Djembe Dragonfire.</h2>
       <p>Choose the type of message and include the details Djembe or Rave will need. The form sends directly through the website after the anti-spam check is complete.</p>
 
-      <form id="directContactForm" method="post" action="https://contact.djembedragonfire.com/submit" novalidate>
+      <form id="directContactForm" novalidate>
         <input class="honeypot" id="contactWebsite" name="website" tabindex="-1" autocomplete="off" />
         <div class="direct-form-grid">
           <label>
@@ -193,7 +192,6 @@
             <span>Second Life contact <em class="optional-note">optional if email is included</em></span>
             <input id="contactSecondLife" name="secondLife" placeholder="Display name, username, or profile info" />
           </label>
-          <p id="contactMethodNote" class="contact-method-note full-span">Please include at least one way to reply: email or Second Life contact.</p>
           <label>
             <span>Preferred reply method</span>
             <select id="replyMethod" name="replyMethod">
@@ -279,8 +277,6 @@
     const messageType = document.getElementById('messageType');
     const rating = document.getElementById('contactRating');
     const reviewPermission = document.getElementById('reviewPermission');
-    const emailField = document.getElementById('contactEmail');
-    const secondLifeField = document.getElementById('contactSecondLife');
 
     function setStatus(message, className = '') {
       formStatus.className = `form-status${className ? ` ${className}` : ''}`;
@@ -315,24 +311,13 @@
       }
     }
 
-    function syncContactRequirement() {
-      const hasReplyContact = emailField.value.trim() || secondLifeField.value.trim();
-      const message = hasReplyContact ? '' : 'Please include either an email address or a Second Life contact.';
-      emailField.setCustomValidity(message);
-      secondLifeField.setCustomValidity('');
-    }
-
     messageType.addEventListener('change', syncReviewFields);
-    emailField.addEventListener('input', syncContactRequirement);
-    secondLifeField.addEventListener('input', syncContactRequirement);
     syncReviewFields();
-    syncContactRequirement();
 
     form.addEventListener('reset', () => {
       window.setTimeout(() => {
         syncReviewFields();
         resetTurnstile();
-        syncContactRequirement();
         setStatus('Complete the form and anti-spam check, then press Send from Website.');
       }, 0);
     });
@@ -344,7 +329,6 @@
       const secondLife = getValue('contactSecondLife');
       const turnstileToken = getTurnstileToken();
 
-      syncContactRequirement();
       if (!form.reportValidity()) return;
 
       if (!email && !secondLife) {

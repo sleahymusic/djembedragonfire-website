@@ -51,18 +51,6 @@
       height: 100%;
       border: 0;
     }
-    .video-loading-note {
-      position: absolute;
-      inset: 0;
-      display: grid;
-      place-items: center;
-      color: rgba(255,248,242,0.72);
-      font-weight: 800;
-      letter-spacing: 0.04em;
-      text-transform: uppercase;
-      background: radial-gradient(circle at center, rgba(246,199,108,0.12), transparent 18rem);
-      pointer-events: none;
-    }
     .media-info-grid {
       display: grid;
       grid-template-columns: 1.1fr 0.9fr;
@@ -133,11 +121,12 @@
     <section class="page-hero">
       <p class="eyebrow">Video & Media</p>
       <h1>Watch and hear the fire.</h1>
-      <p class="lead">Videos, recordings, performance photos, and listening samples live here while the homepage carries the current weekly spotlight, live room, reviews, shows, and booking.</p>
+      <p class="lead">Videos, recordings, performance photos, and weekly feature spotlights live here so the homepage can stay focused on the live room, reviews, shows, and booking.</p>
     </section>
 
     <nav class="media-jump-row" aria-label="Media page shortcuts">
       <a href="#video">Featured Video</a>
+      <a href="#feature">Feature of the Week</a>
       <a href="#samples">Listening Samples</a>
       <a href="#gallery">Gallery</a>
     </nav>
@@ -146,7 +135,6 @@
       <p class="eyebrow">Featured Video</p>
       <h2>Djembe Dragonfire video feature</h2>
       <div class="video-frame-wrap">
-        <span class="video-loading-note">Loading featured video…</span>
         <iframe src="https://www.youtube.com/embed/uib2zwYHBcg" title="Djembe Dragonfire featured video" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
       </div>
       <div class="media-info-grid">
@@ -167,6 +155,24 @@
       </div>
     </section>
 
+    <section id="feature" class="section feature-week-card media-feature-of-week">
+      <p id="featureWeekEyebrow" class="eyebrow">Feature of the Week</p>
+      <h2 id="featureWeekTitle">New Song Spotlight</h2>
+      <div class="feature-song-lockup">
+        <p class="feature-song-label">This week's song</p>
+        <h3 id="featureWeekSong" class="feature-song-name">TBA: next song in the fire</h3>
+        <p id="featureWeekArtist" class="feature-artist-name">Original artist / version to be added</p>
+        <span id="featureWeekStatus" class="feature-status-pill">In rehearsal / coming soon</span>
+      </div>
+      <p id="featureWeekDescription">Use this spotlight for a new song Djembe is preparing, a returning favorite, a themed performance moment, or an original YouTube reference. This does not need to be a Djembe recording — it can simply tell guests what is coming into the show and why it matters.</p>
+      <div id="featureVideoWrap" class="feature-video-wrap" hidden>
+        <iframe id="featureVideoFrame" title="Feature of the Week reference video" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+      </div>
+      <div class="contact-action-row">
+        <a id="featureWeekAction" class="button burst-button" href="songs.html">Browse the full song list</a>
+        <a id="featureOriginalLink" class="button secondary burst-button" href="https://www.youtube.com/" target="_blank" rel="noopener noreferrer" hidden>Open original reference</a>
+      </div>
+    </section>
 
     <section id="samples" class="section media-samples-shell">
       <div class="media-samples-heading">
@@ -195,10 +201,10 @@
       <p class="eyebrow">Gallery</p>
       <h2>Performance highlights</h2>
       <div class="gallery-grid modern-gallery">
-        <figure class="photo-card"><picture><source srcset="images/DjembePromo5-optimized.webp" type="image/webp" /><img src="images/DjembePromo5.png" alt="Djembe Dragonfire promotional portrait" width="1400" height="1400" loading="lazy" decoding="async" /></picture></figure>
-        <figure class="photo-card"><picture><source srcset="images/djembe-optimized.webp" type="image/webp" /><img src="images/djembe.png" alt="Djembe Dragonfire close-up promotional image" width="1000" height="1000" loading="lazy" decoding="async" /></picture></figure>
-        <figure class="photo-card"><picture><source srcset="images/DjembePromo-optimized.webp" type="image/webp" /><img src="images/DjembePromo.png" alt="Djembe Dragonfire live singer promo image" width="1000" height="1000" loading="lazy" decoding="async" /></picture></figure>
-        <figure class="photo-card wide"><picture><source srcset="images/DjembePromo4-optimized.webp" type="image/webp" /><img src="images/DjembePromo4.png" alt="Djembe Dragonfire stage performance promo image" width="1400" height="1050" loading="lazy" decoding="async" /></picture></figure>
+        <figure class="photo-card"><img src="images/DjembePromo5.png" alt="Djembe Dragonfire promotional portrait" /></figure>
+        <figure class="photo-card"><img src="images/djembe.png" alt="Djembe Dragonfire close-up promotional image" /></figure>
+        <figure class="photo-card"><img src="images/DjembePromo.png" alt="Djembe Dragonfire live singer promo image" /></figure>
+        <figure class="photo-card wide"><img src="images/DjembePromo4.png" alt="Djembe Dragonfire stage performance promo image" /></figure>
       </div>
     </section>
   </main>
