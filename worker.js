@@ -18,24 +18,6 @@ function streamHeaders(upstreamHeaders = new Headers()) {
   return headers;
 }
 
-const SECURITY_HEADERS = {
-  'Strict-Transport-Security': 'max-age=31536000; includeSubDomains; preload',
-  'X-Content-Type-Options': 'nosniff',
-  'Referrer-Policy': 'strict-origin-when-cross-origin',
-  'Permissions-Policy': 'camera=(), microphone=(), geolocation=()',
-  'Content-Security-Policy': "default-src 'self'; script-src 'self' 'unsafe-inline' https://challenges.cloudflare.com https://static.cloudflareinsights.com; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; media-src 'self' https://stream.djembedragonfire.com; frame-src https://www.youtube.com https://www.youtube-nocookie.com https://calendar.google.com https://challenges.cloudflare.com; connect-src 'self' https://stream.djembedragonfire.com https://calendar.djembedragonfire.com https://contact.djembedragonfire.com; base-uri 'self'; form-action 'self' https://contact.djembedragonfire.com; frame-ancestors 'self'; upgrade-insecure-requests"
-};
-
-function withSecurityHeaders(response) {
-  const headers = new Headers(response.headers);
-  for (const [key, value] of Object.entries(SECURITY_HEADERS)) headers.set(key, value);
-  return new Response(response.body, {
-    status: response.status,
-    statusText: response.statusText,
-    headers
-  });
-}
-
 function json(data, status = 200) {
   return new Response(JSON.stringify(data), {
     status,
@@ -161,7 +143,7 @@ export default {
     }
 
     if (env.ASSETS) {
-      return withSecurityHeaders(await env.ASSETS.fetch(request));
+      return env.ASSETS.fetch(request);
     }
 
     return new Response('Not found', { status: 404 });
