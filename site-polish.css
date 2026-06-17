@@ -117,6 +117,57 @@
   color: var(--muted);
 }
 
+.feature-song-lockup {
+  display: grid;
+  gap: 0.3rem;
+  margin: 1rem 0 1.15rem;
+  padding: 1rem;
+  border: 1px solid rgba(246,199,108,0.22);
+  border-radius: 24px;
+  background:
+    radial-gradient(circle at 10% 0%, rgba(246,199,108,0.15), transparent 12rem),
+    radial-gradient(circle at 90% 30%, rgba(229,75,122,0.12), transparent 12rem),
+    rgba(255,255,255,0.052);
+}
+
+.feature-song-label {
+  margin: 0;
+  color: rgba(255,248,242,0.62);
+  font-size: 0.78rem;
+  font-weight: 950;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+}
+
+.feature-song-name {
+  margin: 0;
+  color: var(--gold);
+  font-size: clamp(1.85rem, 4vw, 3.15rem);
+  line-height: 0.95;
+  letter-spacing: -0.055em;
+  text-shadow: 0 0 28px rgba(246,199,108,0.22);
+}
+
+.feature-artist-name {
+  margin: 0;
+  color: var(--text);
+  font-size: clamp(1.02rem, 2vw, 1.28rem);
+  font-weight: 900;
+}
+
+.feature-status-pill {
+  display: inline-flex;
+  width: fit-content;
+  margin-top: 0.45rem;
+  padding: 0.45rem 0.68rem;
+  border: 1px solid rgba(255,255,255,0.14);
+  border-radius: 999px;
+  color: var(--muted);
+  background: rgba(255,255,255,0.055);
+  font-size: 0.88rem;
+  font-weight: 850;
+}
+
 .feature-meta {
   display: flex;
   flex-wrap: wrap;

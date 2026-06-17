@@ -1,4 +1,5 @@
 const STREAM_STATUS_URL = 'https://stream.djembedragonfire.com/status';
+const CALENDAR_NEXT_URL = 'https://calendar.djembedragonfire.com/next';
 
 function installStickyHeaderFix() {
   if (document.getElementById('stickyHeaderFix')) return;
@@ -43,8 +44,14 @@ function setLink(id, href, label) {
   }
 }
 
+function addCacheBust(path) {
+  const value = String(path || '');
+  const separator = value.includes('?') ? '&' : '?';
+  return `${value}${separator}v=${Date.now()}`;
+}
+
 async function fetchJson(path) {
-  const response = await fetch(`${path}?v=${Date.now()}`, {
+  const response = await fetch(addCacheBust(path), {
     cache: 'no-store',
     headers: { accept: 'application/json' }
   });
@@ -90,7 +97,7 @@ function setShowModeLiveState(state, data = {}) {
 
   if (state === 'offline') {
     if (pill) pill.textContent = 'Next Show';
-    if (liveLine) liveLine.textContent = 'Not live right now. Use the calendar and next-show card to plan the next visit.';
+    if (liveLine) liveLine.textContent = 'Not live right now. The next performance card is filled from the show calendar when available.';
     if (action) {
       action.href = '#shows';
       action.textContent = 'View upcoming shows';
@@ -269,19 +276,33 @@ async function loadApprovedReviews() {
   }
 }
 
+function applyNextShowData(data) {
+  setText('nextShowTitle', data.title);
+  setText('nextShowDate', data.dateLabel || data.date);
+  setText('nextShowTime', data.timeLabel || data.time);
+  setText('nextShowVenue', data.venue || data.location);
+  setText('nextShowNote', data.note || data.description);
+  setLink('nextShowCalendarLink', data.actionHref || '#shows', data.actionLabel || 'View the calendar');
+}
+
+async function loadNextShowFallback() {
+  const data = await fetchJson('data/next-show.json');
+  applyNextShowData(data);
+}
+
 async function loadNextShow() {
   if (!byId('nextShowTitle')) return;
 
   try {
-    const data = await fetchJson('data/next-show.json');
-    setText('nextShowTitle', data.title);
-    setText('nextShowDate', data.dateLabel);
-    setText('nextShowTime', data.timeLabel);
-    setText('nextShowVenue', data.venue);
-    setText('nextShowNote', data.note);
-    setLink('nextShowCalendarLink', data.actionHref || '#shows', data.actionLabel || 'View the calendar');
+    const data = await fetchJson(CALENDAR_NEXT_URL);
+    if (!data || data.ok === false) throw new Error(data && data.error ? data.error : 'Calendar relay did not return a show');
+    applyNextShowData(data);
   } catch (error) {
-    // Keep fallback next-show content in place.
+    try {
+      await loadNextShowFallback();
+    } catch (fallbackError) {
+      // Keep fallback next-show content in place.
+    }
   }
 }
 
