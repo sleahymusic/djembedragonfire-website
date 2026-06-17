@@ -21,7 +21,7 @@
   height: 126vh;
   opacity: 0.44;
   filter: blur(7px) saturate(1.08);
-  animation-duration: 15s;
+  animation: sweepLight 15s ease-in-out infinite alternate;
   will-change: transform, opacity;
 }
 
@@ -67,9 +67,8 @@
 .home-page.audio-playing .light-beam {
   opacity: 0.70;
   filter: blur(8px) saturate(1.18) brightness(1.14);
-  animation-duration: 7s;
+  animation: sweepLight 7s ease-in-out infinite alternate;
 }
-
 .home-page.audio-playing .beam-two { animation-duration: 7.8s; }
 .home-page.audio-playing .beam-three { animation-duration: 7.3s; }
 
