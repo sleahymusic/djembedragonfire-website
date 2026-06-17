@@ -194,9 +194,150 @@
   }
 }
 
+/* Motion rescue layer.
+   This intentionally affects only the decorative stage effects and CSS-only visualizers. */
+@media (prefers-reduced-motion: no-preference) {
+  .home-page .ambient-particles,
+  .home-page .stage-lights {
+    display: block !important;
+    visibility: visible !important;
+    pointer-events: none !important;
+    overflow: hidden !important;
+  }
+
+  .home-page .ambient-particles {
+    position: fixed !important;
+    inset: 0 !important;
+    z-index: 0 !important;
+    opacity: 1 !important;
+    contain: none !important;
+  }
+
+  .home-page .ambient-particles span {
+    display: block !important;
+    position: absolute !important;
+    width: 0.5rem !important;
+    height: 0.5rem !important;
+    border-radius: 999px !important;
+    opacity: 0.72 !important;
+    background: radial-gradient(circle, rgba(246,199,108,0.95), rgba(229,75,122,0.22), transparent 72%) !important;
+    box-shadow: 0 0 24px rgba(246,199,108,0.55) !important;
+    animation-name: floatParticleRescue !important;
+    animation-timing-function: linear !important;
+    animation-iteration-count: infinite !important;
+    will-change: transform, opacity !important;
+  }
+
+  .home-page .ambient-particles span:nth-child(1) { left: 10% !important; animation-delay: 0s !important; animation-duration: 18s !important; }
+  .home-page .ambient-particles span:nth-child(2) { left: 28% !important; animation-delay: -4s !important; animation-duration: 22s !important; }
+  .home-page .ambient-particles span:nth-child(3) { left: 47% !important; animation-delay: -8s !important; animation-duration: 19s !important; }
+  .home-page .ambient-particles span:nth-child(4) { left: 68% !important; animation-delay: -2s !important; animation-duration: 24s !important; }
+  .home-page .ambient-particles span:nth-child(5) { left: 82% !important; animation-delay: -10s !important; animation-duration: 20s !important; }
+  .home-page .ambient-particles span:nth-child(6) { left: 93% !important; animation-delay: -6s !important; animation-duration: 26s !important; }
+
+  .home-page .stage-lights {
+    position: fixed !important;
+    inset: 0 !important;
+    z-index: 0 !important;
+    opacity: 0.84 !important;
+    mix-blend-mode: screen !important;
+    perspective: 900px !important;
+    transform-style: preserve-3d !important;
+    contain: none !important;
+  }
+
+  .home-page .stage-lights::before {
+    content: "" !important;
+    position: absolute !important;
+    inset: -10% !important;
+    opacity: 0.28 !important;
+    filter: blur(8px) !important;
+    animation: hazeDriftRescue 24s ease-in-out infinite alternate !important;
+  }
+
+  .home-page .light-beam {
+    display: block !important;
+    position: absolute !important;
+    top: -22vh !important;
+    width: 28vw !important;
+    height: 132vh !important;
+    transform-origin: 50% 0% !important;
+    opacity: 0.50 !important;
+    filter: blur(8px) saturate(1.12) !important;
+    clip-path: polygon(47% 0, 53% 0, 100% 100%, 0 100%) !important;
+    animation-name: sweepLightRescue !important;
+    animation-timing-function: ease-in-out !important;
+    animation-iteration-count: infinite !important;
+    animation-direction: alternate !important;
+    animation-duration: 12s !important;
+    will-change: transform, opacity !important;
+  }
+
+  .home-page .beam-one { left: -2vw !important; animation-delay: 0s !important; }
+  .home-page .beam-two { left: 32vw !important; animation-duration: 14s !important; animation-delay: -3s !important; }
+  .home-page .beam-three { right: -2vw !important; animation-duration: 13s !important; animation-delay: -6s !important; }
+
+  .home-page.audio-playing .stage-lights { opacity: 1 !important; }
+  .home-page.audio-playing .light-beam {
+    opacity: 0.76 !important;
+    filter: blur(8px) saturate(1.22) brightness(1.16) !important;
+    animation-duration: 7s !important;
+  }
+
+  .fake-visualizer {
+    display: grid !important;
+    grid-template-columns: repeat(13, minmax(0, 1fr)) !important;
+    align-items: end !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+  }
+
+  .fake-visualizer span {
+    display: block !important;
+    min-width: 4px !important;
+    height: 100% !important;
+    transform-origin: center bottom !important;
+    animation-name: visualizerPulseRescue !important;
+    animation-timing-function: ease-in-out !important;
+    animation-iteration-count: infinite !important;
+    animation-direction: alternate !important;
+    animation-duration: var(--speed, 880ms) !important;
+    animation-play-state: paused !important;
+    will-change: transform, opacity !important;
+  }
+
+  .audio-playing .fake-visualizer span,
+  .fake-visualizer.is-previewing span {
+    animation-play-state: running !important;
+    opacity: 0.96 !important;
+  }
+}
+
+@keyframes floatParticleRescue {
+  from { transform: translate3d(0, 110vh, 0) scale(0.6); opacity: 0.16; }
+  50% { transform: translate3d(2rem, 45vh, 0) scale(1.4); opacity: 0.82; }
+  to { transform: translate3d(-1rem, -10vh, 0) scale(0.8); opacity: 0.10; }
+}
+
+@keyframes sweepLightRescue {
+  from { transform: rotate(-26deg) rotateX(20deg) translateX(-7vw) translateZ(-64px); }
+  to { transform: rotate(26deg) rotateX(28deg) translateX(7vw) translateZ(56px); }
+}
+
+@keyframes hazeDriftRescue {
+  from { transform: translate3d(-2%, 1%, 0) scale(1); }
+  to { transform: translate3d(2%, -1%, 0) scale(1.08); }
+}
+
+@keyframes visualizerPulseRescue {
+  from { transform: scaleY(var(--low, 0.25)); }
+  to { transform: scaleY(var(--high, 0.85)); }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .home-page .light-beam,
   .home-page.audio-playing .light-beam,
+  .home-page .ambient-particles span,
   .fake-visualizer span {
     animation: none;
   }

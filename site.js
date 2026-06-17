@@ -60,9 +60,73 @@ async function fetchJson(path) {
   return response.json();
 }
 
+function ensureEffectMarkup() {
+  if (!document.body.classList.contains('home-page')) return;
+
+  if (!document.querySelector('.ambient-particles')) {
+    const particles = document.createElement('div');
+    particles.className = 'ambient-particles';
+    particles.setAttribute('aria-hidden', 'true');
+    for (let i = 0; i < 6; i += 1) particles.appendChild(document.createElement('span'));
+    document.body.prepend(particles);
+  }
+
+  const particleWrap = document.querySelector('.ambient-particles');
+  if (particleWrap && particleWrap.querySelectorAll('span').length < 6) {
+    const missing = 6 - particleWrap.querySelectorAll('span').length;
+    for (let i = 0; i < missing; i += 1) particleWrap.appendChild(document.createElement('span'));
+  }
+
+  if (!document.querySelector('.stage-lights')) {
+    const lights = document.createElement('div');
+    lights.className = 'stage-lights';
+    lights.setAttribute('aria-hidden', 'true');
+    ['beam-one', 'beam-two', 'beam-three'].forEach(name => {
+      const beam = document.createElement('span');
+      beam.className = `light-beam ${name}`;
+      lights.appendChild(beam);
+    });
+    const backdrop = document.querySelector('.cinematic-backdrop');
+    if (backdrop && backdrop.nextSibling) {
+      backdrop.parentNode.insertBefore(lights, backdrop.nextSibling);
+    } else {
+      document.body.prepend(lights);
+    }
+  }
+
+  const lights = document.querySelector('.stage-lights');
+  if (lights && lights.querySelectorAll('.light-beam').length < 3) {
+    ['beam-one', 'beam-two', 'beam-three'].forEach(name => {
+      if (!lights.querySelector(`.${name}`)) {
+        const beam = document.createElement('span');
+        beam.className = `light-beam ${name}`;
+        lights.appendChild(beam);
+      }
+    });
+  }
+
+  document.querySelectorAll('.fake-visualizer').forEach(visualizer => {
+    const count = visualizer.querySelectorAll('span').length;
+    for (let i = count; i < 13; i += 1) visualizer.appendChild(document.createElement('span'));
+  });
+}
+
 function setAudioPlayingState() {
-  const anyPlaying = [...document.querySelectorAll('audio')].some(audio => !audio.paused && !audio.ended);
+  const anyPlaying = [...document.querySelectorAll('audio')].some(audio => !audio.paused && !audio.ended && audio.readyState >= 0);
   document.body.classList.toggle('audio-playing', anyPlaying);
+}
+
+function installAudioMotionRescue() {
+  const refresh = () => window.requestAnimationFrame(setAudioPlayingState);
+  const audioEvents = ['play', 'playing', 'timeupdate', 'pause', 'ended', 'emptied', 'stalled', 'suspend', 'waiting'];
+
+  audioEvents.forEach(eventName => {
+    document.addEventListener(eventName, event => {
+      if (event.target && event.target.matches && event.target.matches('audio')) refresh();
+    }, true);
+  });
+
+  window.setInterval(setAudioPlayingState, 1500);
 }
 
 function getListenerText(listeners) {
@@ -425,6 +489,8 @@ document.addEventListener('ended', event => {
 }, true);
 
 window.addEventListener('load', () => {
+  ensureEffectMarkup();
+  installAudioMotionRescue();
   setAudioPlayingState();
   startLiveStreamStatusChecks();
   loadSiteContent();
