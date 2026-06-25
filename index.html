@@ -28,6 +28,7 @@
   <header class="site-header modern-header">
     <a class="brand" href="index.html">Djembe Dragonfire</a>
     <nav aria-label="Main navigation">
+      <a href="#watch-live">Watch Live</a>
       <a href="#listen">Listen</a>
       <a href="media.html#samples">Samples</a>
       <a href="#about">Story</a>
@@ -58,8 +59,9 @@
         <p class="stage-tagline">A voice for the songs that need to be felt.</p>
         <p class="lead">Classically trained, emotionally driven, and playfully unpredictable — Djembe brings intimate ballads, soaring theatrical moments, contemporary favorites, blues, jazz, country, and joyful surprises to Second Life stages.</p>
         <div class="hero-actions hero-actions-luxe">
-          <a class="button burst-button" href="#listen">▶ Listen Live</a>
-          <a class="button secondary burst-button" href="songs.html">🎵 Browse Songs</a>
+          <a class="button burst-button" href="#watch-live">▶ Watch Live Video</a>
+          <a class="button secondary burst-button" href="#listen">♫ Listen Live</a>
+          <a class="button ghost burst-button" href="songs.html">🎵 Browse Songs</a>
           <a class="button ghost burst-button" href="#contact">Book a Show</a>
         </div>
         <div class="quick-stats" aria-label="Performer highlights">
@@ -74,6 +76,33 @@
           <p>Uplifted. Connected. Inspired.</p>
         </div>
       </aside>
+    </section>
+
+    <section id="watch-live" class="section live-video-section" data-stream-url="https://stream.vrcdn.live/live/djembedragonfire.live.ts" data-fallback-url="https://stream.vrcdn.live/live/djembedragonfire.live.mp4">
+      <div class="live-video-copy">
+        <p class="eyebrow">Live Video</p>
+        <h2>Watch the show live.</h2>
+        <p>When Djembe is broadcasting video through VRCDN, press the button below to join the live performance here on the website.</p>
+        <div class="live-video-actions">
+          <button id="liveVideoStart" class="button burst-button" type="button">▶ Start Live Video</button>
+          <a class="button secondary burst-button" href="https://stream.vrcdn.live/live/djembedragonfire.live.mp4" target="_blank" rel="noopener noreferrer">Open fallback video</a>
+        </div>
+        <p id="liveVideoStatus" class="live-video-status" aria-live="polite">Player ready. Start the video when the show begins.</p>
+      </div>
+
+      <div class="live-video-player-card">
+        <div class="live-video-frame">
+          <video id="vrcdnLiveVideo" controls playsinline preload="none" poster="images/RascalBand.png">
+            Your browser does not support the live video player.
+          </video>
+          <div id="liveVideoIdle" class="live-video-idle" aria-hidden="true">
+            <span>Live Video</span>
+            <strong>Djembe Dragonfire</strong>
+            <p>Press Start Live Video when the broadcast begins.</p>
+          </div>
+        </div>
+        <p class="small-note">Low-latency video delivered through VRCDN. The separate audio-only player remains available below.</p>
+      </div>
     </section>
 
     <section id="listen" class="section modern-listen">
@@ -206,6 +235,8 @@
 
   <footer class="site-footer"><p>&copy; <span id="year"></span> Djembe Dragonfire. All rights reserved.</p></footer>
 
+  <script src="https://cdn.jsdelivr.net/npm/mpegts.js@1.8.0/dist/mpegts.min.js"></script>
+  <script src="live-video.js"></script>
   <script src="site.js"></script>
   <script>document.getElementById('year').textContent = new Date().getFullYear();</script>
 </body>
