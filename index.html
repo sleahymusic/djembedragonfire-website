@@ -11,6 +11,7 @@
   <link rel="stylesheet" href="contemporary.css" />
   <link rel="stylesheet" href="performance-effects.css" />
   <link rel="stylesheet" href="site-polish.css" />
+  <link rel="stylesheet" href="recent-shows.css" />
 </head>
 <body class="home-page">
   <div class="cinematic-backdrop" aria-hidden="true">
@@ -102,6 +103,22 @@
           </div>
         </div>
         <p class="small-note">Low-latency video delivered through VRCDN. The separate audio-only player remains available below.</p>
+      </div>
+    </section>
+
+    <section id="latest-show" class="section latest-show-section">
+      <div class="latest-show-copy">
+        <p class="eyebrow">Latest Show Replay</p>
+        <h2 id="latestShowTitle">Djembe Live at Golden Hour</h2>
+        <p id="latestShowMeta" class="latest-show-meta">June 25, 2026 · Golden Hour</p>
+        <p id="latestShowDescription">A full Djembe Dragonfire live performance recorded at Golden Hour.</p>
+        <div class="latest-show-actions">
+          <a id="latestShowLink" class="button burst-button" href="https://youtu.be/4TbqgaOEVt8" target="_blank" rel="noopener noreferrer">Watch on YouTube</a>
+          <a class="button secondary burst-button" href="media.html#recent-shows">See recent shows</a>
+        </div>
+      </div>
+      <div class="latest-show-video">
+        <iframe id="latestShowFrame" src="https://www.youtube-nocookie.com/embed/4TbqgaOEVt8?rel=0" title="Djembe Live at Golden Hour replay" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
       </div>
     </section>
 
@@ -237,6 +254,7 @@
 
   <script src="https://cdn.jsdelivr.net/npm/mpegts.js@1.8.0/dist/mpegts.min.js"></script>
   <script src="live-video.js"></script>
+  <script src="recent-shows.js"></script>
   <script src="site.js"></script>
   <script>document.getElementById('year').textContent = new Date().getFullYear();</script>
 </body>
