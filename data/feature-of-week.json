@@ -1,12 +1,13 @@
 {
-  "updated": "2026-06-26",
+  "updated": "2026-07-01",
   "eyebrow": "Feature of the Week",
   "title": "New Song Spotlight",
-  "song": "Watermelon Sugar",
-  "artist": "Harry Styles",
+  "song": "Biblical",
+  "artist": "Calum Scott",
   "status": "Coming into the show rotation",
-  "description": "This week’s spotlight is Harry Styles’ \"Watermelon Sugar\" — a bright, sun-soaked pop song with an easy groove, playful energy, and a chorus made for a happy crowd. Released during the Fine Line era, it became Styles’ first No. 1 single in the United States and later earned him his first Grammy, winning Best Pop Solo Performance. For a Djembe show, it brings a warm summer pulse, a little flirtation, and the kind of instantly recognizable hook that can lift the whole room.",
-  "youtubeUrl": "https://www.youtube.com/watch?v=E07s5ZYygMg",
+  "description": "This week’s spotlight is Calum Scott’s \"Biblical\" — a sweeping modern ballad about a love so immense that ordinary language feels too small. Released in 2021, it later became the opening track on Scott’s album Bridges, and the official recording credits fellow singer-songwriter James Bay among its co-writers. For a Djembe show, it offers vulnerable storytelling, a slow emotional build, and the kind of powerful vocal payoff that can quiet a room before lifting it.",
+  "songListNote": "Released in 2021 and later placed first on the Bridges tracklist, this soaring love ballad also credits James Bay among its co-writers.",
+  "youtubeUrl": "https://www.youtube.com/watch?v=2ULA7xBICKA",
   "actionLabel": "Browse the full song list",
   "actionHref": "songs.html"
 }

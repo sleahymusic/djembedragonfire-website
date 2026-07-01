@@ -1,5 +1,5 @@
 {
-  "updated": "2026-06-26",
+  "updated": "2026-07-01",
   "songs": [
     {
       "title": "Watermelon Sugar",
@@ -8,6 +8,14 @@
       "mood": "joy, intimacy",
       "style": "contemporary, pop rock",
       "energy": "high"
+    },
+    {
+      "title": "Biblical",
+      "artist": "Calum Scott",
+      "category": "New Songs",
+      "mood": "devotion, intimacy",
+      "style": "contemporary, ballad",
+      "energy": "low"
     }
   ]
 }
