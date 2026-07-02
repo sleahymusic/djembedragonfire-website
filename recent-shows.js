@@ -20,12 +20,39 @@
     return '';
   }
 
+  function youtubeStartSeconds(show) {
+    const explicit = Number(show && show.startSeconds);
+    if (Number.isFinite(explicit) && explicit > 0) return Math.floor(explicit);
+
+    try {
+      const parsed = new URL(show.youtubeUrl, window.location.href);
+      const raw = parsed.searchParams.get('t') || parsed.searchParams.get('start') || '';
+
+      if (/^\d+$/.test(raw)) return Number(raw);
+
+      const match = raw.match(/^(?:(\d+)h)?(?:(\d+)m)?(?:(\d+)s)?$/i);
+      if (match) {
+        return (Number(match[1] || 0) * 3600) + (Number(match[2] || 0) * 60) + Number(match[3] || 0);
+      }
+    } catch (error) {
+      return 0;
+    }
+
+    return 0;
+  }
+
   function showMeta(show) {
     return [show.date, show.venue].filter(Boolean).join(' · ');
   }
 
   function youtubeWatchUrl(show, videoId) {
     return show.youtubeUrl || `https://www.youtube.com/watch?v=${videoId}`;
+  }
+
+  function youtubeEmbedUrl(show, videoId) {
+    const startSeconds = youtubeStartSeconds(show);
+    const startQuery = startSeconds > 0 ? `&start=${startSeconds}` : '';
+    return `https://www.youtube-nocookie.com/embed/${videoId}?rel=0${startQuery}`;
   }
 
   function applyLatestShow(show) {
@@ -40,7 +67,7 @@
     const description = document.getElementById('latestShowDescription');
     const link = document.getElementById('latestShowLink');
 
-    frame.src = `https://www.youtube-nocookie.com/embed/${videoId}?rel=0`;
+    frame.src = youtubeEmbedUrl(show, videoId);
     frame.title = `${show.title || 'Djembe Dragonfire live show'} replay`;
 
     if (title && show.title) title.textContent = show.title;
