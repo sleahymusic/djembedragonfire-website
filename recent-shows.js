@@ -1,6 +1,18 @@
 (() => {
   const DATA_URL = 'data/recent-shows.json';
 
+  const FALLBACK_SHOW = Object.freeze({
+    title: 'Djembe Live at Golden Hour',
+    youtubeTitle: 'Djembe live! at Golden Hour Jul 02 2026',
+    date: 'July 2, 2026',
+    dateISO: '2026-07-02',
+    venue: 'Golden Hour',
+    youtubeUrl: 'https://youtu.be/_TAamB8eL9E?t=56',
+    videoId: '_TAamB8eL9E',
+    startSeconds: 56,
+    description: 'A full Djembe Dragonfire live performance recorded at Golden Hour in Second Life.'
+  });
+
   function youtubeVideoId(show) {
     if (show && /^[a-zA-Z0-9_-]{6,}$/.test(show.videoId || '')) return show.videoId;
 
@@ -43,6 +55,10 @@
 
   function showMeta(show) {
     return [show.date, show.venue].filter(Boolean).join(' · ');
+  }
+
+  function showDate(show) {
+    return String((show && show.dateISO) || '');
   }
 
   function youtubeWatchUrl(show, videoId) {
@@ -142,10 +158,25 @@
     grid.classList.add('is-data-loaded');
   }
 
+  function selectEffectiveShows(shows) {
+    const sorted = [...shows].sort((a, b) => showDate(b).localeCompare(showDate(a)));
+
+    if (!sorted.length || showDate(sorted[0]) < FALLBACK_SHOW.dateISO) {
+      return [FALLBACK_SHOW];
+    }
+
+    return sorted;
+  }
+
+  function displayFallbackImmediately() {
+    applyLatestShow(FALLBACK_SHOW);
+    applyArchive([FALLBACK_SHOW]);
+  }
+
   async function loadRecentShows() {
     try {
       const separator = DATA_URL.includes('?') ? '&' : '?';
-      const response = await fetch(`${DATA_URL}${separator}v=${Date.now()}`, {
+      const response = await fetch(`${DATA_URL}${separator}v=20260702-${Date.now()}`, {
         cache: 'no-store',
         headers: { accept: 'application/json' }
       });
@@ -153,18 +184,22 @@
       if (!response.ok) throw new Error(`Recent shows returned ${response.status}`);
 
       const data = await response.json();
-      const shows = Array.isArray(data.shows)
+      const fetchedShows = Array.isArray(data.shows)
         ? data.shows.filter(show => show && (show.videoId || show.youtubeUrl))
         : [];
 
-      if (!shows.length) return;
-
-      shows.sort((a, b) => String(b.dateISO || '').localeCompare(String(a.dateISO || '')));
-      applyLatestShow(shows[0]);
-      applyArchive(shows);
+      const effectiveShows = selectEffectiveShows(fetchedShows);
+      applyLatestShow(effectiveShows[0]);
+      applyArchive(effectiveShows);
     } catch (error) {
-      // Keep the built-in first-show fallback content visible.
+      displayFallbackImmediately();
     }
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', displayFallbackImmediately, { once: true });
+  } else {
+    displayFallbackImmediately();
   }
 
   window.addEventListener('load', loadRecentShows);
