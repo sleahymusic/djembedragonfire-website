@@ -1,5 +1,5 @@
 {
-  "updated": "2026-07-01",
+  "updated": "2026-07-09",
   "songs": [
     {
       "title": "Watermelon Sugar",
@@ -16,6 +16,14 @@
       "mood": "devotion, intimacy",
       "style": "contemporary, ballad",
       "energy": "low"
+    },
+    {
+      "title": "Sing",
+      "artist": "Travis",
+      "category": "New Songs",
+      "mood": "joy, empowerment",
+      "style": "pop rock, indie rock",
+      "energy": "medium"
     }
   ]
 }
