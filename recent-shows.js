@@ -2,14 +2,14 @@
   const DATA_URL = 'data/recent-shows.json';
 
   const FALLBACK_SHOW = Object.freeze({
-    title: 'Djembe Live at Still Standing Venue',
-    youtubeTitle: 'Djembe Live at Still Standing Venue Jul 11 2026',
-    date: 'July 11, 2026',
-    dateISO: '2026-07-11',
-    venue: 'Still Standing Venue',
-    youtubeUrl: 'https://www.youtube.com/watch?v=Tvdvp9NQhhc',
-    videoId: 'Tvdvp9NQhhc',
-    description: 'A full Djembe Dragonfire live performance recorded at Still Standing Venue in Second Life.'
+    title: 'Djembe Live at The Golden Hour',
+    youtubeTitle: 'Djembe live at Golden Hour in Second Life! Jul 16 2026',
+    date: 'July 16, 2026',
+    dateISO: '2026-07-16',
+    venue: 'The Golden Hour',
+    youtubeUrl: 'https://www.youtube.com/watch?v=vhKCZtpThII',
+    videoId: 'vhKCZtpThII',
+    description: 'A full Djembe Dragonfire Golden Hour live performance recorded in Second Life.'
   });
 
   function youtubeVideoId(show) {
