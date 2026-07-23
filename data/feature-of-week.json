@@ -1,13 +1,13 @@
 {
-  "updated": "2026-07-14",
+  "updated": "2026-07-23",
   "eyebrow": "Feature of the Week",
   "title": "New Song Spotlight",
-  "song": "Nature Boy",
-  "artist": "Nat King Cole",
+  "song": "Mr. Blue Sky",
+  "artist": "Electric Light Orchestra",
   "status": "Coming into the show rotation",
-  "description": "This week’s spotlight is Nat King Cole’s “Nature Boy” — a haunting 1948 Capitol single written by eden ahbez and first recorded by Cole. Its floating jazz atmosphere and gentle message of wonder give Djembe a quietly theatrical moment: intimate, mysterious, and perfect for drawing the room close before the next big lift.",
-  "songListNote": "Nat King Cole’s haunting 1948 Capitol classic by eden ahbez, bringing an intimate jazz-lounge mood and a touch of mystery to the show rotation.",
-  "youtubeUrl": "https://www.youtube.com/watch?v=ZpF1J9FnD4E",
+  "description": "This week’s spotlight is Electric Light Orchestra’s “Mr. Blue Sky” — a bright classic-pop lift with sunny harmonies, theatrical sparkle, and the kind of feel-good energy that can turn the room toward instant smiles. It gives Djembe a joyful, recognizable feature moment with a big golden-hour glow.",
+  "songListNote": "Electric Light Orchestra’s sunny classic-pop favorite, bringing joyful, theatrical, high-energy uplift to the show rotation.",
+  "youtubeUrl": "https://www.youtube.com/watch?v=wuJIqmha2Hk",
   "actionLabel": "Browse the full song list",
   "actionHref": "songs.html"
 }
