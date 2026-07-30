@@ -1,13 +1,13 @@
 {
-  "updated": "2026-07-23",
+  "updated": "2026-07-30",
   "eyebrow": "Feature of the Week",
   "title": "New Song Spotlight",
-  "song": "Mr. Blue Sky",
-  "artist": "Electric Light Orchestra",
+  "song": "Speed of Sound",
+  "artist": "Coldplay",
   "status": "Coming into the show rotation",
-  "description": "This week’s spotlight is Electric Light Orchestra’s “Mr. Blue Sky” — a bright classic-pop lift with sunny harmonies, theatrical sparkle, and the kind of feel-good energy that can turn the room toward instant smiles. It gives Djembe a joyful, recognizable feature moment with a big golden-hour glow.",
-  "songListNote": "Electric Light Orchestra’s sunny classic-pop favorite, bringing joyful, theatrical, high-energy uplift to the show rotation.",
-  "youtubeUrl": "https://www.youtube.com/watch?v=wuJIqmha2Hk",
+  "description": "This week’s spotlight is Coldplay’s “Speed of Sound” — a driving pop-rock anthem with bright piano motion, soaring lift, and a wide-open chorus that gives Djembe a recognizable, energizing moment for the room. It brings modern classic energy into the show rotation with a pulse that feels made for lights, movement, and audience momentum.",
+  "songListNote": "Coldplay’s driving pop-rock anthem, bringing bright piano motion, soaring lift, and modern classic energy to the show rotation.",
+  "youtubeUrl": "https://www.youtube.com/watch?v=0k_1kvDh2UA",
   "actionLabel": "Browse the full song list",
   "actionHref": "songs.html"
 }
