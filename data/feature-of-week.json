@@ -1,13 +1,13 @@
 {
-  "updated": "2026-07-30",
+  "updated": "2026-08-06",
   "eyebrow": "Feature of the Week",
   "title": "New Song Spotlight",
-  "song": "Speed of Sound",
-  "artist": "Coldplay",
+  "song": "Time After Time",
+  "artist": "Chet Baker",
   "status": "Coming into the show rotation",
-  "description": "This week’s spotlight is Coldplay’s “Speed of Sound” — a driving pop-rock anthem with bright piano motion, soaring lift, and a wide-open chorus that gives Djembe a recognizable, energizing moment for the room. It brings modern classic energy into the show rotation with a pulse that feels made for lights, movement, and audience momentum.",
-  "songListNote": "Coldplay’s driving pop-rock anthem, bringing bright piano motion, soaring lift, and modern classic energy to the show rotation.",
-  "youtubeUrl": "https://www.youtube.com/watch?v=0k_1kvDh2UA",
+  "description": "This week’s spotlight is Chet Baker’s “Time After Time” — a smoky jazz standard with gentle phrasing, intimate late-night warmth, and a timeless romantic glow. It gives Djembe a softer feature moment for the room: close, classy, and full of feeling.",
+  "songListNote": "Chet Baker’s intimate jazz-standard reading, bringing smoky late-night warmth, romance, and classic lounge elegance to the show rotation.",
+  "youtubeUrl": "https://www.youtube.com/watch?v=1CCtdYWKa_A",
   "actionLabel": "Browse the full song list",
   "actionHref": "songs.html"
 }
