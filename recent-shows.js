@@ -3,7 +3,7 @@
 
   const FALLBACK_SHOW = Object.freeze({
     title: 'Djembe Live at Blues Cove',
-    youtubeTitle: 'Djembe Live at Blues Cove',
+    youtubeTitle: 'Djembe singing live! Aug 10 2026 at Blues Cove',
     date: 'August 10, 2026',
     dateISO: '2026-08-10',
     venue: 'Blues Cove',
