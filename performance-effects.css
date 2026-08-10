@@ -26,11 +26,11 @@
 }
 
 .home-page .bg-one {
-  background-image: linear-gradient(140deg, rgba(8,6,10,0.54), rgba(22,8,19,0.30)), url("images/Background1.jpg") !important;
+  background-image: linear-gradient(140deg, rgba(8,6,10,0.54), rgba(22,8,19,0.30)), image-set(url("images/Background1-optimized.webp") type("image/webp"), url("images/Background1.jpg") type("image/jpeg")) !important;
 }
 
 .home-page .bg-two {
-  background-image: linear-gradient(140deg, rgba(8,6,10,0.58), rgba(229,75,122,0.12)), url("images/Background2.jpg") !important;
+  background-image: linear-gradient(140deg, rgba(8,6,10,0.58), rgba(229,75,122,0.12)), image-set(url("images/Background2-optimized.webp") type("image/webp"), url("images/Background2.jpg") type("image/jpeg")) !important;
   opacity: 0.20 !important;
   mix-blend-mode: screen !important;
   animation-delay: -12s !important;

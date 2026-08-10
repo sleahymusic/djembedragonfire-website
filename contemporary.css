@@ -2,8 +2,8 @@
 
 .cinematic-backdrop { position: fixed; inset: 0; z-index: -2; overflow: hidden; pointer-events: none; background: #050307; }
 .cinematic-bg { position: absolute; inset: -8%; background-position: center; background-size: cover; opacity: 0.42; transform-origin: center; animation: kenBurns 32s ease-in-out infinite alternate; filter: saturate(1.08) contrast(1.03); }
-.bg-one { background-image: linear-gradient(140deg, rgba(8,6,10,0.54), rgba(22,8,19,0.30)), url("images/Background1.jpg"); }
-.bg-two { background-image: linear-gradient(140deg, rgba(8,6,10,0.58), rgba(229,75,122,0.12)), url("images/Background2.jpg"); opacity: 0.20; mix-blend-mode: screen; animation-delay: -12s; animation-duration: 42s; }
+.bg-one { background-image: linear-gradient(140deg, rgba(8,6,10,0.54), rgba(22,8,19,0.30)), image-set(url("images/Background1-optimized.webp") type("image/webp"), url("images/Background1.jpg") type("image/jpeg")); }
+.bg-two { background-image: linear-gradient(140deg, rgba(8,6,10,0.58), rgba(229,75,122,0.12)), image-set(url("images/Background2-optimized.webp") type("image/webp"), url("images/Background2.jpg") type("image/jpeg")); opacity: 0.20; mix-blend-mode: screen; animation-delay: -12s; animation-duration: 42s; }
 .cinematic-backdrop::after { content: ""; position: absolute; inset: 0; background: linear-gradient(to bottom, rgba(5,3,7,0.08), rgba(5,3,7,0.62) 74%, rgba(5,3,7,0.86)), radial-gradient(circle at 50% 12%, rgba(246,199,108,0.16), transparent 24rem), radial-gradient(circle at 82% 32%, rgba(34,211,238,0.12), transparent 24rem); }
 @keyframes kenBurns { from { transform: scale(1.02) translate3d(-1%, -1%, 0); } to { transform: scale(1.12) translate3d(1.5%, 1%, 0); } }
 
@@ -119,6 +119,7 @@
 .quick-stats span { color: var(--muted); font-size: 0.85rem; }
 .stage-portrait { position: relative; min-height: 640px; border-radius: 44px; overflow: hidden; border: 1px solid rgba(255,255,255,0.18); box-shadow: 0 40px 120px rgba(0,0,0,0.55); transform: rotate(1.2deg); }
 .stage-portrait::before { content: ""; position: absolute; inset: 0; background: linear-gradient(to top, rgba(0,0,0,0.72), transparent 60%), radial-gradient(circle at 20% 20%, rgba(246,199,108,0.28), transparent 16rem), radial-gradient(circle at 85% 70%, rgba(34,211,238,0.18), transparent 14rem); z-index: 1; }
+.stage-portrait picture { width: 100%; height: 100%; min-height: 640px; display: block; }
 .stage-portrait img { width: 100%; height: 100%; min-height: 640px; object-fit: cover; display: block; filter: saturate(1.08) contrast(1.05); }
 .portrait-glass { position: absolute; left: 1.5rem; right: 1.5rem; bottom: 1.5rem; z-index: 2; padding: 1.25rem; border: 1px solid rgba(255,255,255,0.18); border-radius: 24px; background: rgba(8,6,10,0.54); backdrop-filter: blur(16px); }
 .portrait-glass p { margin: 0; font-size: clamp(1.4rem, 3vw, 2.6rem); font-weight: 950; line-height: 0.98; letter-spacing: -0.05em; }
@@ -135,9 +136,10 @@
 .wide-sample { grid-column: span 2; }
 .story-strip { align-items: stretch; }
 .story-photo-stack { position: relative; min-height: 560px; }
-.story-photo-stack img { position: absolute; width: 68%; height: 70%; object-fit: cover; border-radius: 32px; border: 1px solid rgba(255,255,255,0.18); box-shadow: 0 30px 90px rgba(0,0,0,0.45); }
-.story-photo-stack img:first-child { left: 0; top: 0; transform: rotate(-4deg); }
-.story-photo-stack img:last-child { right: 0; bottom: 0; transform: rotate(5deg); }
+.story-photo-stack picture { position: absolute; width: 68%; height: 70%; }
+.story-photo-stack picture:first-child { left: 0; top: 0; transform: rotate(-4deg); }
+.story-photo-stack picture:last-child { right: 0; bottom: 0; transform: rotate(5deg); }
+.story-photo-stack img { width: 100%; height: 100%; object-fit: cover; display: block; border-radius: 32px; border: 1px solid rgba(255,255,255,0.18); box-shadow: 0 30px 90px rgba(0,0,0,0.45); }
 .modern-story { display: grid; align-content: center; }
 .signature-line { padding-top: 1rem; border-top: 1px solid rgba(255,255,255,0.14); color: var(--gold) !important; font-weight: 800; }
 .modern-cards, .review-grid, .booking-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1rem; }
@@ -180,7 +182,7 @@
   .live-status-strip { border-radius: 24px; }
   .live-status-strip .text-link { display: inline-block; margin-top: 0.5rem; }
   .stage-portrait, .story-photo-stack { margin-top: 1.25rem; }
-  .stage-portrait, .stage-portrait img { min-height: 460px; }
+  .stage-portrait, .stage-portrait picture, .stage-portrait img { min-height: 460px; }
   .quick-stats, .sample-grid { grid-template-columns: 1fr; }
   .section-heading-row .button { margin-top: 1rem; }
   .wide-sample { grid-column: auto; }

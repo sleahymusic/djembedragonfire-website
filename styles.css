@@ -24,7 +24,7 @@ body {
     linear-gradient(140deg, rgba(8, 6, 10, 0.92), rgba(22, 8, 19, 0.78) 55%, rgba(5, 3, 7, 0.94)),
     radial-gradient(circle at 15% 10%, rgba(229, 75, 122, 0.28), transparent 28rem),
     radial-gradient(circle at 85% 25%, rgba(34, 211, 238, 0.18), transparent 26rem),
-    url("images/Background1.jpg") center center / cover fixed no-repeat,
+    image-set(url("images/Background1-optimized.webp") type("image/webp"), url("images/Background1.jpg") type("image/jpeg")) center center / cover fixed no-repeat,
     linear-gradient(140deg, var(--bg), var(--bg-2) 55%, #050307);
   line-height: 1.6;
 }
@@ -41,6 +41,7 @@ body::before {
   opacity: 0.45;
   mask-image: linear-gradient(to bottom, black, transparent 85%);
 }
+
 
 .site-header {
   position: sticky;
@@ -149,6 +150,7 @@ audio { width: 100%; margin: 1rem 0; }
 .gallery-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1rem; margin-top: 1.5rem; }
 .photo-card { min-height: 300px; margin: 0; overflow: hidden; border-radius: 26px; }
 .photo-card.wide { grid-column: span 3; min-height: 420px; }
+.photo-card picture { width: 100%; height: 100%; min-height: inherit; display: block; }
 .photo-card img { width: 100%; height: 100%; min-height: inherit; display: block; object-fit: cover; object-position: center; transition: transform 220ms ease; }
 .photo-card:hover img { transform: scale(1.035); }
 .contact-section { text-align: center; }
