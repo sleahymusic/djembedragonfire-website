@@ -1,13 +1,13 @@
 {
-  "updated": "2026-08-06",
+  "updated": "2026-08-13",
   "eyebrow": "Feature of the Week",
   "title": "New Song Spotlight",
-  "song": "Time After Time",
-  "artist": "Chet Baker",
+  "song": "Blinding Lights",
+  "artist": "The Weeknd",
   "status": "Coming into the show rotation",
-  "description": "This week’s spotlight is Chet Baker’s “Time After Time” — a smoky jazz standard with gentle phrasing, intimate late-night warmth, and a timeless romantic glow. It gives Djembe a softer feature moment for the room: close, classy, and full of feeling.",
-  "songListNote": "Chet Baker’s intimate jazz-standard reading, bringing smoky late-night warmth, romance, and classic lounge elegance to the show rotation.",
-  "youtubeUrl": "https://www.youtube.com/watch?v=1CCtdYWKa_A",
+  "description": "This week’s spotlight is The Weeknd’s “Blinding Lights” — a soaring synth-pop anthem with a driving pulse and a rush of cinematic golden-hour energy. It gives Djembe a bright, danceable feature moment for the room: euphoric, memorable, and impossible not to sing along to.",
+  "songListNote": "The Weeknd’s synth-pop smash — a bright, euphoric, dance-ready boost of energy joining the show rotation.",
+  "youtubeUrl": "https://www.youtube.com/watch?v=4NRXx6U8ABQ",
   "actionLabel": "Browse the full song list",
   "actionHref": "songs.html"
 }
