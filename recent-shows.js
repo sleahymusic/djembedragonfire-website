@@ -2,14 +2,14 @@
   const DATA_URL = 'data/recent-shows.json';
 
   const FALLBACK_SHOW = Object.freeze({
-    title: 'Djembe Live at Blues Cove',
-    youtubeTitle: 'Djembe singing live! Aug 10 2026 at Blues Cove',
-    date: 'August 10, 2026',
-    dateISO: '2026-08-10',
-    venue: 'Blues Cove',
-    youtubeUrl: 'https://www.youtube.com/watch?v=w2kcOEkUH70',
-    videoId: 'w2kcOEkUH70',
-    description: 'A full Djembe Dragonfire Blues Cove live performance recorded in Second Life.'
+    title: 'Djembe Live at The Golden Hour',
+    youtubeTitle: 'Djembe live! Aug 13 2026 Golden Hour',
+    date: 'August 13, 2026',
+    dateISO: '2026-08-13',
+    venue: 'The Golden Hour',
+    youtubeUrl: 'https://www.youtube.com/watch?v=mSJH0aPxFSc',
+    videoId: 'mSJH0aPxFSc',
+    description: 'A full Djembe Dragonfire Golden Hour live performance recorded in Second Life.'
   });
 
   function youtubeVideoId(show) {
@@ -175,7 +175,7 @@
   async function loadRecentShows() {
     try {
       const separator = DATA_URL.includes('?') ? '&' : '?';
-      const response = await fetch(`${DATA_URL}${separator}v=20260810-${Date.now()}`, {
+      const response = await fetch(`${DATA_URL}${separator}v=20260813-${Date.now()}`, {
         cache: 'no-store',
         headers: { accept: 'application/json' }
       });
