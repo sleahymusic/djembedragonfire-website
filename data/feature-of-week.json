@@ -1,13 +1,13 @@
 {
-  "updated": "2026-08-13",
+  "updated": "2026-08-19",
   "eyebrow": "Feature of the Week",
   "title": "New Song Spotlight",
-  "song": "Blinding Lights",
-  "artist": "The Weeknd",
+  "song": "We've Only Just Begun",
+  "artist": "The Carpenters",
   "status": "Coming into the show rotation",
-  "description": "This week’s spotlight is The Weeknd’s “Blinding Lights” — a soaring synth-pop anthem with a driving pulse and a rush of cinematic golden-hour energy. It gives Djembe a bright, danceable feature moment for the room: euphoric, memorable, and impossible not to sing along to.",
-  "songListNote": "The Weeknd’s synth-pop smash — a bright, euphoric, dance-ready boost of energy joining the show rotation.",
-  "youtubeUrl": "https://www.youtube.com/watch?v=4NRXx6U8ABQ",
+  "description": "This week’s spotlight is The Carpenters’ “We’ve Only Just Begun” — a tender soft-rock classic with a warm, wedding-day glow and an easy sway. It gives Djembe a graceful romantic feature moment for the room: familiar, heartfelt, and gentle enough to let the lyric and vocal carry the emotion.",
+  "songListNote": "The Carpenters’ tender soft-rock classic — a warm, romantic slow-sway feature joining the show rotation.",
+  "youtubeUrl": "https://www.youtube.com/watch?v=xeBoRF5tgDo",
   "actionLabel": "Browse the full song list",
   "actionHref": "songs.html"
 }
