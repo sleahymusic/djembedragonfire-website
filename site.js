@@ -393,34 +393,79 @@ function youtubeEmbedFromUrl(url) {
   }
 }
 
+function escapeFeatureHtml(value) {
+  return String(value || '')
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#039;');
+}
+
+function normalizeFeatureList(data) {
+  if (Array.isArray(data.features) && data.features.length) {
+    return data.features.filter(feature => feature && feature.song && feature.artist);
+  }
+
+  if (data.song && data.artist) return [data];
+  return [];
+}
+
+function renderFeatureVideos(features) {
+  return features.map(feature => {
+    const embedUrl = youtubeEmbedFromUrl(feature.youtubeUrl || feature.youtubeEmbedUrl || '');
+    if (!embedUrl) return '';
+    const label = feature.videoLabel || `${feature.song} reference video`;
+    return `
+      <div class="feature-video-item">
+        <iframe title="${escapeFeatureHtml(label)}" src="${escapeFeatureHtml(embedUrl)}" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+      </div>
+    `;
+  }).join('');
+}
+
 async function loadFeatureOfWeek() {
   if (!byId('featureWeekTitle')) return;
 
   try {
     const data = await fetchJson('data/feature-of-week.json');
-    const embedUrl = youtubeEmbedFromUrl(data.youtubeUrl || data.youtubeEmbedUrl || '');
+    const features = normalizeFeatureList(data);
     const videoWrap = byId('featureVideoWrap');
     const videoFrame = byId('featureVideoFrame');
     const originalLink = byId('featureOriginalLink');
 
     setText('featureWeekEyebrow', data.eyebrow || 'Feature of the Week');
     setText('featureWeekTitle', data.title || 'Feature of the Week');
-    setText('featureWeekSong', data.song);
-    setText('featureWeekArtist', data.artist);
+    setText('featureWeekSong', features.length > 1 ? features.map(feature => feature.song).join(' + ') : data.song);
+    setText('featureWeekArtist', features.length > 1 ? features.map(feature => feature.artist).join(' / ') : data.artist);
     setText('featureWeekStatus', data.status);
     setText('featureWeekDescription', data.description);
     setLink('featureWeekAction', data.actionHref || 'songs.html', data.actionLabel || 'Browse the song list');
 
-    if (embedUrl && videoWrap && videoFrame) {
-      videoFrame.src = embedUrl;
-      videoWrap.hidden = false;
-    } else if (videoWrap && videoFrame) {
-      videoFrame.removeAttribute('src');
-      videoWrap.hidden = true;
+    if (videoWrap && videoFrame) {
+      if (features.length > 1) {
+        const videos = renderFeatureVideos(features);
+        videoFrame.removeAttribute('src');
+        videoFrame.hidden = true;
+        videoWrap.innerHTML = videos;
+        videoWrap.hidden = videos.trim() === '';
+      } else {
+        const embedUrl = youtubeEmbedFromUrl(data.youtubeUrl || data.youtubeEmbedUrl || '');
+        videoWrap.innerHTML = '';
+        videoWrap.appendChild(videoFrame);
+        videoFrame.hidden = false;
+        if (embedUrl) {
+          videoFrame.src = embedUrl;
+          videoWrap.hidden = false;
+        } else {
+          videoFrame.removeAttribute('src');
+          videoWrap.hidden = true;
+        }
+      }
     }
 
     if (originalLink) {
-      const sourceUrl = data.youtubeUrl || data.originalUrl || '';
+      const sourceUrl = data.youtubeUrl || data.originalUrl || (features[0] && features[0].youtubeUrl) || '';
       if (sourceUrl) {
         originalLink.href = sourceUrl;
         originalLink.hidden = false;

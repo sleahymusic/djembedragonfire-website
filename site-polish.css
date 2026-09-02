@@ -455,3 +455,31 @@
     border-radius: 17px;
   }
 }
+
+.feature-video-wrap:has(.feature-video-item) {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 1rem;
+}
+
+.feature-video-item iframe {
+  display: block;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  border: 0;
+}
+
+.song-of-week-item {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 1rem 0;
+  border-top: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+.song-of-week-item:first-child {
+  padding-top: 0;
+  border-top: 0;
+}
+

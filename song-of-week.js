@@ -16,11 +16,20 @@
     return `${song.title}|${song.artist}`;
   }
 
-  function findFeaturedSong() {
-    if (typeof songs === 'undefined' || !Array.isArray(songs) || !currentFeature) return null;
+  function normalizeFeatureList() {
+    if (!currentFeature) return [];
+    if (Array.isArray(currentFeature.features) && currentFeature.features.length) {
+      return currentFeature.features.filter(feature => feature && feature.song && feature.artist);
+    }
+    if (currentFeature.song && currentFeature.artist) return [currentFeature];
+    return [];
+  }
 
-    const title = String(currentFeature.song || '').trim().toLowerCase();
-    const artist = String(currentFeature.artist || '').trim().toLowerCase();
+  function findFeaturedSong(feature) {
+    if (typeof songs === 'undefined' || !Array.isArray(songs) || !feature) return null;
+
+    const title = String(feature.song || '').trim().toLowerCase();
+    const artist = String(feature.artist || '').trim().toLowerCase();
 
     return songs.find(song => (
       String(song.title || '').trim().toLowerCase() === title
@@ -32,34 +41,38 @@
     const container = document.getElementById('songOfWeek');
     if (!container) return;
 
-    if (!currentFeature) {
+    const featureList = normalizeFeatureList();
+    if (!featureList.length) {
       if (originalRenderSongOfWeek) originalRenderSongOfWeek();
       return;
     }
 
-    const found = findFeaturedSong();
-    const key = found ? songKeyFor(found) : '';
-    const isFavorite = Boolean(
-      found
-      && typeof favorites !== 'undefined'
-      && favorites
-      && typeof favorites.has === 'function'
-      && favorites.has(key)
-    );
+    container.innerHTML = featureList.map(feature => {
+      const found = findFeaturedSong(feature);
+      const key = found ? songKeyFor(found) : '';
+      const isFavorite = Boolean(
+        found
+        && typeof favorites !== 'undefined'
+        && favorites
+        && typeof favorites.has === 'function'
+        && favorites.has(key)
+      );
+      const note = feature.songListNote || feature.description || currentFeature.songListNote || currentFeature.description || 'This week’s featured song is coming into the show rotation.';
+      const videoUrl = feature.youtubeUrl || '';
 
-    const note = currentFeature.songListNote || currentFeature.description || 'This week’s featured song is coming into the show rotation.';
-    const videoUrl = currentFeature.youtubeUrl || '';
-
-    container.innerHTML = `
-      <div>
-        <h2>${escapeText(currentFeature.song)}</h2>
-        <p>${escapeText(currentFeature.artist)}</p>
-        <p>${escapeText(note)}</p>
-        ${videoUrl ? `<a class="text-link" href="${escapeText(videoUrl)}" target="_blank" rel="noopener noreferrer">Watch the official reference video</a>` : ''}
-        ${found ? `<button class="song-request-button song-request-live-button" type="button" data-song-key="${escapeText(key)}">Request Live</button>` : '<p class="small-note">This song is being added to the request catalog.</p>'}
-      </div>
-      <button class="favorite-button${isFavorite ? ' is-favorite' : ''}" type="button" data-song-key="${escapeText(key)}" aria-label="Favorite ${escapeText(currentFeature.song)}">&#9829;</button>
-    `;
+      return `
+        <article class="song-of-week-item">
+          <div>
+            <h2>${escapeText(feature.song)}</h2>
+            <p>${escapeText(feature.artist)}</p>
+            <p>${escapeText(note)}</p>
+            ${videoUrl ? `<a class="text-link" href="${escapeText(videoUrl)}" target="_blank" rel="noopener noreferrer">Watch the official reference video</a>` : ''}
+            ${found ? `<button class="song-request-button song-request-live-button" type="button" data-song-key="${escapeText(key)}">Request Live</button>` : '<p class="small-note">This song is being added to the request catalog.</p>'}
+          </div>
+          <button class="favorite-button${isFavorite ? ' is-favorite' : ''}" type="button" data-song-key="${escapeText(key)}" aria-label="Favorite ${escapeText(feature.song)}">&#9829;</button>
+        </article>
+      `;
+    }).join('');
   }
 
   if (typeof renderSongOfWeek === 'function') {
