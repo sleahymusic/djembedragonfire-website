@@ -1,31 +1,31 @@
 {
-  "updated": "2026-09-02",
+  "updated": "2026-09-10",
   "eyebrow": "Song of the Week",
   "title": "Dual Song Spotlight",
-  "song": "Sister Golden Hair",
-  "artist": "America",
+  "song": "Aperture",
+  "artist": "Harry Styles",
   "status": "Coming into the show rotation",
-  "description": "This week has two spotlights: America’s “Sister Golden Hair” brings warm classic-rock lift and easy singalong glow, while Fleetwood Mac’s “Songbird” gives Djembe a tender Christine McVie ballad moment for quiet devotion and room-hushing emotion.",
-  "songListNote": "Dual Song of the Week: “Sister Golden Hair” by America and “Songbird” by Fleetwood Mac are both joining the request catalog this week.",
-  "youtubeUrl": "https://www.youtube.com/watch?v=4gibSb1_GGw",
+  "description": "This week has two spotlights: Harry Styles' danceable electropop comeback single “Aperture” — a throbbing, romantic, slow-burn dance track with an intimately-delivered vocal — and Corneille's smooth, soulful cover of the Terence Trent D'Arby classic “Sign Your Name,” warm, lush and romantic. Each brings a different energy to the set.",
+  "songListNote": "Dual Song of the Week: “Aperture” by Harry Styles and “Sign Your Name” by Corneille are both joining the request catalog this week.",
+  "youtubeUrl": "https://www.youtube.com/watch?v=rA_eCxPay7E",
   "features": [
     {
-      "song": "Sister Golden Hair",
-      "artist": "America",
+      "song": "Aperture",
+      "artist": "Harry Styles",
       "status": "Coming into the show rotation",
-      "description": "Warm classic-rock lift with an easy singalong glow and sunny mid-set momentum.",
-      "songListNote": "Dual Song of the Week — warm classic-rock lift and singalong glow.",
-      "youtubeUrl": "https://www.youtube.com/watch?v=4gibSb1_GGw",
-      "videoLabel": "America - Sister Golden Hair (Official Audio)"
+      "description": "Harry Styles' electropop/disco comeback single — intimate vocal, throbbing dance groove, signature romantic overtones. A strong current singalong feature.",
+      "songListNote": "Dual Song of the Week — Harry Styles' danceable comeback single.",
+      "youtubeUrl": "https://www.youtube.com/watch?v=rA_eCxPay7E",
+      "videoLabel": "Harry Styles - Aperture (Official Audio)"
     },
     {
-      "song": "Songbird",
-      "artist": "Fleetwood Mac",
+      "song": "Sign Your Name",
+      "artist": "Corneille",
       "status": "Coming into the show rotation",
-      "description": "A tender Christine McVie ballad for quiet devotion, soft focus, and room-hushing emotion.",
-      "songListNote": "Dual Song of the Week — tender Fleetwood Mac ballad feature.",
-      "youtubeUrl": "https://www.youtube.com/watch?v=3NFf8j8JOJ4",
-      "videoLabel": "Fleetwood Mac - Songbird (2004 Remaster)"
+      "description": "Corneille's smooth R&B cover of the soul classic — warm, romantic, lush and intimate.",
+      "songListNote": "Dual Song of the Week — smooth soulful R&B cover.",
+      "youtubeUrl": "https://www.youtube.com/user/corneille",
+      "videoLabel": "Corneille - Sign Your Name"
     }
   ],
   "actionLabel": "Browse the full song list",
