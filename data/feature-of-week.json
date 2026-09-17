@@ -1,33 +1,13 @@
 {
-  "updated": "2026-09-10",
+  "updated": "2026-09-17",
   "eyebrow": "Song of the Week",
-  "title": "Dual Song Spotlight",
-  "song": "Aperture",
-  "artist": "Harry Styles",
+  "title": "New Song Spotlight",
+  "song": "Breakfast in America",
+  "artist": "Supertramp",
   "status": "Coming into the show rotation",
-  "description": "This week has two spotlights: Harry Styles' danceable electropop comeback single “Aperture” — a throbbing, romantic, slow-burn dance track with an intimately-delivered vocal — and Corneille's smooth, soulful cover of the Terence Trent D'Arby classic “Sign Your Name,” warm, lush and romantic. Each brings a different energy to the set.",
-  "songListNote": "Dual Song of the Week: “Aperture” by Harry Styles and “Sign Your Name” by Corneille are both joining the request catalog this week.",
-  "youtubeUrl": "https://www.youtube.com/watch?v=rA_eCxPay7E",
-  "features": [
-    {
-      "song": "Aperture",
-      "artist": "Harry Styles",
-      "status": "Coming into the show rotation",
-      "description": "Harry Styles' electropop/disco comeback single — intimate vocal, throbbing dance groove, signature romantic overtones. A strong current singalong feature.",
-      "songListNote": "Dual Song of the Week — Harry Styles' danceable comeback single.",
-      "youtubeUrl": "https://www.youtube.com/watch?v=rA_eCxPay7E",
-      "videoLabel": "Harry Styles - Aperture (Official Audio)"
-    },
-    {
-      "song": "Sign Your Name",
-      "artist": "Corneille",
-      "status": "Coming into the show rotation",
-      "description": "Corneille's smooth R&B cover of the soul classic — warm, romantic, lush and intimate.",
-      "songListNote": "Dual Song of the Week — smooth soulful R&B cover.",
-      "youtubeUrl": "https://www.youtube.com/user/corneille",
-      "videoLabel": "Corneille - Sign Your Name"
-    }
-  ],
+  "description": "This week's spotlight is Supertramp's bright, buoyant “Breakfast in America” — a sun-drenched, self-aware singalong with a warm acoustic core and a big chorus that feels like a morning with nowhere to rush. It brings easy optimism and a touch of playful nostalgia to a Djembe set, and it is instantly recognizable to anyone who grew up on 1970s pop-rock radio.",
+  "songListNote": "Song of the Week — Supertramp's bright, optimistic “Breakfast in America” joins the request catalog this week.",
+  "youtubeUrl": "https://www.youtube.com/watch?v=aQdoUUi3iJ8",
   "actionLabel": "Browse the full song list",
   "actionHref": "songs.html"
 }
