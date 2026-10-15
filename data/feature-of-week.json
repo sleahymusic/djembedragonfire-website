@@ -1,13 +1,13 @@
 {
-  "updated": "2026-10-07",
+  "updated": "2026-10-15",
   "eyebrow": "Song of the Week",
   "title": "New Song Spotlight",
-  "song": "Sailing",
-  "artist": "Rod Stewart",
+  "song": "Gravedigger",
+  "artist": "Dave Matthews Band",
   "status": "Coming into the show rotation",
-  "description": "This week's spotlight is Rod Stewart's \"Sailing\" — a soaring, heartfelt anthem of longing and hope from his 1975 album Atlantic Crossing. An enduring signature hit and a UK #1, it rides a slow-burning swell of strings and emotion into a chorus people instinctively sing along to. In a Djembe set it lands as a warm, reflective lift — big feeling, wide-open space, and a room that sails with it.",
-  "songListNote": "Song of the Week — Rod Stewart's timeless 1975 anthem \"Sailing\" joins the request catalog this week.",
-  "youtubeUrl": "https://www.youtube.com/watch?v=FOt3oQ_k008",
+  "description": "This week's spotlight is Dave Matthews Band's \"Gravedigger\" — a stark, whispering story-song that pulls a crowded room into utter silence. From DMB's 2003 solo record Some Devil, it trades DMB's big-band sunshine for a single acoustic guitar and Dave's hushed parlor voice, telling the tales of the dead through the hands that bury them. In a Djembe set it lands as a dark, dramatic centerpiece — a deep breath of mortality that hangs in the air long after the last word.",
+  "songListNote": "Song of the Week — Dave Matthews Band's hushed story-song \"Gravedigger\" joins the request catalog this week.",
+  "youtubeUrl": "https://www.youtube.com/watch?v=DklkwQpxmdA",
   "actionLabel": "Browse the full song list",
   "actionHref": "songs.html"
 }
