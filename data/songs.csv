@@ -203,7 +203,7 @@ Let's Face The Music and Dance,Frank Sinatra,Classical/Broadway/Ballads/Oldies,j
 Let's Get Away From It All,Frank Sinatra,Classical/Broadway/Ballads/Oldies,theatrical,showtunes|standards,low
 Let There Be Love,Michael Buble/Nat King Cole,Classical/Broadway/Ballads/Oldies,intimacy|theatrical,showtunes|standards,low
 Little Drummer Boy,Pentatonix,Classical/Broadway/Ballads/Oldies,devotion|holiday,vocal|holiday,medium
-Little Shop of Horrors,Little Shop of Horrors,Classical/Broadway/Ballads/Oldies,theatrical|playful,showtunes|rock,high
+Little Shop of Horrors,Little Shop of Horrors,Classical/Broadway/Ballads/Oldies,theatrical|playful|halloween,showtunes|rock,high
 Lost,Michael Buble,Classical/Broadway/Ballads/Oldies,breakup|theatrical,showtunes|standards,low
 LOVE,Nat King Cole,Classical/Broadway/Ballads/Oldies,intimacy|theatrical,showtunes|standards,low
 Love Changes Everything,Andrew Lloyd Webber,Classical/Broadway/Ballads/Oldies,intimacy|theatrical,showtunes|standards,low
@@ -264,7 +264,7 @@ Please Mr Jailer,Cry Baby,Classical/Broadway/Ballads/Oldies,theatrical,showtunes
 Pure Imagination,Josh Groban,Classical/Broadway/Ballads/Oldies,theatrical,showtunes|standards,low
 Purple People Eater,Sheb Wooley,Classical/Broadway/Ballads/Oldies,joy|nostalgia|playful,novelty|oldies,high
 Put Your Head On My Shoulder,Michael Buble,Classical/Broadway/Ballads/Oldies,theatrical,showtunes|standards,low
-Puttin On the Ritz,Robbie Williams,Classical/Broadway/Ballads/Oldies,theatrical,showtunes|standards,low
+Puttin On the Ritz,Robbie Williams,Classical/Broadway/Ballads/Oldies,theatrical|halloween,showtunes|standards,low
 Quando Quando Quando,Michael Buble,Classical/Broadway/Ballads/Oldies,theatrical,showtunes|standards,low
 Rainy Days And Mondays,The Carpenters,Classical/Broadway/Ballads/Oldies,theatrical,showtunes|standards,low
 Razzle Dazzle,Chicago,Classical/Broadway/Ballads/Oldies,theatrical,showtunes|standards,low
@@ -300,7 +300,7 @@ Stars,Les Miserables,Classical/Broadway/Ballads/Oldies,theatrical,showtunes|stan
 Steppin' Out With My Baby,Tony Bennet & Michael Buble,Classical/Broadway/Ballads/Oldies,theatrical,showtunes|standards,low
 Stranger In Paradise,Tony Bennett,Classical/Broadway/Ballads/Oldies,theatrical,showtunes|standards,low
 Strangers In The Night,Frank Sinatra,Classical/Broadway/Ballads/Oldies,theatrical,showtunes|standards,low
-Suddenly Seymour,Little Shop of Horrors,Classical/Broadway/Ballads/Oldies,devotion|theatrical,showtunes|duet,medium
+Suddenly Seymour,Little Shop of Horrors,Classical/Broadway/Ballads/Oldies,devotion|theatrical|halloween,showtunes|duet,medium
 Summer Nights,Grease,Classical/Broadway/Ballads/Oldies,theatrical,showtunes|standards,low
 Summer Wind,Michael Buble,Classical/Broadway/Ballads/Oldies,theatrical,showtunes|standards,low
 Sunset Boulevard,Sunset Boulevard,Classical/Broadway/Ballads/Oldies,theatrical,showtunes|standards,low
@@ -312,7 +312,7 @@ That's Amore,Dean Martin,Classical/Broadway/Ballads/Oldies,theatrical,showtunes|
 That's Christmas to Me,Pentatonix,Classical/Broadway/Ballads/Oldies,devotion|holiday,vocal|holiday,low
 That's Life,Michael Buble,Classical/Broadway/Ballads/Oldies,theatrical,showtunes|standards,low
 The 59th Street Bridge Song (Feelin' Groovy),Simon & Garfunkel,Classical/Broadway/Ballads/Oldies,joy|nostalgia,pop_rock,medium
-The Addams Family,TV Theme,Classical/Broadway/Ballads/Oldies,playful|spooky,tv_theme|novelty,high
+The Addams Family,TV Theme,Classical/Broadway/Ballads/Oldies,playful|spooky|halloween,tv_theme|novelty,high
 The Best Is Yet To Come,Frank Sinatra,Classical/Broadway/Ballads/Oldies,joy|theatrical,showtunes|standards,low
 The First Time Ever I Saw Your Face,George Michael,Classical/Broadway/Ballads/Oldies,theatrical,showtunes|standards,low
 The Greatest Show,The Greatest Showman,Classical/Broadway/Ballads/Oldies,theatrical|empowerment|joy,showtunes|contemporary,high
@@ -335,7 +335,7 @@ The Winner Takes It All,John Barrowman,Classical/Broadway/Ballads/Oldies,breakup
 These Boots Are Made for Walkin',Nancy Sinatra,Classical/Broadway/Ballads/Oldies,theatrical,showtunes|standards,low
 They Can't Take That Away From Me,Robbie Williams,Classical/Broadway/Ballads/Oldies,theatrical,showtunes|standards,low
 This Is Me,The Greatest Showman,Classical/Broadway/Ballads/Oldies,empowerment|theatrical,showtunes|standards,low
-This is the Moment,Jekyll & Hyde,Classical/Broadway/Ballads/Oldies,theatrical,showtunes|standards,low
+This is the Moment,Jekyll & Hyde,Classical/Broadway/Ballads/Oldies,theatrical|halloween,showtunes|standards,low
 This Is The New Year,Glee/Great Big World,Classical/Broadway/Ballads/Oldies,theatrical,showtunes|standards,low
 Three Times A Lady,The Commodores,Classical/Broadway/Ballads/Oldies,theatrical,showtunes|standards,low
 Time To Say Goodbye (Con Te Partiro),Andrea Bocelli,Classical/Broadway/Ballads/Oldies,breakup|theatrical,showtunes|standards,low
