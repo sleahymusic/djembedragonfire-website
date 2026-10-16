@@ -1,7 +1,7 @@
 ﻿title,artist,primary_category,mood_tags,style_tags,energy
 9 to 5,Dolly Parton,New Songs,joy|empowerment|work,country|pop|dance,high
 Aperture,Harry Styles,New Songs,romance|euphoria|motion,contemporary|pop_rock|dance,high
-Autumn Leaves,Eric Clapton,New Songs,melancholy|nostalgia|reflection,jazz|standards,low
+Autumn Leaves,Eric Clapton,New Songs,melancholy|nostalgia|reflection|halloween,jazz|standards,low
 Beautiful Madness,Michael Patrick Kelly,New Songs,joy|celebration|warm,reggae|pop_rock,high
 Blinding Lights,The Weeknd,New Songs,euphoria|motion|nostalgia,synth pop|pop_rock,high
 Breakfast in America,Supertramp,New Songs,bright|nostalgia|optimism,pop_rock,high
@@ -29,7 +29,7 @@ The Bare Necessities,The Jungle Book,New Songs,joy|playful,disney|showtunes,medi
 Thriller,Michael Jackson,New Songs,playful|spooky|dance,pop_rock|dance|novelty,high
 Time After Time,Chet Baker,New Songs,intimacy|nostalgia|reflection,jazz|standards,low
 We've Only Just Begun,The Carpenters,New Songs,devotion|nostalgia,ballad|soft_rock,low
-Witch Doctor,David Seville,New Songs,joy|nostalgia|playful,novelty|oldies,high
+Witch Doctor,David Seville,New Songs,joy|nostalgia|playful|halloween,novelty|oldies,high
 All About Tonight,Blake Shelton,Country,neutral,country,medium
 All American Boy,Steve Grand,Country,neutral,country,medium
 All My Friends Say,Luke Bryan,Country,neutral,country,medium
@@ -69,7 +69,7 @@ Take Me Home Country Roads,John Denver,Country,neutral,country,medium
 Tangled Up In You,Staind,Country,neutral,country,medium
 That's My Kind of Night,Luke Bryan,Country,neutral,country,medium
 The Dance,Garth Brooks,Country,joy,country,medium
-The Devil Went Down to Georgia,The Charlie Daniels Band,Country,dramatic|playful,country|rock,high
+The Devil Went Down to Georgia,The Charlie Daniels Band,Country,dramatic|playful|halloween,country|rock,high
 Then What,Clay Walker,Country,neutral,country,medium
 This I Promise You,Ronana Keating,Country,devotion,country,medium
 This is How We Roll,Florida Georgia Line,Country,neutral,country,medium
@@ -134,7 +134,7 @@ Corner of the Sky,Pippin,Classical/Broadway/Ballads/Oldies,theatrical,showtunes|
 Could It Be Magic,Barry Manilow,Classical/Broadway/Ballads/Oldies,theatrical,showtunes|standards,low
 Crazy Little Thing Called Love,Michael Buble,Classical/Broadway/Ballads/Oldies,intimacy|theatrical,showtunes|standards,low
 Cry Me A River,Michael Bubl,Classical/Broadway/Ballads/Oldies,breakup|theatrical,showtunes|standards,low
-Defying Gravity,Wicked,Classical/Broadway/Ballads/Oldies,theatrical,showtunes|standards,low
+Defying Gravity,Wicked,Classical/Broadway/Ballads/Oldies,theatrical|halloween,showtunes|standards,low
 Do Nothing Till You Hear From Me,Robbie Williams/Duke Ellington,Classical/Broadway/Ballads/Oldies,theatrical,showtunes|standards,low
 Don't Cry For Me Argentina,Evita,Classical/Broadway/Ballads/Oldies,breakup|theatrical,showtunes|standards,low
 Dream A Little Dream,Michael Buble,Classical/Broadway/Ballads/Oldies,theatrical,showtunes|standards,low
@@ -149,7 +149,7 @@ Feeling Good,Michael Buble,Classical/Broadway/Ballads/Oldies,theatrical,showtune
 Fever,Michael Buble,Classical/Broadway/Ballads/Oldies,theatrical,showtunes|standards,low
 Fly Me To The Moon,Frank Sinatra,Classical/Broadway/Ballads/Oldies,intimacy|theatrical,showtunes|standards,low
 For Once In My Life,Michael Buble,Classical/Broadway/Ballads/Oldies,nostalgia|theatrical,showtunes|standards,low
-Forever Autumn,Gary Barlow,Classical/Broadway/Ballads/Oldies,devotion|intimacy|theatrical,showtunes|standards,low
+Forever Autumn,Gary Barlow,Classical/Broadway/Ballads/Oldies,devotion|intimacy|theatrical|halloween,showtunes|standards,low
 Forever Now,Michael Bublé,Classical/Broadway/Ballads/Oldies,devotion|family,ballad|crooner,low
 Frosty the Snowman,Michael Bublé,Classical/Broadway/Ballads/Oldies,joy|holiday,holiday|crooner,medium
 Georgia On My Mind,Michael Buble,Classical/Broadway/Ballads/Oldies,theatrical,showtunes|standards,low
@@ -181,7 +181,7 @@ I'm Beginning To See The Light,Michael Buble,Classical/Broadway/Ballads/Oldies,t
 I'm Your Man,Michael Buble,Classical/Broadway/Ballads/Oldies,intimacy|theatrical,showtunes|standards,low
 I'm Yours,The Script,Classical/Broadway/Ballads/Oldies,theatrical,showtunes|standards,low
 I Only Have Eyes For You,Michael Buble,Classical/Broadway/Ballads/Oldies,theatrical,showtunes|standards,low
-I Put A Spell On You,Bette Midler,Classical/Broadway/Ballads/Oldies,theatrical,showtunes|standards,low
+I Put A Spell On You,Bette Midler,Classical/Broadway/Ballads/Oldies,theatrical|halloween,showtunes|standards,low
 I Still Call Australia,Peter Allen,Classical/Broadway/Ballads/Oldies,theatrical,showtunes|standards,low
 I've Got My Love to Keep Me Warm,Dean Martin,Classical/Broadway/Ballads/Oldies,devotion|holiday,jazz|holiday,medium
 I've Got The World On A String,Michael Buble/Bing Crosby,Classical/Broadway/Ballads/Oldies,theatrical,showtunes|standards,low
@@ -189,7 +189,7 @@ I've Got You Under My Skin,Michael Buble,Classical/Broadway/Ballads/Oldies,theat
 I've Grown Accustomed To Her Face,Dean Martin,Classical/Broadway/Ballads/Oldies,theatrical,showtunes|standards,low
 I Wanna Be Like You,Robbie Williams & Olly Murs,Classical/Broadway/Ballads/Oldies,theatrical,showtunes|standards,low
 I Write The Songs,Barry Manilow,Classical/Broadway/Ballads/Oldies,theatrical,showtunes|standards,low
-If I Only Had A Brain,Robbie Williams,Classical/Broadway/Ballads/Oldies,theatrical,showtunes|standards,low
+If I Only Had A Brain,Robbie Williams,Classical/Broadway/Ballads/Oldies,theatrical|halloween,showtunes|standards,low
 Into The Fire,Scarlet Pimpernel,Classical/Broadway/Ballads/Oldies,theatrical,showtunes|standards,low
 It Don't Mean a Thing if it Ain't Got That Swing,Tony Bennet & Lady Gaga,Classical/Broadway/Ballads/Oldies,breakup|theatrical,showtunes|standards,low
 It Had To Be You,Barbara Stresisand & Michael Buble,Classical/Broadway/Ballads/Oldies,theatrical,showtunes|standards,low
@@ -209,7 +209,7 @@ LOVE,Nat King Cole,Classical/Broadway/Ballads/Oldies,intimacy|theatrical,showtun
 Love Changes Everything,Andrew Lloyd Webber,Classical/Broadway/Ballads/Oldies,intimacy|theatrical,showtunes|standards,low
 Love Me Like a River Does,Melody Gardot,Classical/Broadway/Ballads/Oldies,intimacy,standards,low
 Love My Life,Robbie Williams,Classical/Broadway/Ballads/Oldies,intimacy|theatrical,showtunes|standards,low
-Love Potion No. 9,The Searchers,Classical/Broadway/Ballads/Oldies,joy|nostalgia|playful,oldies|pop_rock,high
+Love Potion No. 9,The Searchers,Classical/Broadway/Ballads/Oldies,joy|nostalgia|playful|halloween,oldies|pop_rock,high
 Love Will Keep Us Alive,The Eagles,Classical/Broadway/Ballads/Oldies,intimacy|theatrical,showtunes|standards,low
 Love You Anymore,Michael Buble,Classical/Broadway/Ballads/Oldies,intimacy|theatrical,showtunes|standards,low
 Luck Be A Lady Tonight,Guys and Dolls,Classical/Broadway/Ballads/Oldies,theatrical,showtunes|standards,low
@@ -248,7 +248,7 @@ Not While I'm Around,Sweeney Todd,Classical/Broadway/Ballads/Oldies,theatrical,s
 Now We Are Free,Hans Zimmer,Classical/Broadway/Ballads/Oldies,intimacy|theatrical,contemporary,low
 O Christmas Tree,Jazzy Christmas,Classical/Broadway/Ballads/Oldies,nostalgia|holiday,jazz|holiday,low
 O Sole Mio,Luciano Pavarotti,Classical/Broadway/Ballads/Oldies,theatrical,showtunes|standards,low
-Old Devil Moon,Jamie Cullum,Classical/Broadway/Ballads/Oldies,intimacy|theatrical,showtunes|standards,low
+Old Devil Moon,Jamie Cullum,Classical/Broadway/Ballads/Oldies,intimacy|theatrical|halloween,showtunes|standards,low
 On an Evening in Roma,Michael Buble,Classical/Broadway/Ballads/Oldies,theatrical,showtunes|standards,low
 On The Street Where You Live,My Fair Lady,Classical/Broadway/Ballads/Oldies,theatrical,showtunes|standards,low
 Once Upon A Dream,Sleeping Beauty,Classical/Broadway/Ballads/Oldies,theatrical,showtunes|standards,low
@@ -307,7 +307,7 @@ Sunset Boulevard,Sunset Boulevard,Classical/Broadway/Ballads/Oldies,theatrical,s
 Sway,Michael Buble,Classical/Broadway/Ballads/Oldies,theatrical,showtunes|standards,low
 Sweet Caroline,Frank Sinatra,Classical/Broadway/Ballads/Oldies,joy|theatrical,showtunes|standards,low
 Thankful,Josh Groban,Classical/Broadway/Ballads/Oldies,theatrical,showtunes|standards,low
-That Old Black Magic,Sammy Davis Jr.,Classical/Broadway/Ballads/Oldies,romance|playful,jazz|standard,medium
+That Old Black Magic,Sammy Davis Jr.,Classical/Broadway/Ballads/Oldies,romance|playful|halloween,jazz|standard,medium
 That's Amore,Dean Martin,Classical/Broadway/Ballads/Oldies,theatrical,showtunes|standards,low
 That's Christmas to Me,Pentatonix,Classical/Broadway/Ballads/Oldies,devotion|holiday,vocal|holiday,low
 That's Life,Michael Buble,Classical/Broadway/Ballads/Oldies,theatrical,showtunes|standards,low
@@ -323,9 +323,9 @@ The Love Boat,Jack Jones,Classical/Broadway/Ballads/Oldies,intimacy|theatrical,s
 The More I See You,Michael Buble,Classical/Broadway/Ballads/Oldies,theatrical,showtunes|standards,low
 The Mummer's Dance,Loreena McKennit,Classical/Broadway/Ballads/Oldies,joy|theatrical,showtunes|standards,low
 The Mummers' Dance,Loreena McKennitt,Classical/Broadway/Ballads/Oldies,mystery|nostalgia,celtic|folk,medium
-The Music of The Night,Phantom of the Opera,Classical/Broadway/Ballads/Oldies,theatrical,showtunes|standards,low
+The Music of The Night,Phantom of the Opera,Classical/Broadway/Ballads/Oldies,theatrical|halloween,showtunes|standards,low
 The Other Side,The Greatest Showman,Classical/Broadway/Ballads/Oldies,theatrical,showtunes|standards,low
-The Phantom of The Opera,Webber,Classical/Broadway/Ballads/Oldies,theatrical,showtunes|standards,low
+The Phantom of The Opera,Webber,Classical/Broadway/Ballads/Oldies,theatrical|halloween,showtunes|standards,low
 The Prayer,Josh Groban,Classical/Broadway/Ballads/Oldies,devotion|inspiration,classical_crossover|ballad,low
 The Prayer (Duet),Céline Dion,Classical/Broadway/Ballads/Oldies,devotion|inspiration,classical_crossover|duet,low
 The Rainbow Connection,Kermit the Frog,Classical/Broadway/Ballads/Oldies,theatrical,showtunes|standards,low
@@ -358,7 +358,7 @@ What Christmas Means to Me,John Legend,Classical/Broadway/Ballads/Oldies,joy|hol
 What I Did For Love,Josh Groban,Classical/Broadway/Ballads/Oldies,intimacy|theatrical,showtunes|standards,low
 What You Own,Rent,Classical/Broadway/Ballads/Oldies,theatrical,showtunes|standards,low
 When a Man Loves a Woman,Percy Sledge,Classical/Broadway/Ballads/Oldies,intimacy|theatrical,showtunes|standards,low
-When October Goes,Barry Manilow,Classical/Broadway/Ballads/Oldies,theatrical,showtunes|standards,low
+When October Goes,Barry Manilow,Classical/Broadway/Ballads/Oldies,theatrical|halloween,showtunes|standards,low
 When You Believe,Leon Jackson/The Prince of Egypt,Classical/Broadway/Ballads/Oldies,devotion|theatrical,showtunes|standards,low
 When You Say You Love Me,Josh Groban,Classical/Broadway/Ballads/Oldies,intimacy|theatrical,showtunes|standards,low
 When You Wish Upon A Star,Linda Ronstadt,Classical/Broadway/Ballads/Oldies,theatrical,showtunes|standards,low
@@ -384,7 +384,7 @@ You're Nobody Till Somebody Loves You,Michael Buble/Dean Martin,Classical/Broadw
 You Say,Lauren Daigle,Classical/Broadway/Ballads/Oldies,devotion|empowerment,contemporary,low
 You've Got A Friend In Me,Michael Buble,Classical/Broadway/Ballads/Oldies,theatrical,showtunes|standards,low
 Young At Heart,Frank Sinatra,Classical/Broadway/Ballads/Oldies,intimacy|nostalgia|theatrical,showtunes|standards,low
-Your Heart Is As Black As Night,Melody Gardot,Classical/Broadway/Ballads/Oldies,breakup,standards,low
+Your Heart Is As Black As Night,Melody Gardot,Classical/Broadway/Ballads/Oldies,breakup|halloween,standards,low
 21 Guns,Green Day,Pop/Rock/EDM,neutral,pop_rock,high
 7 Years,Lukas Graham,Pop/Rock/EDM,nostalgia,pop_rock,medium
 867-5309/Jenny,Tommy Tutone,Pop/Rock/EDM,joy|playful,pop_rock|new_wave,high
@@ -434,6 +434,7 @@ Blue Eyes,Elton John,Pop/Rock/EDM,neutral,pop_rock,high
 Body and Soul,Amy Winehouse / Tony Bennett,Pop/Rock/EDM,neutral,pop_rock,high
 Boulevard of Broke Dreams,Green Day,Pop/Rock/EDM,neutral,pop_rock,high
 Bridge Over Troubled Water,Simon & Garfunkel,Pop/Rock/EDM,neutral,pop_rock,high
+Bring Me To Life,Evanescence,Pop/Rock/EDM,intense|dark|empowering|halloween,rock|alt_rock,high
 Broken Wings,Mr Mister,Pop/Rock/EDM,breakup,pop_rock,high
 Brothers in Arms,Dire Straits,Pop/Rock/EDM,neutral,pop_rock,high
 Bye Bye Blackbird,Henderson & Dixon,Pop/Rock/EDM,neutral,pop_rock,high
@@ -460,7 +461,7 @@ Come Together,The Beatles,Pop/Rock/EDM,intimacy,pop_rock,high
 Complicated,Avril Lavigne,Pop/Rock/EDM,neutral,pop_rock,high
 Copacabana,Barry Manilow,Pop/Rock/EDM,joy|nostalgia|theatrical,pop_rock|disco,high
 Cotton Fields,Creedance Clearwater Revival,Pop/Rock/EDM,neutral,pop_rock,high
-Could It Be Magic,Take That,Pop/Rock/EDM,neutral,pop_rock,high
+Could It Be Magic,Take That,Pop/Rock/EDM,neutral|halloween,pop_rock,high
 Count On Me,Bruno Mars,Pop/Rock/EDM,devotion,pop_rock,high
 Counting Stars,OneRepublic,Pop/Rock/EDM,neutral,pop_rock,high
 Cover Me in Sunshine,Pink,Pop/Rock/EDM,neutral,pop_rock,high
@@ -474,7 +475,7 @@ Dancing with Myself,Billy Idol,Pop/Rock/EDM,confidence|joy,rock|new_wave,high
 Daughters,John Mayer,Pop/Rock/EDM,neutral,pop_rock,high
 Daydream Believer,The Monkees,Pop/Rock/EDM,devotion,pop_rock,high
 Diamonds,Rihanna,Pop/Rock/EDM,empowerment|intimacy,pop|ballad,medium
-Die With a Smile,Bruno Mars / Lady Gaga,Pop/Rock/EDM,joy,pop_rock,high
+Die With a Smile,Bruno Mars / Lady Gaga,Pop/Rock/EDM,joy|halloween,pop_rock,high
 Don't Dream It's Over,Crowded House,Pop/Rock/EDM,breakup,pop_rock,high
 Don't Go Breaking My Heart,Elton John,Pop/Rock/EDM,breakup|intimacy,pop_rock,high
 Don't Know Why,Norah Jones,Pop/Rock/EDM,breakup,pop_rock,high
@@ -536,7 +537,7 @@ Good Times,Chic,Pop/Rock/EDM,joy,pop_rock,high
 Goodbye My Lover,James Blunt,Pop/Rock/EDM,breakup|intimacy,pop_rock,high
 Goodbye Stranger,Supertramp,Pop/Rock/EDM,breakup,pop_rock,high
 Goodbye Yellow Brick Road,Elton John,Pop/Rock/EDM,breakup,pop_rock,high
-Gravedigger,Dave Matthews Band,Pop/Rock/EDM,dark|reflection|storytelling,folk_rock|rock,low
+Gravedigger,Dave Matthews Band,Pop/Rock/EDM,dark|reflection|storytelling|halloween,folk_rock|rock,low
 Gravity,John Mayer,Pop/Rock/EDM,neutral,pop_rock,high
 Greatest Love of All,Whitney Houston,Pop/Rock/EDM,intimacy,pop_rock,high
 Hall Of Fame,The Script,Pop/Rock/EDM,empowerment,pop_rock,high
@@ -604,7 +605,7 @@ Invisible Touch,Genesis,Pop/Rock/EDM,neutral,pop_rock,high
 Iris,Goo Goo Dolls,Pop/Rock/EDM,neutral,pop_rock,high
 It Might Be You,Stephen Bishop,Pop/Rock/EDM,neutral,pop_rock,high
 It Never Tains in Southern California,Albert Hammond,Pop/Rock/EDM,breakup,pop_rock,high
-It's a Sin,Pet Shop Boys,Pop/Rock/EDM,neutral,pop_rock,high
+It's a Sin,Pet Shop Boys,Pop/Rock/EDM,neutral|halloween,pop_rock,high
 It's My Life,Bon Jovi,Pop/Rock/EDM,neutral,pop_rock,high
 It's Still Rock and Roll to Me,Billy Joel,Pop/Rock/EDM,joy|nostalgia,rock|pop_rock,high
 It's Still Rock n' Roll To Me,Billy Joel,Pop/Rock/EDM,neutral,pop_rock,high
@@ -739,7 +740,7 @@ That's What Friends Are For,Burt Bacharach,Pop/Rock/EDM,neutral,pop_rock,high
 The Best,Tina Turner,Pop/Rock/EDM,joy,pop_rock,high
 The Fool on The Hill,The Beatles,Pop/Rock/EDM,neutral,pop_rock,high
 The Great Pretender,Freddie Mercury,Pop/Rock/EDM,neutral,pop_rock,high
-The Hanging Tree,James Newton Howard,Pop/Rock/EDM,neutral,pop_rock,high
+The Hanging Tree,James Newton Howard,Pop/Rock/EDM,neutral|halloween,pop_rock,high
 The House of the Rising Sun,The Animals,Pop/Rock/EDM,neutral,pop_rock,high
 The Living Years,Mike & The Mechanics,Pop/Rock/EDM,neutral,pop_rock,high
 The Longest Time,Billy Joel,Pop/Rock/EDM,neutral,pop_rock,high
@@ -759,7 +760,7 @@ Time In A Bottle,Jim Croce,Pop/Rock/EDM,neutral,pop_rock,high
 Tiny Dancer,Elton John,Pop/Rock/EDM,joy,pop_rock,high
 Titanium,Boyce Avenue,Pop/Rock/EDM,neutral,pop_rock,high
 Together Forever,Rick Astley,Pop/Rock/EDM,devotion|intimacy,pop_rock,high
-Total Eclipse of the Heart,Bonnie Tyler,Pop/Rock/EDM,intimacy,pop_rock,high
+Total Eclipse of the Heart,Bonnie Tyler,Pop/Rock/EDM,intimacy|halloween,pop_rock,high
 Treasure,Bruno Mars,Pop/Rock/EDM,neutral,pop_rock,high
 Truly Madly Deeply,Savage Garden,Pop/Rock/EDM,devotion|intimacy,pop_rock,medium
 Unchain My Heart,Joe Cocker,Pop/Rock/EDM,intimacy,pop_rock,high
@@ -780,7 +781,7 @@ Wake Me Up!,Avicii,Pop/Rock/EDM,neutral,pop_rock,high
 Walk on By,Dionne Warwick,Pop/Rock/EDM,neutral,pop_rock,high
 Walk on the Ocean,Toad the Wet Sprocket,Pop/Rock/EDM,nostalgia,pop_rock,medium
 Walking On The Moon,The Police,Pop/Rock/EDM,intimacy,pop_rock,high
-Wanted Dead or Alive,Bon Jovi,Pop/Rock/EDM,neutral,pop_rock,high
+Wanted Dead or Alive,Bon Jovi,Pop/Rock/EDM,neutral|halloween,pop_rock,high
 Watermelon Sugar,Harry Styles,Pop/Rock/EDM,joy|summer|flirty,contemporary|pop_rock,high
 We Don't Need Another Hero,Tina Turner,Pop/Rock/EDM,breakup,pop_rock,high
 We Found Love,Boyce Avenue,Pop/Rock/EDM,intimacy,pop_rock,high
@@ -794,7 +795,7 @@ What's Love Got to Do With It,Tina Tuner,Pop/Rock/EDM,intimacy,pop_rock,high
 What's Up,4 Non Blondes,Pop/Rock/EDM,neutral,pop_rock,high
 What Was I Made For,Billie Elish,Pop/Rock/EDM,neutral,pop_rock,high
 When I Was Your Man,Bruno Mars,Pop/Rock/EDM,intimacy,pop_rock,high
-Wicked Game,Chris Isaak,Pop/Rock/EDM,neutral,pop_rock,high
+Wicked Game,Chris Isaak,Pop/Rock/EDM,neutral|halloween,pop_rock,high
 Wild World,Cat Stevens,Pop/Rock/EDM,neutral,pop_rock,high
 Wind of Change,Scorpions,Pop/Rock/EDM,neutral,pop_rock,high
 With A Little Help From My Friends,The Beatles,Pop/Rock/EDM,neutral,pop_rock,high
