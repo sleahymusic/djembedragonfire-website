@@ -1,13 +1,13 @@
 {
-  "updated": "2026-11-12",
+  "updated": "2026-11-19",
   "eyebrow": "Song of the Week",
   "title": "New Song Spotlight",
-  "song": "Play Me",
-  "artist": "Neil Diamond",
+  "song": "The Logical Song",
+  "artist": "Supertramp",
   "status": "Coming into the show rotation",
-  "description": "This week's spotlight is Neil Diamond's “Play Me” — the hushed 1971 ballad from the Stones album, built on one of his most personal lyrics: “You are the sun, I am the moon… you are the words, I am the tune — play me.” It creeps in on a spare piano line and swells into one of the most romantic choruses in his catalog. In a Djembe set it lands as the tender heart of the night — a slow-burn moment that pulls the room in close.",
-  "songListNote": "Song of the Week — Neil Diamond's tender 1971 ballad “Play Me” joins the request catalog this week.",
-  "youtubeUrl": "https://www.youtube.com/watch?v=z2QuNFlAj9U",
+  "description": "This week's spotlight is Supertramp's “The Logical Song” — the bright 1979 anthem from Breakfast in America that opens with schoolboy wonder and a sunny Wurlitzer riff before lifting into one of the most singable choruses in soft-rock history. It’s sunshine-with-a-heart: joyful, restless, and just a little bit existential. In a Djembe set it lands as an upbeat earworm — the kind that has the whole room humming the hook by the second chorus.",
+  "songListNote": "Song of the Week — Supertramp's bright 1979 singalong “The Logical Song” joins the request catalog this week.",
+  "youtubeUrl": "https://www.youtube.com/watch?v=kln_bIndDJg",
   "actionLabel": "Browse the full song list",
   "actionHref": "songs.html"
 }
