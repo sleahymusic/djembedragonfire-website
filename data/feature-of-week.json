@@ -1,13 +1,13 @@
 {
-  "updated": "2026-11-19",
+  "updated": "2026-11-25",
   "eyebrow": "Song of the Week",
   "title": "New Song Spotlight",
-  "song": "The Logical Song",
-  "artist": "Supertramp",
+  "song": "Hold My Hand",
+  "artist": "Lady Gaga",
   "status": "Coming into the show rotation",
-  "description": "This week's spotlight is Supertramp's “The Logical Song” — the bright 1979 anthem from Breakfast in America that opens with schoolboy wonder and a sunny Wurlitzer riff before lifting into one of the most singable choruses in soft-rock history. It’s sunshine-with-a-heart: joyful, restless, and just a little bit existential. In a Djembe set it lands as an upbeat earworm — the kind that has the whole room humming the hook by the second chorus.",
-  "songListNote": "Song of the Week — Supertramp's bright 1979 singalong “The Logical Song” joins the request catalog this week.",
-  "youtubeUrl": "https://www.youtube.com/watch?v=kln_bIndDJg",
+  "description": "This week's spotlight is Lady Gaga's “Hold My Hand” — the soaring, devotional ballad from Top Gun: Maverick. It opens in whisper-close piano intimacy before building into a huge, wide-open chorus of conviction and hope, the kind that fills a room. In a Djembe set it lands as an emotional peak: vulnerable verses that pull everyone in, then a chorus that feels like an anthem and a release.",
+  "songListNote": "Song of the Week — Lady Gaga's soaring “Hold My Hand” (from Top Gun: Maverick) joins the request catalog this week.",
+  "youtubeUrl": "https://www.youtube.com/watch?v=O2CIAKVTOrc",
   "actionLabel": "Browse the full song list",
   "actionHref": "songs.html"
-}
+}
